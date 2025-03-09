@@ -1,86 +1,56 @@
-                         ██████╗ ██████╗ ██╗ ██████╗ ██╗███╗   ██╗██╗   ██╗ █████╗ ██╗   ██╗██╗  ████████╗ 
-                        ██╔═══██╗██╔══██╗██║██╔════╝ ██║████╗  ██║██║   ██║██╔══██╗██║   ██║██║  ╚══██╔══╝ 
-                        ██║   ██║██████╔╝██║██║  ███╗██║██╔██╗ ██║██║   ██║███████║██║   ██║██║     ██║  
-                        ██║   ██║██╔══██╗██║██║   ██║██║██║╚██╗██║╚██╗ ██╔╝██╔══██║██║   ██║██║     ██║ 
-                        ╚██████╔╝██║  ██║██║╚██████╔╝██║██║ ╚████║ ╚████╔╝ ██║  ██║╚██████╔╝███████╗██║
-                         ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝   
+# [Open Verifiable Schema Registry](https://github.com/openverifiable/open-verifiable-types)
 
-<div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-      <img src="https://gray-objective-tiglon-784.mypinata.cloud/ipfs/Qma7EjPPPfomzEKkYcJa2ctEFPUhHaMwiojTR1wTQPg2x8" alt="OriginVault logo" width="300" height="300">
-</div>
-<br />
-This repository serves as the **drafting and collaboration zone** for schemas intended to be incorporated into the **OriginVault Namespace**. It provides a structured environment for defining, reviewing, and refining JSON-LD schemas before they are pushed to the main OriginVault schema registry. The purpose is to provide a framework for open verifiable types that can be used beyond the OriginVault ecosystem.
+## 🌍 Introduction
+The **Open Verifiable Schema Registry** is a decentralized repository designed to **aggregate, standardize, and provide access to common schemas used throughout the internet**. It serves as a **hub for openness and verifiable typings**, allowing schemas to be **shared, repurposed, and extended beyond their original intent**. This approach helps **lower the barrier for namespaces to establish themselves in the decentralized internet**, fostering interoperability and trust across Web3 and AI ecosystems.
 
-## 📦 Installation
+Built to support **decentralized identity assurance, AI attribution, and open trust standards**, Open Verifiable ensures schemas remain **interoperable, community-driven, and aligned with global verification frameworks**.
 
+## 🎯 Mission Statement
+Our mission is to **enable a decentralized, verifiable, and privacy-preserving trust infrastructure** by maintaining a shared repository of schemas for:
+- **Identity Verification & Trust Models** (e.g., OpenID IDA, W3C Verifiable Credentials, Cheqd DID-Linked Resources)
+- **AI-Generated Content Provenance & Attribution** (e.g., C2PA, W3C Metadata)
+- **Reputation & Trust Frameworks** for decentralized applications
+- **Governance Models** for digital trust and verification policies
+
+By adopting open schemas, organizations, developers, and individuals can **verify identity, establish content authenticity, and manage trust without reliance on centralized authorities**.
+
+## 🚀 Current Development
+At this stage, Open Verifiable is integrating **existing schema standards** from **Verida, Cheqd, OpenID, and W3C** to ensure a strong foundation for trust and verification.
+
+### 🔹 Existing Schemas Referenced
+- **Verida Common & Core Repos** – Schema structures for **decentralized identity and storage**
+- **Schema-DTS** – A powerful TypeScript toolset that generates TypeScript types from JSON Schemas, allowing developers to work with strongly typed data models that align with schema specifications. Schema-DTS helps ensure **consistency, validation, and interoperability** when integrating schemas into Web3 and decentralized applications.
+
+### 🔹 TypeScript Integration
+The repository is designed to **export schema types as a TypeScript package** under:
 ```bash
-npm install @originvault/ov-types
+@openverifiable/open-verifiable-types
+```
+This package allows developers to easily import and use **strongly-typed schema definitions** in their applications, ensuring consistency across decentralized identity, content verification, and trust frameworks.
+
+To install the package:
+```bash
+npm install @openverifiable/open-verifiable-types
 ```
 
+As we expand, Open Verifiable will introduce **modular, extensible schemas** to support:
+- DID-based verification & reputation scoring
+- AI-generated content provenance tracking
+- OpenID & W3C-aligned credential models
 
-## Purpose
-The schema registry enables:
-- **Collaboration**: Allows developers and contributors to propose and iterate on schema definitions.
-- **Version Control**: Ensures schemas maintain backward compatibility through structured versioning.
-- **Interoperability**: Facilitates schema standardization to support third-party system integrations.
-- **Review & Approval**: Provides a space for governance and validation before schemas are published.
+## 📜 Ethos
+We believe in:
+✅ **Decentralization First** – Trust frameworks should be open, verifiable, and permissionless.  
+✅ **Privacy-Preserving Verification** – Users should control how their identity and credentials are shared.  
+✅ **Interoperability** – Open Verifiable bridges **Web2 identity models (OpenID, OAuth)** with **Web3 trust networks (DIDs, VCs, Cheqd)**.  
+✅ **Community Governance** – Schema evolution should be driven by **decentralized governance** to ensure fairness and transparency.  
 
-## Repository Structure
-The repository is organized by schema versions:
-```
-originvault-schema-registry/
-├── README.md               # Repository overview
-├── drafts/                 # Working drafts for new schemas
-│   ├── schema-example.json # Example schema draft
-├── v1/                     # Version 1 of approved schemas
-│   ├── context.jsonld      # JSON-LD context for v1
-├── v2/                     # Version 2 of approved schemas (future)
-│   ├── context.jsonld      # JSON-LD context for v2
-```
+## 📌 Next Steps
+1️⃣ **Define core schemas** based on Verida, Cheqd, OpenID, and W3C models.  
+2️⃣ **Publish an API & repository for schema querying and updates.**  
+3️⃣ **Establish a DAO governance model** to maintain schema updates.  
 
-## Current Status
-Drafts currently under review can be found in the `drafts/` folder.
+## 🔗 Get Involved
+Open Verifiable is a **community-driven initiative**. Join us to shape the future of **decentralized trust and identity!**
 
-## Hosted URL
-Once a schema is approved and pushed into the OriginVault namespace, it will be publicly accessible at:
-[https://schemas.originvault.box/v1](https://schemas.originvault.box/v1)
-
-## Usage
-To use an approved schema, include it in the `@context` property of your JSON-LD data:
-
-```json
-{
-  "@context": [
-    "https://schemas.originvault.box/v1"
-  ],
-  "type": "CredentialSchema",
-  "schema": {
-    "name": "ContentCredential",
-    "version": "1.0",
-    "attributes": [
-      { "name": "creator", "type": "string" },
-      { "name": "createdAt", "type": "date" },
-      { "name": "signature", "type": "string" }
-    ]
-  }
-}
-```
-
-## Contributing
-We welcome contributions to improve and expand the OriginVault schema registry. If you have suggestions for new schemas, updates to existing ones, or feedback, please follow these steps:
-
-1. **Fork the Repository**: Create a copy in your GitHub account.
-2. **Draft a Schema**: Add your proposed schema to the `drafts/` directory.
-3. **Submit a Pull Request**: Provide a clear explanation of the schema and its intended use.
-4. **Engage in Review**: Be available for discussions and refinements before approval.
-
-### Contribution Guidelines
-- Follow **JSON-LD standards** and ensure compliance with OriginVault schema structures.
-- Clearly define **attributes, types, and expected behavior** for each schema.
-- Place new schemas in the `drafts/` directory until they are reviewed and approved.
-- Approved schemas will be moved to the appropriate version folder (`v1`, `v2`, etc.).
-
-Thank you for contributing to the OriginVault schema ecosystem!
-
-## License
-This repository is licensed under the [MIT License](LICENSE).
+🚀 **Open Verifiable – Building the Decentralized Trust Layer for AI & Web3** 🚀

@@ -1,6 +1,6 @@
 {
   "name": "@openverifiable/open-verifiable-types",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1",
   "description": "A collection of schemas for open and verifiable types.",
   "main": "index.js",
   "type": "module",
