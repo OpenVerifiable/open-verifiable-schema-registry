@@ -1,0 +1,49 @@
+{
+  "name": "@openverifiable/open-verifiable-types",
+  "version": "0.0.1-alpha.1",
+  "description": "A collection of schemas for open and verifiable types.",
+  "main": "index.js",
+  "type": "module",
+  "types": "types/index.d.ts",
+  "files": [
+    "types/",
+    "schemas/"
+  ],
+  "scripts": {
+    "generate-types": "rm -rf types && json2ts -i drafts/ -o types/",
+    "export-types": "node exportTypes.js",
+    "build": "npm run generate-types && npm run export-types",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenVerifiable/open-verifiable-types.git"
+  },
+  "keywords": [
+    "openverifiable",
+    "open-verifiable",
+    "open verifiable",
+    "open verifiable types",
+    "open verifiable schemas",
+    "open verifiable credentials",
+    "open verifiable types"
+  ],
+  "author": "openverifiable@gmail.com",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "tag": "alpha"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.9.3",
+    "axios": "^1.8.2",
+    "jsonld": "^8.3.3",
+    "quicktype-core": "^23.0.171",
+    "schema-dts": "^1.1.5",
+    "simple-git": "^3.27.0"
+  }
+}
