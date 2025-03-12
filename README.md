@@ -33,6 +33,14 @@ To install the package:
 npm install @openverifiable/open-verifiable-types
 ```
 
+### 🔹 Usage
+
+```typescript
+import { DIDDocument, OneVeridaProfile, VerifiableCredential, VerifiablePresentation, ICheqd, IResolver, Creator, CreateAction, Organization, Privatekey, Publickey, LinkedResource } from '@openverifiable/open-verifiable-types';
+```
+
+
+
 As we expand, Open Verifiable will introduce **modular, extensible schemas** to support:
 - DID-based verification & reputation scoring
 - AI-generated content provenance tracking
