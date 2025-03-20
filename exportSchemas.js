@@ -82,33 +82,24 @@ const customFileResolver = {
   },
   async read(file) {
     try {
-      // Attempt to read the local file
-      const content = await fs.promises.readFile(file.url, 'utf8');
-      return content;
+        // Check if the file URL is a remote URL
+        if (file.url.startsWith('http://') || file.url.startsWith('https://')) {
+            console.log(`Fetching remote schema from: ${file.url}`);
+            const response = await axios.get(file.url);
+            return JSON.stringify(response.data);
+        } else {
+            // Attempt to read the local file
+            const content = await fs.promises.readFile(file.url, 'utf8');
+            return content;
+        }
     } catch (err) {
-      // If local reading fails, fallback to remote fetch.
-      console.warn(`Local read failed for "${file.url}": ${err.message}`);
-      // Map the local file path to a remote URL.
-      // For example, if file.url is:
-      //   "/mnt/c/Users/lnisp/open-verifiable-schema-registry/schemas/verida/schemas-core/inbox/type/datastoreSync/v0.1.0/schema.json"
-      // We assume everything from "/schemas/verida" onward should be appended to "https://core.schemas.verida.io"
-      const marker = '/schemas/verida';
-      let relativePath = '';
-      const index = file.url.indexOf(marker);
-      if (index !== -1) {
-        relativePath = file.url.substring(index + marker.length);
-      } else {
-        // If marker not found, fallback to using file.url directly
-        relativePath = file.url;
-      }
-      const remoteUrl = 'https://core.schemas.verida.io' + relativePath;
-      console.log(`[FALLBACK] Fetching remote schema from: ${remoteUrl}`);
-      try {
-        const response = await axios.get(remoteUrl);
-        return JSON.stringify(response.data);
-      } catch (remoteErr) {
-        throw new Error(`Remote fetch failed for "${remoteUrl}": ${remoteErr.message}`);
-      }
+        console.warn(`Failed to read "${file.url}": ${err.message}`);
+        if (err.response) {
+            console.error(`Response data: ${JSON.stringify(err.response.data, null, 2)}`);
+            console.error(`Response status: ${err.response.status}`);
+            console.error(`Response headers: ${JSON.stringify(err.response.headers, null, 2)}`);
+        }
+        throw err; // Rethrow the error to be handled by the caller
     }
   }
 };
