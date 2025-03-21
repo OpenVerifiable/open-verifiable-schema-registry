@@ -1,50 +1,35 @@
 #!/usr/bin/env node
-/**
- * generateSingleDts.js
- *
- * - Clones/pulls the Verida schema repos.
- * - Gathers all JSON schemas.
- * - Dereferences and compiles each schema to TypeScript.
- * - Splits each compiled output into definition blocks and merges them,
- *   skipping duplicate definitions.
- * - Uses a custom file resolver that, if local file reading fails,
- *   maps the file path to a remote URL on https://core.schemas.verida.io.
- * - Writes the merged definitions to index.ts.
- */
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 import simpleGit from 'simple-git';
 import { compile } from 'json-schema-to-typescript';
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import axios from 'axios';
 
 const git = simpleGit();
 const readdir = promisify(fs.readdir);
 const mkdir = promisify(fs.mkdir);
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-/* ---------- Repos & Paths ---------- */
-const repos = [
-  { 
-    name: 'schemas/verida/schemas-common',
-    url: 'https://github.com/verida/schemas-common.git'
-  },
-  { 
-    name: 'schemas/verida/schemas-core',
-    url: 'https://github.com/verida/schemas-core.git'
-  }
-];
-const outDir = path.join(__dirname, 'src', 'schemaTypes');  // writing merged file to repo root
-const outFile = path.join(outDir, 'index.ts');
+/* ---------- Paths ---------- */
+const schemasDir = path.join(__dirname, 'schemas'); // Directory containing all schemas
+const outDir = path.join(__dirname, 'src', 'schemaTypes'); // Output directory
+const outFile = path.join(outDir, 'index.ts'); // Output TypeScript file
 
-/* ---------- Utility Functions ---------- */
+const veridaRepos = [
+  { name: 'schemas/verida/schemas-common', url: 'https://github.com/verida/schemas-common.git' },
+  { name: 'schemas/verida/schemas-core', url: 'https://github.com/verida/schemas-core.git' }
+];
+
+/* ---------- Ensure Output Directory Exists ---------- */
 async function ensureDirectoriesExist() {
   if (!fs.existsSync(outDir)) {
     await mkdir(outDir, { recursive: true });
     console.log(`Created directory: ${outDir}`);
   }
 }
+
+/* ---------- Clone or Pull Verida Schemas ---------- */
 async function cloneOrPullRepo(repo) {
   const localDir = path.join(__dirname, repo.name);
   if (!fs.existsSync(localDir)) {
@@ -56,9 +41,12 @@ async function cloneOrPullRepo(repo) {
   }
   return localDir;
 }
+
+/* ---------- Get All JSON Files in Schemas Directory ---------- */
 async function getAllJsonFiles(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   let jsonFiles = [];
+
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory() && entry.name !== '.git' && entry.name !== '.github') {
@@ -70,144 +58,59 @@ async function getAllJsonFiles(dir) {
   return jsonFiles;
 }
 
-/* ---------- Custom File Resolver ---------- */
-// This resolver wraps the default file reading.
-// It attempts to read the local file; if that fails, it maps the local file path
-// to a remote URL on "https://core.schemas.verida.io" and fetches from there.
-const customFileResolver = {
-  order: 1,
-  canRead: file => {
-    // We'll allow reading for all files (even if absolute)
-    return true;
-  },
-  async read(file) {
-    try {
-        // Check if the file URL is a remote URL
-        if (file.url.startsWith('http://') || file.url.startsWith('https://')) {
-            console.log(`Fetching remote schema from: ${file.url}`);
-            const response = await axios.get(file.url);
-            return JSON.stringify(response.data);
-        } else {
-            // Attempt to read the local file
-            const content = await fs.promises.readFile(file.url, 'utf8');
-            return content;
-        }
-    } catch (err) {
-        console.warn(`Failed to read "${file.url}": ${err.message}`);
-        if (err.response) {
-            console.error(`Response data: ${JSON.stringify(err.response.data, null, 2)}`);
-            console.error(`Response status: ${err.response.status}`);
-            console.error(`Response headers: ${JSON.stringify(err.response.headers, null, 2)}`);
-        }
-        throw err; // Rethrow the error to be handled by the caller
-    }
-  }
-};
-
-const renameSymbol = (symbol, newName, content) => {
-    const regex = new RegExp(`\\b${symbol}\\b`, 'g');
-
-    return content?.replace(regex, newName);
-};
-
-
+/* ---------- Merge TypeScript Definitions ---------- */
 async function mergeBlocks(compiledOutputs) {
-  const alreadyDeclared = new Map();
+  const alreadyDeclared = new Set();
   let mergedContent = '/* eslint-disable */\n\n';
-  
-  // Read existing content from outFile to avoid duplicates
-  let existingContent = '';
+
   if (fs.existsSync(outFile)) {
-    existingContent = fs.readFileSync(outFile, 'utf8');
-  }
-
-
-  function extractTypeBlocks(content) {
-    const blocks = [];
-    let currentBlock = [];
-    let currentSymbol = null;
-    const DEFINITION_REGEX = /^export\s+(type|interface)\s+([\w\d_$]+)/;
-
-    for (const line of content.split('\n')) {
-      const match = line.trim().match(DEFINITION_REGEX);
-      if (match) {
-        if (currentBlock.length > 0) {
-          blocks.push({ symbol: currentSymbol, lines: currentBlock });
-        }
-        currentBlock = [line];
-        currentSymbol = match[2];
-      } else {
-        currentBlock.push(line);
-      }
-    }
-    if (currentBlock.length > 0) {
-      blocks.push({ symbol: currentSymbol, lines: currentBlock });
-    }
-    return blocks;
-  }
-
-  const schemaDtsPath = path.join(__dirname, 'node_modules/schema-dts/dist/schema.d.ts');
-  if (fs.existsSync(schemaDtsPath)) {
-    console.log(`Appending schema-dts definitions from: ${schemaDtsPath}`);
-    const schemaDtsContent = fs.readFileSync(schemaDtsPath, 'utf8');
-    const schemaDtsBlocks = extractTypeBlocks(schemaDtsContent);
-
-    for (const block of schemaDtsBlocks) {
-      if (block.symbol && !alreadyDeclared.has(block.symbol) && !existingContent.includes(block.symbol)) {
-        alreadyDeclared.set(block.symbol);
-        mergedContent += block.lines.join('\n') + '\n';
-      } else if (!block.symbol) {
-        mergedContent += block.lines.join('\n') + '\n';
-      }
-    }
-    mergedContent += '\n';
-  } else {
-    console.warn(`schema-dts not found at ${schemaDtsPath}. Skipping schema-dts definitions.`);
+    const existingContent = fs.readFileSync(outFile, 'utf8');
+    mergedContent += existingContent;
+    existingContent.split('\n').forEach((line) => {
+      const match = line.match(/^export\s+(type|interface)\s+([\w\d_$]+)/);
+      if (match) alreadyDeclared.add(match[2]);
+    });
   }
 
   for (const tsOutput of compiledOutputs) {
-    const blocks = extractTypeBlocks(tsOutput);
-    for (const block of blocks) {
-      if (!block.symbol) {
-        mergedContent += block.lines.join('\n') + '\n';
-        continue;
-      }
-      if (!alreadyDeclared.has(block.symbol) && !existingContent.includes(block.symbol)) {
-        alreadyDeclared.set(block.symbol);
-        mergedContent += block.lines.join('\n') + '\n';
-      }
-    }
-    mergedContent += '\n';
+    tsOutput.split('\n').forEach((line) => {
+      const match = line.match(/^export\s+(type|interface)\s+([\w\d_$]+)/);
+      if (match && alreadyDeclared.has(match[2])) return;
+      mergedContent += line + '\n';
+    });
   }
 
   return mergedContent;
 }
 
-/* ---------- Orchestrate Everything ---------- */
-async function generateSingleDts() {
+/* ---------- Generate TypeScript from JSON Schemas ---------- */
+async function generateSchemasDts() {
   await ensureDirectoriesExist();
 
-  for (const repo of repos) {
+  // Clone or pull Verida repos
+  for (const repo of veridaRepos) {
     await cloneOrPullRepo(repo);
   }
 
   let allJsonFiles = [];
-  for (const repo of repos) {
-    const localDir = path.join(__dirname, repo.name);
-    const jsonPaths = await getAllJsonFiles(localDir);
-    allJsonFiles.push(...jsonPaths);
+
+  // Get JSON files from all schema directories
+  const schemaSubdirs = await readdir(schemasDir, { withFileTypes: true });
+  for (const dir of schemaSubdirs) {
+    if (dir.isDirectory()) {
+      const jsonPaths = await getAllJsonFiles(path.join(schemasDir, dir.name));
+      allJsonFiles.push(...jsonPaths);
+    }
   }
 
+  console.log(`Found ${allJsonFiles.length} schema files.`);
+
+  // Compile JSON schemas to TypeScript
   const compiledOutputs = [];
   for (const jsonPath of allJsonFiles) {
     console.log(`Processing: ${jsonPath}`);
     try {
-      const resolved = await $RefParser.dereference(jsonPath, {
-        resolve: {
-          file: customFileResolver,
-          http: { order: 2, canRead: true }
-        }
-      });
+      const resolved = await $RefParser.dereference(jsonPath);
       const rootName = path.basename(jsonPath, '.json');
       const tsOutput = await compile(resolved, rootName);
       compiledOutputs.push(tsOutput);
@@ -216,38 +119,41 @@ async function generateSingleDts() {
     }
   }
 
+  // Merge compiled TypeScript definitions
   const finalDts = await mergeBlocks(compiledOutputs);
-  const finalDtsRenamed = renameSymbol("Order", "Order_Override", finalDts);
-  fs.appendFileSync(outFile, finalDtsRenamed, 'utf8');
-  await deleteRepos();
+  fs.writeFileSync(outFile, finalDts, 'utf8');
   console.log(`\nAll schemas merged into: ${outFile}\n`);
+
+  // Delete Verida cloned repos but keep local schemas
+  await deleteVeridaRepos();
 }
 
+/* ---------- Delete Only Verida Schemas ---------- */
 const deleteDir = (dirPath) => {
   if (fs.existsSync(dirPath)) {
     fs.readdirSync(dirPath).forEach((file) => {
       const currentPath = path.join(dirPath, file);
       if (fs.lstatSync(currentPath).isDirectory()) {
-        deleteDir(currentPath); // Recursively delete subdirectory
+        deleteDir(currentPath);
       } else {
-        fs.unlinkSync(currentPath); // Delete file
+        fs.unlinkSync(currentPath);
       }
     });
-    fs.rmdirSync(dirPath); // Remove the now-empty directory
+    fs.rmdirSync(dirPath);
   }
 };
 
-const deleteRepos = async () => {
-  for (const repo of repos) {
+const deleteVeridaRepos = async () => {
+  for (const repo of veridaRepos) {
     const localDir = path.join(__dirname, repo.name);
-    console.log(`Removing directory: ${localDir}`);
-    deleteDir(localDir); // Use the custom delete function
+    console.log(`Removing Verida directory: ${localDir}`);
+    deleteDir(localDir);
   }
-}
+};
 
 /* ---------- Run ---------- */
-generateSingleDts().catch(async (err) => {
+generateSchemasDts().catch(async (err) => {
   console.error("Fatal Error:", err);
-  await deleteRepos();
+  await deleteVeridaRepos();
   process.exit(1);
 });
