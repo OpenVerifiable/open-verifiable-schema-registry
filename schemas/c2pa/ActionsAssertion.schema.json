@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/c2pa/ActionsAssertion.schema.json",
+  "title": "ActionsAssertion",
+  "version": "0.0.1",
+  "type": "object",
+  "description": "Describes creation, edits, or other actions on the asset (v1).",
+  "properties": {
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ActionItem"
+      },
+      "description": "List of action objects"
+    }
+  },
+  "required": ["actions"],
+  "$defs": {
+    "ActionItem": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "A c2pa.* label or custom action name."
+        },
+        "when": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Non-trusted timestamp."
+        },
+        "softwareAgent": {
+          "type": "string",
+          "description": "Software/hardware used."
+        },
+        "digitalSourceType": {
+          "type": "string",
+          "description": "URL from IPTC newscodes describing source type."
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Optional extra data about the action."
+        }
+      },
+      "required": ["action"],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+} 

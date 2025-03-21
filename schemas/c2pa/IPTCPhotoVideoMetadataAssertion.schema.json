@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/c2pa/IPTCPhotoVideoMetadataAssertion.schema.json",
+  "title": "IPTCPhotoVideoMetadataAssertion",
+  "version": "0.0.1",
+  "type": "object",
+  "description": "Stores IPTC Photo/Video metadata in JSON-LD form, referencing XMP fields for IPTC Photo/Video standards",
+  "properties": {
+    "@context": {
+      "type": ["string", "object", "array"],
+      "description": "Should reference the IPTC XMP namespaces, e.g., Iptc4xmpCore, Iptc4xmpExt, dc, photoshop, plus, xmp, xmpRights, etc."
+    },
+    "dc:title": {
+      "type": "string",
+      "description": "A short textual title for the asset."
+    },
+    "dc:description": {
+      "type": "string",
+      "description": "A textual description of the asset's content."
+    },
+    "dc:creator": {
+      "type": "array",
+      "description": "Array of creator names (string). For more structured names, store them as separate fields or in an extended form.",
+      "items": { "type": "string" }
+    },
+    "dc:rights": {
+      "type": "string",
+      "description": "Rights statement for the asset."
+    },
+    "photoshop:DateCreated": {
+      "type": "string",
+      "description": "Creation date/time in textual or ISO 8601 format. e.g. '2022-08-31T10:00:00Z' or 'Aug 31, 2022'"
+    },
+    "photoshop:Credit": {
+      "type": "string",
+      "description": "Credit line for how the asset should be publicly credited."
+    },
+    "photoshop:Headline": {
+      "type": "string",
+      "description": "Headline for the asset."
+    },
+    "photoshop:Source": {
+      "type": "string",
+      "description": "Name of the original source of the asset (e.g., 'Associated Press')."
+    },
+    "Iptc4xmpExt:DigitalSourceType": {
+      "type": "string",
+      "description": "Value from https://cv.iptc.org/newscodes/digitalsourcetype/ e.g. 'digitalCapture', 'compositeSynthetic', 'trainedAlgorithmicMedia', etc."
+    },
+    "Iptc4xmpExt:PersonInImage": {
+      "type": "array",
+      "description": "List of names or identifiers for persons depicted in the image/video.",
+      "items": { "type": "string" }
+    },
+    "Iptc4xmpExt:LocationCreated": {
+      "type": "object",
+      "description": "Location metadata for where the asset was created/captured.",
+      "properties": {
+        "Iptc4xmpExt:City": {
+          "type": "string",
+          "description": "City where the asset was created."
+        },
+        "Iptc4xmpExt:Sublocation": {
+          "type": "string",
+          "description": "Additional sublocation info, e.g. neighborhood."
+        },
+        "Iptc4xmpExt:ProvinceState": {
+          "type": "string",
+          "description": "Province or state where the asset was created."
+        },
+        "Iptc4xmpExt:CountryName": {
+          "type": "string",
+          "description": "Country name of the asset's creation location."
+        },
+        "Iptc4xmpExt:CountryCode": {
+          "type": "string",
+          "description": "ISO country code for the creation location (e.g. 'US', 'FR')."
+        }
+      },
+      "additionalProperties": false
+    },
+    "xmpRights:UsageTerms": {
+      "type": "array",
+      "description": "Terms under which the asset may be used.",
+      "items": { "type": "string" }
+    },
+    "xmpRights:WebStatement": {
+      "type": "string",
+      "format": "uri",
+      "description": "A URL for the statement of usage rights."
+    },
+    "plus:licensor": {
+      "type": "array",
+      "description": "List of licensor objects providing details about who licenses the asset.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "plus:LicensorName": {
+            "type": "string",
+            "description": "Name of the licensor entity."
+          },
+          "plus:LicensorURL": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL referencing the licensor."
+          }
+        },
+        "required": ["plus:LicensorName"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["@context"],
+  "additionalProperties": true
+} 

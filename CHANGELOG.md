@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## [0.0.8]
+### Added
+- Additional schemas from C2PA
+- Added Privado schemas
+- Added Cheqd schemas
+
 ## [0.0.7]
 ### Refactor
 - Refactored packaged scripts for a single time run to generate schemas from verida and schema.org. Along with Cheqd and Veramo types, these are now all in the same place, exported from directly from the src/index.ts file.

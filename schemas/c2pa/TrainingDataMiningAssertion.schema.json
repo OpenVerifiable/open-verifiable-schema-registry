@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/c2pa/TrainingDataMiningAssertion.schema.json",
+  "title": "TrainingDataMiningAssertion",
+  "version": "0.0.1",
+  "type": "object",
+  "description": "Specifies whether the asset can be used for data mining, AI training, etc.",
+  "properties": {
+    "entries": {
+      "type": "object",
+      "description": "Map of usage categories to an object with 'use' and optional 'constraint_info'. Keys can be c2pa.data_mining, c2pa.ai_training, etc.",
+      "patternProperties": {
+        "^c2pa\\.(data_mining|ai_training|ai_generative_training|ai_inference)$": {
+          "$ref": "#/$defs/TrainingMiningEntry"
+        },
+        "^[A-Za-z0-9_.-]+$": {
+          "$ref": "#/$defs/TrainingMiningEntry"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["entries"],
+  "$defs": {
+    "TrainingMiningEntry": {
+      "type": "object",
+      "description": "Specifies the usage status for a particular category of data mining or ML usage.",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": ["allowed", "notAllowed", "constrained"]
+        },
+        "constraint_info": {
+          "type": "string",
+          "description": "If 'use' is 'constrained', additional details can go here."
+        }
+      },
+      "required": ["use"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+} 

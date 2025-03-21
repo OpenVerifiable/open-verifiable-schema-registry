@@ -1,26 +1,5 @@
-export { DIDDocument, DIDResolver, ServiceEndpoint, PublicKey, Authentication } from 'did-resolver';
-export { APPLICATION_BASE_URL, API_KEY_PREFIX, API_SECRET_KEY_LENGTH, API_KEY_EXPIRATION, CORS_ALLOWED_ORIGINS, CORS_ERROR_MSG, DEFAULT_DENOM_EXPONENT, FAUCET_URI, LOG_LEVEL, LOGTO_MANAGEMENT_API, MINIMAL_DENOM, TESTNET_MINIMUM_BALANCE, VC_CONTEXT, VC_PROOF_FORMAT, VC_REMOVE_ORIGINAL_FIELDS } from '@cheqd/studio/dist/types/constants';
-export { DIDResolutionResult, IResolver, IDataStore, IKeyManager, TAgent, IAgentPlugin, IAgentBase, IAgentContext, IAgentOptions, ICheckCredentialStatusArgs, ICreateVerifiableCredentialArgs, ICreateVerifiablePresentationArgs, ICredentialIssuer, IDIDManager, IAgent, IAgentPluginSchema, IPluginMethodMap, RemoveContext, VerifiableCredential, UniqueVerifiableCredential, UniqueVerifiablePresentation, UnsignedCredential, UnsignedPresentation, UsingResolutionOptions, IDIDManagerUpdateArgs, ICredentialPlugin, ICredentialStatusManager, ICredentialStatus, ICredentialStatusVerifier, ICredentialVerifier, IDIDManagerAddKeyArgs, IDIDManagerAddServiceArgs, IDIDManagerCreateArgs, IDIDManagerDeleteArgs, IDIDManagerFindArgs, IDIDManagerGetArgs, IDIDManagerGetByAliasArgs, IDIDManagerGetOrCreateArgs, IDIDManagerRemoveKeyArgs, IDIDManagerRemoveServiceArgs, IDIDManagerSetAliasArgs, IDataStoreDeleteMessageArgs, IDataStoreDeleteVerifiableCredentialArgs, IMessage, IDataStoreORM, IDataStoreGetMessageArgs, IHandleMessageArgs, KeyMetadata, FindMessagesArgs, ManagedKeyInfo, IDataStoreSaveMessageArgs, IKeyManagerSharedSecretArgs, IKeyManagerSignArgs, DIDDocComponent, TClaimsColumns, TMessageColumns, CompactJWT, ContextType, TCredentialColumns, CredentialStatus, CredentialPayload, CredentialStatusGenerateArgs, CredentialStatusReference, CredentialStatusUpdateArgs, CredentialSubject, FindCredentialsArgs, IVerifyCredentialArgs, W3CVerifiablePresentation, W3CVerifiableCredential, IKeyManagerCreateArgs, FindClaimsArgs, IDataStoreGetVerifiableCredentialArgs, IDataStoreSaveVerifiableCredentialArgs, IKeyManagerEncryptJWEArgs, IDataStoreGetVerifiablePresentationArgs, IDataStoreSaveVerifiablePresentationArgs, IKeyManagerDecryptJWEArgs, IKey, IIdentifier, IMessageAttachment, IMessageAttachmentData, IMessageHandler, IMetaData, IEventListener, IError, IssuerAgentContext, IssuerType, IVerifyResult, IVerifyPresentationArgs, IServiceEndpoint, IService, IPluginMethod, IKeyManagerSignJWTArgs, IKeyManagerDeleteArgs, IKeyManagerGetArgs, IKeyManagerSignEthTXArgs, PartialIdentifier, MinimalImportableKey, MinimalImportableIdentifier } from '@veramo/core-types';
-export { ICheqdSDKOptions, IContext, IKeyPair, IKeyValuePair, IModuleMethod, IModuleMethodMap, ISignInputs, IVerificationKeys, TVerificationKey, TImportableEd25519Key, TMethodSpecificId, TSignerAlgo, TVerificationKeyPrefix } from '@cheqd/sdk';
-export { DIDAccreditationTypes, AccreditationRequestType, DIDAccreditationRequestBody, DIDAccreditationRequestParams, DIDUrlParams, VerifyAccreditationRequestBody, VerifyAccreditationRequest, isDidUrl, isDidAndResourceId, isDidAndResourceName, VerfifiableAccreditation, RevokeAccreditationRequestBody, SuspendAccreditationRequestBody, UnsuspendAccreditationRequestBody, RevokeAccreditationResponseBody, SuspendAccreditationResponseBody, UnsuspendAccreditationResponseBody, RevokeAccreditationRequestQuery, SuspendAccreditationRequestQuery, UnsuspendAccreditationRequestQuery } from '@cheqd/studio/dist/types/accreditation';
-export { CreateResourceRequestParams, CreateResourceRequestBody, SearchResourceRequestParams, CreateResourceResponseBody, QueryResourceResponseBody, UnsuccessfulCreateResourceResponseBody } from '@cheqd/studio/dist/types/resource';
-export { CreateDidRequestBody, DeactivateDIDRequestBody, DeactivateDIDRequestParams, GetDIDRequestParams, ResolveDIDRequestParams, CreateDidResponseBody, UpdateDidRequestBody, UpdateDidResponseBody, DeactivateDidResponseBody, ResolveDidResponseBody, UnsuccessfulCreateDidResponseBody, UnsuccessfulUpdateDidResponseBody, UnsuccessfulDeactivateDidResponseBody, UnsuccessfulGetDidResponseBody, UnsuccessfulResolveDidResponseBody } from '@cheqd/studio/dist/types/did';
-export { QueryCustomerResponseBody, UpdateCustomerEntity, QueryIdTokenResponseBody, UnsuccessfulQueryCustomerResponseBody, UnsuccessfulQueryIdTokenResponseBody } from '@cheqd/studio/dist/types/customer';
-export { IFeePaymentOptions, IResourceTrack, ICredentialStatusTrack, ICredentialTrack, IDIDTrack, IPresentationTrack, IKeyTrack, ITrackOperation, ITrackResult, INotifyMessage } from '@cheqd/studio/dist/types/track';
-export { CredentialConnectors, CredentialRequest, CredentialRequestBody, IssueCredentialRequestBody, VerifyCredentialRequestBody, VerifyCredentialRequestQuery, RevokeCredentialRequestBody, RevokeCredentialRequestQuery, SuspendCredentialRequestBody, SuspendCredentialRequestQuery, UnsuspendCredentialRequestBody, UnsuspendCredentialRequestQuery, IssueCredentialResponseBody, VerifyCredentialResponseBody, RevokeCredentialResponseBody, SuspendCredentialResponseBody, UnsuspendCredentialResponseBody, UnsuccesfulIssueCredentialResponseBody, UnsuccesfulRevokeredentialResponseBody, UnsuccesfulReinstateCredentialResponseBody, UnsuccesfulVerifyCredentialResponseBody, UnsuccesfulRevokeCredentialResponseBody, UnsuccesfulSuspendCredentialResponseBody, UnsuccesfulUnsuspendCredentialResponseBody } from '@cheqd/studio/dist/types/credential';
-export { KeyImport, ImportKeyRequestBody, GetKeyRequestBody, CreateKeyResponseBody, ImportKeyResponseBody, QueryKeyResponseBody, UnsuccessfulCreateKeyResponseBody, UnsuccessfulImportKeyResponseBody, UnsuccessfulQueryKeyResponseBody } from '@cheqd/studio/dist/types/key';
-export { CreatePresentationRequestBody, VerifyPresentationRequestBody, CreatePresentationResponseBody, VerifyPresentationResponseQuery, VerifyPresentationResponseBody, UnsuccessfulVerifyCredentialResponseBody, UnsuccessfulCreatePresentationResponseBody } from '@cheqd/studio/dist/types/presentation';
-export { VeramoAgent, CreateAgentRequest, IErrorResponse, IReturn, SpecValidationResult, ValidationErrorResponseBody, VerificationOptions, IBooleanResponse } from '@cheqd/studio/dist/types/shared';
-export { LinkedResource, LinkedResourceMetadataResolutionResult, ICheqdCreateLinkedResourceArgs, ICheqd, ICheqdBroadcastStatusList2021Args, ICheqdCheckCredentialStatusWithStatusList2021Args, ICheqdCheckCredentialWithStatusList2021StatusOptions, ICheqdCreateIdentifierArgs, ICheqdCreateStatusList2021Args, ICheqdCreateUnencryptedStatusList2021Args, ICheqdDeactivateIdentifierArgs, ICheqdDelegateCapacityCreditArgs, ICheqdGenerateDidDocArgs, ICheqdGenerateDidDocWithLinkedResourceArgs, ICheqdGenerateKeyPairArgs, ICheqdGenerateStatusList2021Args, ICheqdGenerateVersionIdArgs, ICheqdIDentifier, ICheqdIssueRevocableCredentialWithStatusList2021Args, ICheqdIssueSuspendableCredentialWithStatusList2021Args, ICheqdMintCapacityCreditArgs, ICheqdObservePaymentConditionArgs, ICheqdRevokeBulkCredentialsWithStatusList2021Args, ICheqdRevokeBulkCredentialsWithStatusList2021Options, ICheqdRevokeCredentialWithStatusList2021Args, ICheqdRevokeCredentialWithStatusList2021Options, ICheqdStatusList2021Options, ICheqdSuspendBulkCredentialsWithStatusList2021Args, ICheqdSuspendBulkCredentialsWithStatusList2021Options, ICheqdSuspendCredentialWithStatusList2021Args, ICheqdSuspendCredentialWithStatusList2021Options, ICheqdTransactSendTokensArgs, ICheqdUnsuspendBulkCredentialsWithStatusList2021Args, ICheqdUnsuspendBulkCredentialsWithStatusList2021Options, ICheqdUnsuspendCredentialWithStatusList2021Args, ICheqdUnsuspendCredentialWithStatusList2021Options, ICheqdUpdateIdentifierArgs, ICheqdVerifyCredentialWithStatusList2021Args, ICheqdVerifyPresentationWithStatusList2021Args, IContext as ICheqdContext, IKeyWithController } from '@cheqd/did-provider-cheqd/build/types';
-export { APISuccessResponse, APIErrorResponse, SafeAPIResponse } from '@cheqd/studio/dist/types/common';
-export { AlternativeUri } from '@cheqd/ts-proto/cheqd/resource/v2/resource.js';
-export { CreateUnencryptedStatusListRequestBody, CreateUnencryptedStatusListRequestQuery, CreateUnencryptedStatusListSuccessfulResponseBody, CreateUnencryptedStatusListUnsuccessfulResponseBody, CreateEncryptedStatusListRequestBody, CreateEncryptedStatusListRequestQuery, CreateEncryptedStatusListSuccessfulResponseBody, CreateEncryptedStatusListUnsuccessfulResponseBody, UpdateUnencryptedStatusListRequestBody, UpdateUnencryptedStatusListRequestQuery, UpdateUnencryptedStatusListSuccessfulResponseBody, UpdateUnencryptedStatusListUnsuccessfulResponseBody, UpdateEncryptedStatusListRequestBody, UpdateEncryptedStatusListRequestQuery, UpdateEncryptedStatusListSuccessfulResponseBody, UpdateEncryptedStatusListUnsuccessfulResponseBody, CheckStatusListRequestBody, CheckStatusListRequestQuery, CheckStatusListSuccessfulResponseBody, CheckStatusListUnsuccessfulResponseBody, SearchStatusListQuery, SearchStatusListSuccessfulResponseBody, SearchStatusListUnsuccessfulResponseBody, CreateUnencryptedStatusListOptions, CreateEncryptedStatusListOptions, UpdateUnencryptedStatusListOptions, UpdateEncryptedStatusListOptions, SearchStatusListResult, BroadcastStatusListOptions, StatusOptions, RevocationStatusOptions, SuspensionStatusOptions, CheckStatusListOptions } from '@cheqd/studio/dist/types/credential-status';
-export { DataRecord, CredentialDataRecord } from '@cheqd/studio/dist/types/verida';
-export { AuthRule, ICommonErrorResponse, AuthRuleOptions } from '@cheqd/studio/dist/types/authentication';
-export { ProductWithPrices, APIServiceOptions, ProductListUnsuccessfulResponseBody, ProductGetUnsuccessfulResponseBody, ProductListResponseBody, ProductGetResponseBody, PriceListResponseBody, PriceListUnsuccessfulResponseBody, SubscriptionCreateRequestBody, SubscriptionCreateResponseBody, SubscriptionUpdateResponseBody, SubscriptionUpdateRequestBody, SubscriptionGetRequestBody, SubscriptionGetResponseBody, SubscriptionListResponseBody, SubscriptionCancelRequestBody, SubscriptionCancelResponseBody, SubscriptionResumeRequestBody, SubscriptionResumeResponseBody, CheckoutSessionGetResponseBody, SubscriptionCreateUnsuccessfulResponseBody, SubscriptionListUnsuccessfulResponseBody, SubscriptionGetUnsuccessfulResponseBody, SubscriptionUpdateUnsuccessfulResponseBody, SubscriptionCancelUnsuccessfulResponseBody, SubscriptionResumeUnsuccessfulResponseBody, CheckoutSessionGetUnsuccessfulResponseBody, PortalCustomerGetUnsuccessfulResponseBody, APIKeyResponseBody, APIKeyCreateRequestBody, APIKeyCreateResponseBody, APIKeyCreateUnsuccessfulResponseBody, APIKeyUpdateRequestBody, APIKeyUpdateResponseBody, APIKeyUpdateUnsuccessfulResponseBody, APIKeyRevokeRequestBody, APIKeyRevokeResponseBody, APIKeyRevokeUnsuccessfulResponseBody, APIKeyListResponseBody, APIKeyListUnsuccessfulResponseBody, APIKeyGetRequestBody, APIKeyGetResponseBody, APIKeyGetUnsuccessfulResponseBody, AdminOrganisationResponseBody, AdminOrganisationGetResponseBody, AdminOrganisationGetUnsuccessfulResponseBody, AdminOrganisationUpdateRequestBody, AdminOrganisationUpdateResponseBody, AdminOrganisationUpdateUnsuccessfulResponseBody, PaymentBehavior, SupportedPlanTypes } from '@cheqd/studio/dist/types/admin';
-export { CreateDIDService, JwtProof2020, JSONLDProofType, CheqdCredentialStatus } from '@cheqd/studio/dist/types/validation';
-export { ResourcePayload, StatusList2021Revocation, StatusCheckResult, StatusList2021ResourcePayload, StatusList2021RevocationNonMigrated, StatusList2021Suspension, StatusList2021SuspensionNonMigrated, CreateStatusList2021MethodName, CreateStatusList2021Result, DefaultStatusList2021Encoding, DefaultStatusList2021Encodings, DefaultStatusList2021ResourceType, DefaultStatusList2021ResourceTypes, DefaultStatusList2021StatusPurposeType, DefaultStatusList2021StatusPurposeTypes, GenerateStatusList2021MethodName, SaveEncryptionKeyArgs, LastCommit, Header, Evidence, Block, BlockID, BlockResponse, BroadcastStatusList2021MethodName, LitNetwork, LitCompatibleCosmosChain, LitProtocolOptions, LitContractsOptions, LitContractsMintCapacityCreditsOptions, LitContractsCreateCapacityDelegationAuthSignatureOptions, MintCapacityCreditsResult, CreateCapacityDelegationAuthSignatureResult, TxNonceFormat, PrivateKeyLiteral, LitProtocol, ShallowTypedTx, TxNonceFormats, TExportedDIDDocWithKeys, TPublicKeyEd25519, TExportedDIDDocWithLinkedResourceWithKeys, TSupportedKeyType, ThresholdEncryptionCipherText, TransactionResult, ThresholdEncryptionResult, TransactSendTokensMethodName, ShallowTypedTxTxResponses, ShallowTypedTxsResponse, SymmetricEncryptionCipherText } from '@cheqd/did-provider-cheqd/dist/types';
-export type { Stripe } from 'stripe';
+/* eslint-disable */
+
 /** Used at the top-level node to indicate the context for the JSON-LD objects used. The context provided in this type is compatible with the keys and URLs in the rest of this generated file. */
 export type WithContext<T extends Thing> = T & {
     "@context": "https://schema.org";
@@ -11687,20 +11666,24 @@ interface ZooLeaf extends CivicStructureBase {
 /** A zoo. */
 export type Zoo = ZooLeaf | string;
 export {};
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * General history of activities such as listening, watching, browsing, etc.
  */
 export type History = BaseSchema & {
-    timestamp: Timestamp;
-    activityType: ActivityType;
-    url?: URL;
-    duration?: Duration;
-    [k: string]: unknown;
+  timestamp: Timestamp;
+  activityType: ActivityType;
+  url?: URL;
+  duration?: Duration;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -11758,67 +11741,73 @@ export type ActivityType = "listening" | "watching" | "browsing" | "reading";
  * Duration of the activity in seconds
  */
 export interface BaseSchema {
-    name?: Name;
-    summary?: Summary;
-    archived?: Archived;
-    schema: Schema;
-    signatures?: Signatures;
-    sourceApplication?: SourceApplication;
-    sourceAccountId?: SourceAccountID;
-    sourceId?: SourceID;
-    sourceData?: SourceData;
-    icon?: Icon;
-    indexableText?: IndexableText;
-    insertedAt?: Inserted;
-    modifiedAt?: Modified;
-    [k: string]: unknown;
+  name?: Name;
+  summary?: Summary;
+  archived?: Archived;
+  schema: Schema;
+  signatures?: Signatures;
+  sourceApplication?: SourceApplication;
+  sourceAccountId?: SourceAccountID;
+  sourceId?: SourceID;
+  sourceData?: SourceData;
+  icon?: Icon;
+  indexableText?: IndexableText;
+  insertedAt?: Inserted;
+  modifiedAt?: Modified;
+  [k: string]: unknown;
 }
 /**
  * Signatures verifying this data has been signed
  */
 export interface Signatures {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 /**
  * Raw data from the original source
  */
 export interface SourceData {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 /**
  * The link of source information
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * AI assistants and their configuration
  */
 export type AIAssistant = BaseSchema & {
-    name: Name1;
-    order?: Order_Override;
-    [k: string]: unknown;
+  name: Name1;
+  order?: Order_Override;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
  */
 export type Name1 = string;
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Saved prompts for the assistant
  */
 export type UserPrompt = BaseSchema & {
-    assistantId: AssistantID;
-    name: Name1;
-    prompt: Prompt;
-    order?: Order_Override;
-    [k: string]: unknown;
+  assistantId: AssistantID;
+  name: Name1;
+  prompt: Prompt;
+  order?: Order_Override;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -11828,51 +11817,69 @@ export type AssistantID = string;
  * The user-friendly label
  */
 export type Prompt = string;
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * DID JWT representation of this credential
  */
 export type DIDJWTVerifiableCredential = string;
+
 export interface Credential {
-    didJwtVc: DIDJWTVerifiableCredential;
-    [k: string]: unknown;
+  didJwtVc: DIDJWTVerifiableCredential;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type CredentialSchema = string;
+
 /**
  * A base schema
  */
 export interface CredentialData {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type Content = string;
 export type Expires = string;
+
 /**
  * An encrypted credential
  */
 export interface EncryptedCredential {
-    content: Content;
-    expires?: Expires;
-    [k: string]: unknown;
+  content: Content;
+  expires?: Expires;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Unique id of the task allocated by the allocator node
  */
@@ -11889,20 +11896,20 @@ export type HttpProviderId = [string, ...string[]];
  * @minItems 1
  */
 export type Proofs = [
-    {
-        identifier: Identifier;
-        claimData: ClaimData;
-        signature: Signature;
-        witnesses?: Witnesses;
-        [k: string]: unknown;
-    },
-    ...{
-        identifier: Identifier;
-        claimData: ClaimData;
-        signature: Signature;
-        witnesses?: Witnesses;
-        [k: string]: unknown;
-    }[]
+  {
+    identifier: Identifier;
+    claimData: ClaimData;
+    signature: Signature;
+    witnesses?: Witnesses;
+    [k: string]: unknown;
+  },
+  ...{
+    identifier: Identifier;
+    claimData: ClaimData;
+    signature: Signature;
+    witnesses?: Witnesses;
+    [k: string]: unknown;
+  }[]
 ];
 /**
  * Identifier of provider
@@ -11936,16 +11943,16 @@ export type Signature = [string, ...string[]];
  * @minItems 1
  */
 export type Witnesses = [
-    {
-        id: ID;
-        url: URL;
-        [k: string]: unknown;
-    },
-    ...{
-        id: ID;
-        url: URL;
-        [k: string]: unknown;
-    }[]
+  {
+    id: ID;
+    url: URL;
+    [k: string]: unknown;
+  },
+  ...{
+    id: ID;
+    url: URL;
+    [k: string]: unknown;
+  }[]
 ];
 /**
  * ID
@@ -11967,34 +11974,39 @@ export type ReclaimProviderLabel = string;
  * DID of the subject
  */
 export type Did = string;
+
 /**
  * A schema for reclaim protocol credential
  */
 export interface SchemaForReclaimProtocol {
-    appId: AppID;
-    httpProviderId?: HttpProviderId;
-    proofs: Proofs;
-    sessionId: SessionId;
-    reclaimProviderId: ReclaimProviderID;
-    reclaimProviderLabel: ReclaimProviderLabel;
-    id: Did;
-    [k: string]: unknown;
+  appId: AppID;
+  httpProviderId?: HttpProviderId;
+  proofs: Proofs;
+  sessionId: SessionId;
+  reclaimProviderId: ReclaimProviderID;
+  reclaimProviderLabel: ReclaimProviderLabel;
+  id: Did;
+  [k: string]: unknown;
 }
 /**
  * Verifiable credential data
  */
 export interface ClaimData {
-    provider: Protocol;
-    parameters?: ParametersOfRequest;
-    identifier: IdentifierOfRequest;
-    epoch?: EpochOfRequest;
-    [k: string]: unknown;
+  provider: Protocol;
+  parameters?: ParametersOfRequest;
+  identifier: IdentifierOfRequest;
+  epoch?: EpochOfRequest;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Unique id of the task allocated by the allocator node
  */
@@ -12039,54 +12051,64 @@ export type SchemaLabel = string;
  * Decentralized Identifier on the network
  */
 export type DIDOfTheSubject = string;
+
 /**
  * A schema for zkpass credential
  */
 export interface SchemaForZKPass {
-    taskId: TaskID;
-    publicFields?: ZkPassPublicFields;
-    allocatorAddress: AllocatorAddress;
-    publicFieldsHash?: PublicFields;
-    allocatorSignature: AllocatorSignature;
-    uHash: UHash;
-    validatorAddress: ValidatorAddress;
-    validatorSignature: ValidatorSignature;
-    zkPassSchemaId: ZkPassSchemaID;
-    zkPassSchemaLabel: SchemaLabel;
-    id: DIDOfTheSubject;
-    [k: string]: unknown;
+  taskId: TaskID;
+  publicFields?: ZkPassPublicFields;
+  allocatorAddress: AllocatorAddress;
+  publicFieldsHash?: PublicFields;
+  allocatorSignature: AllocatorSignature;
+  uHash: UHash;
+  validatorAddress: ValidatorAddress;
+  validatorSignature: ValidatorSignature;
+  zkPassSchemaId: ZkPassSchemaID;
+  zkPassSchemaLabel: SchemaLabel;
+  id: DIDOfTheSubject;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Base64 encoded data
  */
 export type Data1 = string;
+
 /**
  * Base64 encoded data
  */
 export interface Data {
-    data: Data1;
-    [k: string]: unknown;
+  data: Data1;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A document
  */
 export type Document = BaseSchema & {
-    type: Type;
-    size?: Size;
-    contentText: ContentText;
-    contentRaw?: Content;
-    uri?: URI;
-    [k: string]: unknown;
+  type: Type;
+  size?: Size;
+  contentText: ContentText;
+  contentRaw?: Content;
+  uri?: URI;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12104,22 +12126,26 @@ export type ContentText = string;
  * Base64 encoded content of the document (optional)
  */
 export type URI = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Favourite links across all platforms
  */
 export type Favourite = BaseSchema & {
-    favouriteType: FavouriteType;
-    contentType: ContentType;
-    uri: URI;
-    [k: string]: unknown;
+  favouriteType: FavouriteType;
+  contentType: ContentType;
+  uri: URI;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12129,22 +12155,25 @@ export type FavouriteType = "like" | "favourite" | "recommendation" | "share";
  * Type of post
  */
 export type ContentType = "video" | "audio" | "document" | "webpage";
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A file
  */
 export type File = BaseSchema & {
-    extension: Extension;
-    mimeType: MIMEType;
-    size: Size;
-    contentText?: ContentText;
-    fileDataId?: FileDataID;
-    uri?: URI;
-    [k: string]: unknown;
+  extension: Extension;
+  mimeType: MIMEType;
+  size: Size;
+  contentText?: ContentText;
+  fileDataId?: FileDataID;
+  uri?: URI;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12161,53 +12190,71 @@ export type FileDataID = string;
 /**
  * External link to the document (optional)
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Name of this item
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  *  A code specifying the particular kind of Act that the Act-instance represents within its class.  Constraints:
  * The kind of Act (e.g. physical examination, serum potassium, inpatient encounter, charge financial transaction, etc.) is specified with a code from one of several, typically external, coding systems.  The coding system will depend on the class of Act, such as LOINC for observations, etc. Conceptually, the Act.code must be a specialization of the Act.classCode. This is why the structure of ActClass domain should be reflected in the superstructure of the ActCode domain and then individual codes or externally referenced vocabularies subordinated under these domains that reflect the ActClass structure. Act.classCode and Act.code are not modifiers of each other but the Act.code concept should really imply the Act.classCode concept. For a negative example, it is not appropriate to use an Act.code "potassium" together with and Act.classCode for "laboratory observation" to somehow mean "potassium laboratory observation" and then use the same Act.code for "potassium" together with Act.classCode for "medication" to mean "substitution of potassium". This mutually modifying use of Act.code and Act.classCode is not permitted.
  */
 export interface V3CodeSystemActCode {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * This example value set defines a set of codes that can be used to indicate the role of a Practitioner.
  */
 export interface PractitionerRole {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * This value set defines an example set of codes of service-types.
  */
 export interface ServiceType {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type FullName = string;
 /**
  * YYYY-MM-DD
@@ -12215,71 +12262,94 @@ export type FullName = string;
 export type DateOfBirth = string;
 export type PatientID = string;
 export type TestTimestamp = string;
+
 export interface IdentifiablePathologyTest {
-    fullName: FullName;
-    dateOfBirth: DateOfBirth;
-    patientId?: PatientID;
-    testTimestamp: TestTimestamp;
-    [k: string]: unknown;
+  fullName: FullName;
+  dateOfBirth: DateOfBirth;
+  patientId?: PatientID;
+  testTimestamp: TestTimestamp;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type CholesterolTotalTest = IdentifiablePathologyTest & {
-    result?: ResultMgDL;
-    acceptable?: AcceptableRange;
-    [k: string]: unknown;
+  result?: ResultMgDL;
+  acceptable?: AcceptableRange;
+  [k: string]: unknown;
 };
 export type ResultMgDL = number;
 export type AcceptableRange = "Yes" | "No";
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type COVID19PCRTest = IdentifiablePathologyTest & {
-    result?: Result;
-    [k: string]: unknown;
+  result?: Result;
+  [k: string]: unknown;
 };
 export type Result = "Positive" | "Negative";
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type GlucoseFastingTest = IdentifiablePathologyTest & {
-    result?: ResultMgDL;
-    acceptable?: AcceptableRange;
-    [k: string]: unknown;
+  result?: ResultMgDL;
+  acceptable?: AcceptableRange;
+  [k: string]: unknown;
 };
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type HaemoglobinTest = IdentifiablePathologyTest & {
-    result?: ResultGDL;
-    acceptable?: AcceptableRange;
-    [k: string]: unknown;
+  result?: ResultGDL;
+  acceptable?: AcceptableRange;
+  [k: string]: unknown;
 };
 export type ResultGDL = number;
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type SyphilisABTest = IdentifiablePathologyTest & {
-    result?: Result;
-    [k: string]: unknown;
+  result?: Result;
+  [k: string]: unknown;
 };
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
-export type AustraliaBasicKYC = BaseSchema & Credential & {
+
+export type AustraliaBasicKYC = BaseSchema &
+  Credential & {
     gender?: Gender;
     firstName: FirstName;
     lastName?: DateOfBirth;
@@ -12289,7 +12359,7 @@ export type AustraliaBasicKYC = BaseSchema & Credential & {
     postcode?: PostCode;
     dateOfBirth?: DateOfBirth1;
     [k: string]: unknown;
-};
+  };
 /**
  * Name of the item within card list and details
  */
@@ -12298,24 +12368,32 @@ export type FirstName = string;
 export type StreetAddress1 = string;
 export type Suburb = string;
 export type PostCode = string;
+
 /**
  * A base schema
  */
 export interface DateOfBirth1 {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type LastName = string;
 export type StreetAddress = string;
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type FinClusiveId = string;
 export type ComplianceProfileLevel = string;
 export type ComplianceStatus = string;
@@ -12328,57 +12406,67 @@ export type CreationDate = string;
  */
 export type ValidUntil = string;
 export type FinClusiveComplianceApiUrl = string;
+
 export interface FinClusiveBasicIndividualKYC {
-    finClusiveId?: FinClusiveId;
-    firstName: FirstName;
-    lastName?: LastName;
-    streetAddress1?: StreetAddress;
-    suburb?: Suburb;
-    state?: State;
-    postcode?: PostCode;
-    dateOfBirth?: DateOfBirth;
-    complianceProfileLevel?: ComplianceProfileLevel;
-    complianceStatus?: ComplianceStatus;
-    creationDate?: CreationDate;
-    validUntil?: ValidUntil;
-    finClusiveComplianceApiUrl?: FinClusiveComplianceApiUrl;
-    [k: string]: unknown;
+  finClusiveId?: FinClusiveId;
+  firstName: FirstName;
+  lastName?: LastName;
+  streetAddress1?: StreetAddress;
+  suburb?: Suburb;
+  state?: State;
+  postcode?: PostCode;
+  dateOfBirth?: DateOfBirth;
+  complianceProfileLevel?: ComplianceProfileLevel;
+  complianceStatus?: ComplianceStatus;
+  creationDate?: CreationDate;
+  validUntil?: ValidUntil;
+  finClusiveComplianceApiUrl?: FinClusiveComplianceApiUrl;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type Process = string;
 export type ApprovalDate = string;
+
 export interface VeriteKYCAMLAttestation {
-    type: Type;
-    process: Process;
-    approvalDate: ApprovalDate;
-    [k: string]: unknown;
+  type: Type;
+  process: Process;
+  approvalDate: ApprovalDate;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Location tracking data
  */
 export type Location = BaseSchema & {
-    latitude: Latitude;
-    longitude: Longitude;
-    locationAccuracy?: LocationAccuracy;
-    altitude?: Altitude;
-    altitudeAccuracy?: AltitudeAccuracy;
-    isMoving?: Moving;
-    speed?: Speed;
-    speedAccuracy?: SpeedAccuracy;
-    heading?: Heading;
-    headingAccuracy?: HeadingAccuracy;
-    activityType?: ActivityType;
-    timestamp: Timetstamp;
-    [k: string]: unknown;
+  latitude: Latitude;
+  longitude: Longitude;
+  locationAccuracy?: LocationAccuracy;
+  altitude?: Altitude;
+  altitudeAccuracy?: AltitudeAccuracy;
+  isMoving?: Moving;
+  speed?: Speed;
+  speedAccuracy?: SpeedAccuracy;
+  heading?: Heading;
+  headingAccuracy?: HeadingAccuracy;
+  activityType?: ActivityType;
+  timestamp: Timetstamp;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12394,22 +12482,26 @@ export type SpeedAccuracy = number;
 export type Heading = number;
 export type HeadingAccuracy = number;
 export type Timetstamp = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A generic schema for playlists from platforms like Spotify, YouTube, etc.
  */
 export type Playlist = BaseSchema & {
-    type: Type;
-    owner?: Person;
-    tracks?: Tracks;
-    [k: string]: unknown;
+  type: Type;
+  owner?: Person;
+  tracks?: Tracks;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12435,61 +12527,69 @@ export type Thumbnail = string;
  * Duration of the track/video in milliseconds
  */
 export type Tracks = Track[];
+
 /**
  * A base schema
  */
 export interface Track {
-    id: TrackID;
-    title: Title;
-    artist?: ArtistCreator;
-    album?: Album;
-    thumbnail?: Thumbnail;
-    duration?: Duration;
-    url?: URL;
-    type?: Type;
-    [k: string]: unknown;
+  id: TrackID;
+  title: Title;
+  artist?: ArtistCreator;
+  album?: Album;
+  thumbnail?: Thumbnail;
+  duration?: Duration;
+  url?: URL;
+  type?: Type;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Public profile data for a user
  */
 export type Profile = BaseSchema & {
-    name: string;
-    country?: string;
-    description?: string;
-    /**
-     * Website URL
-     */
-    website?: string;
-    /**
-     * Profile image for the profile
-     */
-    avatar?: {
-        uri?: string;
-        [k: string]: unknown;
-    };
+  name: string;
+  country?: string;
+  description?: string;
+  /**
+   * Website URL
+   */
+  website?: string;
+  /**
+   * Profile image for the profile
+   */
+  avatar?: {
+    uri?: string;
     [k: string]: unknown;
+  };
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type Coupon = BaseSchema & {
-    title: Title;
-    description?: Description;
-    value: Value;
-    valueType?: ValueType;
-    currency?: Currency;
-    barcode?: BarCode;
-    [k: string]: unknown;
+  title: Title;
+  description?: Description;
+  value: Value;
+  valueType?: ValueType;
+  currency?: Currency;
+  barcode?: BarCode;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12499,47 +12599,55 @@ export type Value = string;
 export type ValueType = string;
 export type Currency = string;
 export type BarCode = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Calendar information
  */
 export type Calendar = BaseSchema & {
-    description?: Description;
-    /**
-     * UTC offset format
-     */
-    timezone: string;
-    location?: Location;
-    syncData?: SyncData;
-    [k: string]: unknown;
+  description?: Description;
+  /**
+   * UTC offset format
+   */
+  timezone: string;
+  location?: Location;
+  syncData?: SyncData;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
  */
 export type SyncData = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Chat group that contains chat messages
  */
 export type ChatGroup = BaseSchema & {
-    uri?: URI;
-    newestId?: NewestID;
-    syncData?: SyncData;
-    [k: string]: unknown;
+  uri?: URI;
+  newestId?: NewestID;
+  syncData?: SyncData;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12548,25 +12656,28 @@ export type NewestID = string;
 /**
  * Data to help co-ordinating the sync of messages in this group
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Single message within a chat group
  */
 export type ChatMessage = BaseSchema & {
-    groupId: ChatGroupID;
-    groupName?: ChatGroupName;
-    type: Type;
-    messageText: MessageText;
-    messageHTML?: MessageHTML;
-    fromId: FromID;
-    fromHandle?: FromHandle;
-    fromName?: FromName;
-    sentAt: SentAt;
-    [k: string]: unknown;
+  groupId: ChatGroupID;
+  groupName?: ChatGroupName;
+  type: Type;
+  messageText: MessageText;
+  messageHTML?: MessageHTML;
+  fromId: FromID;
+  fromHandle?: FromHandle;
+  fromName?: FromName;
+  sentAt: SentAt;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12582,24 +12693,28 @@ export type FromID = string;
 export type FromHandle = string;
 export type FromName = string;
 export type SentAt = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A record of a contact
  */
 export type Contact = BaseSchema & {
-    firstName: FirstName;
-    lastName: LastName;
-    email?: Email;
-    mobile?: Mobile;
-    did?: DID;
-    [k: string]: unknown;
+  firstName: FirstName;
+  lastName: LastName;
+  email?: Email;
+  mobile?: Mobile;
+  did?: DID;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12607,14 +12722,18 @@ export type Contact = BaseSchema & {
 export type Email = string;
 export type Mobile = string;
 export type DID = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Email message
  */
@@ -12623,22 +12742,26 @@ export type FromEmail = string;
  * Message content of the email as text
  */
 export type Attachments = {
-    id: string;
-    filename: string;
-    data?: string;
-    textContent: string;
-    uri?: string;
-    [k: string]: unknown;
+  id: string;
+  filename: string;
+  data?: string;
+  textContent: string;
+  uri?: string;
+  [k: string]: unknown;
 }[];
 export type SourceData1 = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Schema for a calendar event
  */
@@ -12651,97 +12774,105 @@ export type Attendees = Person[];
  * Attachments for the event
  */
 export interface Creator {
-    /**
-     * Email address of the person
-     */
-    email: string;
-    /**
-     * Display name of the person
-     */
-    displayName?: string;
-    [k: string]: unknown;
+  /**
+   * Email address of the person
+   */
+  email: string;
+  /**
+   * Display name of the person
+   */
+  displayName?: string;
+  [k: string]: unknown;
 }
 /**
  * Details of the event organizer
  */
 export interface Organizer {
-    /**
-     * Email address of the person
-     */
-    email: string;
-    /**
-     * Display name of the person
-     */
-    displayName?: string;
-    [k: string]: unknown;
+  /**
+   * Email address of the person
+   */
+  email: string;
+  /**
+   * Display name of the person
+   */
+  displayName?: string;
+  [k: string]: unknown;
 }
 /**
  * Start time of the event
  */
 export interface Start {
-    dateTime: string;
-    /**
-     * UTC offset format
-     */
-    timezone?: string;
-    [k: string]: unknown;
+  dateTime: string;
+  /**
+   * UTC offset format
+   */
+  timezone?: string;
+  [k: string]: unknown;
 }
 /**
  * End time of the event
  */
 export interface End {
-    dateTime: string;
-    /**
-     * UTC offset format
-     */
-    timezone?: string;
-    [k: string]: unknown;
+  dateTime: string;
+  /**
+   * UTC offset format
+   */
+  timezone?: string;
+  [k: string]: unknown;
 }
 /**
  * Schema representing a person
  */
 export interface ConferenceData {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A person or business I am following
  */
 export type Following = BaseSchema & {
-    uri?: URI;
-    followedTimestamp?: FollowedTimestamp;
-    sourceData?: SourceData1;
-    [k: string]: unknown;
+  uri?: URI;
+  followedTimestamp?: FollowedTimestamp;
+  sourceData?: SourceData1;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
  */
 export type FollowedTimestamp = string;
+
 /**
  * A base schema
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Schema for a meeting transcript
  */
 export type MeetingTranscript = BaseSchema & {
-    organizerEmail: OrganizerEmail;
-    user?: User;
-    speakers?: Speakers;
-    meetingAttendees?: MeetingAttendees;
-    duration?: Duration;
-    dateTime?: Datetime;
-    sentence?: Sentence;
-    calendarEventId?: CalendarID;
-    [k: string]: unknown;
+  organizerEmail: OrganizerEmail;
+  user?: User;
+  speakers?: Speakers;
+  meetingAttendees?: MeetingAttendees;
+  duration?: Duration;
+  dateTime?: Datetime;
+  sentence?: Sentence;
+  calendarEventId?: CalendarID;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12767,67 +12898,75 @@ export type Sentence = Sentence1[];
  * Unique identifier for the calendar event (Google or Outlook)
  */
 export type CalendarID = string;
+
 /**
  * A base schema
  */
 export interface User {
-    /**
-     * Email address of the person
-     */
-    email?: string;
-    /**
-     * Display name of the person
-     */
-    displayName: string;
-    /**
-     * Full name of the attendee
-     */
-    name?: string;
-    /**
-     * Phone number of the attendee
-     */
-    phoneNumber?: string;
-    [k: string]: unknown;
+  /**
+   * Email address of the person
+   */
+  email?: string;
+  /**
+   * Display name of the person
+   */
+  displayName: string;
+  /**
+   * Full name of the attendee
+   */
+  name?: string;
+  /**
+   * Phone number of the attendee
+   */
+  phoneNumber?: string;
+  [k: string]: unknown;
 }
 /**
  * Schema representing a person
  */
 export interface Sentence1 {
-    /**
-     * Raw text of the sentence
-     */
-    rawText: string;
-    /**
-     * Name of the speaker for this sentence
-     */
-    speakerName: string;
-    [k: string]: unknown;
+  /**
+   * Raw text of the sentence
+   */
+  rawText: string;
+  /**
+   * Name of the speaker for this sentence
+   */
+  speakerName: string;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Social media post
  */
 export type Post = BaseSchema & {
-    type?: Type;
-    content?: Content;
-    contentHtml?: ContentHtml;
-    uri: URI;
-    sourceData?: SourceData1;
-    [k: string]: unknown;
+  type?: Type;
+  content?: Content;
+  contentHtml?: ContentHtml;
+  uri: URI;
+  sourceData?: SourceData1;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
  */
 export type ContentHtml = string;
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * URL of an image representing this credential
  */
@@ -12857,40 +12996,45 @@ export type AnimationURL = string;
  * A URL to a Youtube video
  */
 export type YoutubeURL = string;
+
 /**
  * OpenSea metadata standards (https://docs.opensea.io/docs/metadata-standards)
  */
 export interface OpenSeaMetadata {
-    image?: ImageURL;
-    image_data?: ImageURL1;
-    external_url?: ExternalURL;
-    name: Name;
-    attributes?: Attributes;
-    description?: Description;
-    background_color?: BackgroundColor;
-    animation_url?: AnimationURL;
-    youtube_url?: YoutubeURL;
-    [k: string]: unknown;
+  image?: ImageURL;
+  image_data?: ImageURL1;
+  external_url?: ExternalURL;
+  name: Name;
+  attributes?: Attributes;
+  description?: Description;
+  background_color?: BackgroundColor;
+  animation_url?: AnimationURL;
+  youtube_url?: YoutubeURL;
+  [k: string]: unknown;
 }
 export interface Attribute {
-    trait_type?: TraitType;
-    value?: Value;
-    [k: string]: unknown;
+  trait_type?: TraitType;
+  value?: Value;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Self-sovereign Soulbound token (SBT) metadata. Only one SBT exists for a
  */
 export type SoulboundTokenCredential = OpenSeaMetadata & {
-    did: DID;
-    didAddress?: DIDAddress;
-    type: Type;
-    uniqueAttribute?: UniqueAttribute;
-    [k: string]: unknown;
+  did: DID;
+  didAddress?: DIDAddress;
+  type: Type;
+  uniqueAttribute?: UniqueAttribute;
+  [k: string]: unknown;
 };
 /**
  * URL of an image representing this credential
@@ -12900,38 +13044,46 @@ export type DIDAddress = string;
  * Type of credential (ie: 'twitter-10k-followers' or 'linkedin-account')
  */
 export type UniqueAttribute = string;
+
 /**
  * OpenSea metadata standards (https://docs.opensea.io/docs/metadata-standards)
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Self-sovereign storage of Soulbound token metadata
  */
-export type SoulboundTokenMetadata = BaseSchema & SoulboundTokenCredential & {
+export type SoulboundTokenMetadata = BaseSchema &
+  SoulboundTokenCredential & {
     didJwtVc?: DIDJWTVerifiableCredential;
     [k: string]: unknown;
-};
+  };
 /**
  * Name of the item within card list and details
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Configuration of a profile on Verida One
  */
 export type VeridaOneProfile = BaseSchema & {
-    customLinks?: CustomLinks;
-    platformLinks?: PlatformLinks;
-    walletAddresses?: WalletAddresses;
-    featuredAssets?: FeaturedAssets;
-    [k: string]: unknown;
+  customLinks?: CustomLinks;
+  platformLinks?: PlatformLinks;
+  walletAddresses?: WalletAddresses;
+  featuredAssets?: FeaturedAssets;
+  [k: string]: unknown;
 };
 /**
  * Name of the item within card list and details
@@ -12975,86 +13127,99 @@ export type Order3 = number;
  * @minItems 0
  */
 export type FeaturedAssets = FeaturedAsset[];
+
 /**
  * A base schema
  */
 export interface CustomLink {
-    label: Label;
-    url: URL;
-    featured?: Featured;
-    order: Order_Override;
-    [k: string]: unknown;
+  label: Label;
+  url: URL;
+  featured?: Featured;
+  order: Order_Override;
+  [k: string]: unknown;
 }
 export interface PlatformLink {
-    category: Category;
-    platform: Platform;
-    accountId: AccountId;
-    avatarUrl?: AvatarURL;
-    url: URL1;
-    verificationProof?: {
-        type: Type;
-        proof: Proof;
-        [k: string]: unknown;
-    };
-    order: Order1;
+  category: Category;
+  platform: Platform;
+  accountId: AccountId;
+  avatarUrl?: AvatarURL;
+  url: URL1;
+  verificationProof?: {
+    type: Type;
+    proof: Proof;
     [k: string]: unknown;
+  };
+  order: Order1;
+  [k: string]: unknown;
 }
 export interface Proof {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 export interface WalletAddress {
-    chainId: ChainId;
-    address: Address;
-    label?: Label1;
-    verificationProof?: {
-        type: Type1;
-        proof: Proof1;
-        [k: string]: unknown;
-    };
-    order: Order2;
+  chainId: ChainId;
+  address: Address;
+  label?: Label1;
+  verificationProof?: {
+    type: Type1;
+    proof: Proof1;
     [k: string]: unknown;
+  };
+  order: Order2;
+  [k: string]: unknown;
 }
 export interface Type1 {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 export interface Proof1 {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 export interface FeaturedAsset {
-    chainId: ChainId1;
-    contractAddress: ContractAddress;
-    tokenId: TokenId;
-    ownerAddress: OwnerAddress;
-    order: Order3;
-    [k: string]: unknown;
+  chainId: ChainId1;
+  contractAddress: ContractAddress;
+  tokenId: TokenId;
+  ownerAddress: OwnerAddress;
+  order: Order3;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Name of the item within card list and details
  */
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type PublicKey = string;
+
 /**
  * An unprocessed, encrypted inbox item in a users public inbox
  */
 export interface EncryptedInboxMessage {
-    content: Content;
-    key: PublicKey;
-    [k: string]: unknown;
+  content: Content;
+  key: PublicKey;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Type of data being requested
  */
@@ -13067,71 +13232,84 @@ export type UserSelectLimit = number;
  * Label of the action
  */
 export interface DataRequest {
-    requestSchema: Schema;
-    filter?: Filter;
-    userSelect?: UserSelectsTheData;
-    userSelectLimit?: UserSelectLimit;
-    fallbackAction?: FallbackAction;
-    status?: Status;
-    [k: string]: unknown;
+  requestSchema: Schema;
+  filter?: Filter;
+  userSelect?: UserSelectsTheData;
+  userSelectLimit?: UserSelectLimit;
+  fallbackAction?: FallbackAction;
+  status?: Status;
+  [k: string]: unknown;
 }
 /**
  * Database filter the data must match
  */
 export interface Filter {
-    [k: string]: unknown;
+  [k: string]: unknown;
 }
 /**
  * An action suggested to the user if they don't have the requested data
  */
 export interface FallbackAction {
-    label: Label;
-    url: URL;
-    [k: string]: unknown;
+  label: Label;
+  url: URL;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Array of data being sent. Must be valid schema data.
  */
 export type ReplyID = string;
+
 /**
  * An inbox message sending data to a user
  */
 export interface DataSend {
-    data: Data;
-    status: Status;
-    replyId?: ReplyID;
-    [k: string]: unknown;
+  data: Data;
+  status: Status;
+  replyId?: ReplyID;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 export type Subject = string;
 export interface GenericInboxMessage {
-    subject: Subject;
-    message: Message;
-    /**
-     * Optional link that user can click on for more information
-     */
-    link?: {
-        url?: URL;
-        text?: Text;
-        [k: string]: unknown;
-    };
-    replyId?: ReplyID;
+  subject: Subject;
+  message: Message;
+  /**
+   * Optional link that user can click on for more information
+   */
+  link?: {
+    url?: URL;
+    text?: Text;
     [k: string]: unknown;
+  };
+  replyId?: ReplyID;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Symmetric encryption key as a hex string
  */
@@ -13140,346 +13318,376 @@ export type Key = string;
  * Type of symmetric encryption key
  */
 export interface SymmetricKey {
-    key: Key;
-    type: Type;
-    [k: string]: unknown;
+  key: Key;
+  type: Type;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Describes creation, edits, or other actions on the asset (v1).
  */
 export interface ActionsAssertion {
-    /**
-     * List of action objects
-     */
-    actions: ActionItem[];
+  /**
+   * List of action objects
+   */
+  actions: ActionItem[];
 }
 export interface ActionItem {
-    /**
-     * A c2pa.* label or custom action name.
-     */
-    action: string;
-    /**
-     * Non-trusted timestamp.
-     */
-    when?: string;
-    /**
-     * Software/hardware used.
-     */
-    softwareAgent?: string;
-    /**
-     * URL from IPTC newscodes describing source type.
-     */
-    digitalSourceType?: string;
-    /**
-     * Optional extra data about the action.
-     */
-    parameters?: {
-        [k: string]: unknown;
-    };
+  /**
+   * A c2pa.* label or custom action name.
+   */
+  action: string;
+  /**
+   * Non-trusted timestamp.
+   */
+  when?: string;
+  /**
+   * Software/hardware used.
+   */
+  softwareAgent?: string;
+  /**
+   * URL from IPTC newscodes describing source type.
+   */
+  digitalSourceType?: string;
+  /**
+   * Optional extra data about the action.
+   */
+  parameters?: {
     [k: string]: unknown;
+  };
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A generic structure for custom C2PA assertions using reverse domain notation.
  */
 export interface CustomAssertion {
-    /**
-     * Reverse domain label, e.g. 'com.example.custom-assertion'
-     */
-    label: string;
-    /**
-     * Custom assertion data. Flexible schema, may follow JSON-LD or any structure.
-     */
-    data: {
-        [k: string]: unknown;
-    };
-    /**
-     * Optional payload format. Usually 'Json'.
-     */
-    kind?: "Json" | "Cbor" | "Binary" | "Uri";
-    /**
-     * Optional index if multiple instances are needed.
-     */
-    instance?: number;
+  /**
+   * Reverse domain label, e.g. 'com.example.custom-assertion'
+   */
+  label: string;
+  /**
+   * Custom assertion data. Flexible schema, may follow JSON-LD or any structure.
+   */
+  data: {
     [k: string]: unknown;
+  };
+  /**
+   * Optional payload format. Usually 'Json'.
+   */
+  kind?: "Json" | "Cbor" | "Binary" | "Uri";
+  /**
+   * Optional index if multiple instances are needed.
+   */
+  instance?: number;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Contains a cryptographic hash of some or all of the asset for content binding.
  */
 export interface DataHashAssertion {
-    /**
-     * Hash algorithm (e.g. 'sha256').
-     */
-    alg?: string;
-    /**
-     * Base64-encoded hash.
-     */
-    hash: string;
-    /**
-     * Zero-filled byte string (base64-encoded) for multi-pass hashing.
-     */
-    pad: string;
-    /**
-     * Optional second zero-filled byte string (base64-encoded).
-     */
-    pad2?: string;
-    /**
-     * Optional human-readable label for the covered data.
-     */
-    name?: string;
-    exclusions?: ExclusionRange[];
+  /**
+   * Hash algorithm (e.g. 'sha256').
+   */
+  alg?: string;
+  /**
+   * Base64-encoded hash.
+   */
+  hash: string;
+  /**
+   * Zero-filled byte string (base64-encoded) for multi-pass hashing.
+   */
+  pad: string;
+  /**
+   * Optional second zero-filled byte string (base64-encoded).
+   */
+  pad2?: string;
+  /**
+   * Optional human-readable label for the covered data.
+   */
+  name?: string;
+  exclusions?: ExclusionRange[];
 }
 export interface ExclusionRange {
-    start: number;
-    length: number;
-    [k: string]: unknown;
+  start: number;
+  length: number;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Represents Exif metadata in JSON-LD form. Partial coverage of common exif fields.
  */
 export interface ExifInformationAssertion {
-    /**
-     * JSON-LD context referencing exif = 'http://ns.adobe.com/exif/1.0/' and possibly exifEX = 'http://cipa.jp/exif/2.32/'
-     */
-    "@context": string | {
+  /**
+   * JSON-LD context referencing exif = 'http://ns.adobe.com/exif/1.0/' and possibly exifEX = 'http://cipa.jp/exif/2.32/'
+   */
+  "@context":
+    | string
+    | {
         [k: string]: unknown;
-    } | unknown[];
-    /**
-     * Manufacturer of the capturing device, e.g. 'Canon', 'Nikon'
-     */
-    "exif:Make"?: string;
-    /**
-     * Model of the capturing device, e.g. 'EOS R5'
-     */
-    "exif:Model"?: string;
-    /**
-     * Manufacturer of the lens, if separate from camera maker.
-     */
-    "exif:LensMake"?: string;
-    /**
-     * Model of the lens, if applicable.
-     */
-    "exif:LensModel"?: string;
-    /**
-     * Date/Time when the original image data was generated (local camera time). e.g. '2021:06:28 16:34:11'
-     */
-    "exif:DateTimeOriginal"?: string;
-    /**
-     * Exposure time, typically as fraction of a second. e.g. '1/125'
-     */
-    "exif:ExposureTime"?: string;
-    /**
-     * The F number (aperture) e.g. 2.8
-     */
-    "exif:FNumber"?: number;
-    /**
-     * ISO speed or sensitivity setting e.g. 100, 400, 1600.
-     */
-    "exif:ISOSpeedRatings"?: number;
-    /**
-     * Focal length of the lens in mm e.g. '50mm'.
-     */
-    "exif:FocalLength"?: string;
-    /**
-     * Flash setting or mode. Could be 'Flash fired' or 'Flash did not fire'.
-     */
-    "exif:Flash"?: string;
-    /**
-     * GPS tag version. Typically '2.2.0.0'
-     */
-    "exif:GPSVersionID"?: string;
-    /**
-     * Indicates whether latitude is north or south latitude (e.g. 'N' or 'S').
-     */
-    "exif:GPSLatitudeRef"?: string;
-    /**
-     * Latitude in degrees, minutes, seconds format e.g. '39,21.102N' or numeric decimal. Implementation dependent.
-     */
-    "exif:GPSLatitude"?: string;
-    /**
-     * Indicates whether longitude is east or west (e.g. 'E' or 'W').
-     */
-    "exif:GPSLongitudeRef"?: string;
-    /**
-     * Longitude in degrees, minutes, seconds format e.g. '74,26.5737W' or numeric decimal. Implementation dependent.
-     */
-    "exif:GPSLongitude"?: string;
-    /**
-     * 0 = above sea level, 1 = below sea level. Part of Exif standard.
-     */
-    "exif:GPSAltitudeRef"?: number;
-    /**
-     * Altitude in meters (possibly a fraction). e.g. '100963/29890'
-     */
-    "exif:GPSAltitude"?: string;
-    /**
-     * Time (UTC) of GPS data record. e.g. '2021-06-28T16:34:11Z'
-     */
-    "exif:GPSTimeStamp"?: string;
-    "exif:GPSMapDatum"?: string;
-    "exif:GPSProcessingMethod"?: string;
-    "exif:GPSDateStamp"?: string;
-    "exif:GPSImgDirection"?: number;
-    "exif:GPSImgDirectionRef"?: "T" | "M";
-    "exif:SerialNumber"?: string;
-    "exif:LensSerialNumber"?: string;
-    "exif:LensSpecification"?: string;
-    "exif:ShutterSpeedValue"?: string;
-    "exif:ApertureValue"?: string;
-    "exif:BrightnessValue"?: number;
-    /**
-     * 0=Auto, 1=Manual, 2=Auto Bracket
-     */
-    "exif:ExposureMode"?: number;
-    "exif:ExposureProgram"?: number;
-    "exif:MeteringMode"?: number;
-    "exif:WhiteBalance"?: number;
-    "exif:DateTimeDigitized"?: string;
-    "exif:SubSecTimeOriginal"?: string;
-    /**
-     * e.g. [+5, 0] for timezone offset
-     */
-    "exif:TimeZoneOffset"?: number[];
-    "exif:ImageUniqueID"?: string;
-    "exif:Software"?: string;
-    "exif:ProcessingSoftware"?: string;
-    "exif:ColorSpace"?: number;
-    "exif:SceneCaptureType"?: number;
-    "exif:Contrast"?: number;
-    "exif:Saturation"?: number;
-    "exif:Sharpness"?: number;
-    "exif:Copyright"?: string;
-    "exif:CameraOwnerName"?: string;
-    "exif:UserComment"?: string;
-    [k: string]: unknown;
+      }
+    | unknown[];
+  /**
+   * Manufacturer of the capturing device, e.g. 'Canon', 'Nikon'
+   */
+  "exif:Make"?: string;
+  /**
+   * Model of the capturing device, e.g. 'EOS R5'
+   */
+  "exif:Model"?: string;
+  /**
+   * Manufacturer of the lens, if separate from camera maker.
+   */
+  "exif:LensMake"?: string;
+  /**
+   * Model of the lens, if applicable.
+   */
+  "exif:LensModel"?: string;
+  /**
+   * Date/Time when the original image data was generated (local camera time). e.g. '2021:06:28 16:34:11'
+   */
+  "exif:DateTimeOriginal"?: string;
+  /**
+   * Exposure time, typically as fraction of a second. e.g. '1/125'
+   */
+  "exif:ExposureTime"?: string;
+  /**
+   * The F number (aperture) e.g. 2.8
+   */
+  "exif:FNumber"?: number;
+  /**
+   * ISO speed or sensitivity setting e.g. 100, 400, 1600.
+   */
+  "exif:ISOSpeedRatings"?: number;
+  /**
+   * Focal length of the lens in mm e.g. '50mm'.
+   */
+  "exif:FocalLength"?: string;
+  /**
+   * Flash setting or mode. Could be 'Flash fired' or 'Flash did not fire'.
+   */
+  "exif:Flash"?: string;
+  /**
+   * GPS tag version. Typically '2.2.0.0'
+   */
+  "exif:GPSVersionID"?: string;
+  /**
+   * Indicates whether latitude is north or south latitude (e.g. 'N' or 'S').
+   */
+  "exif:GPSLatitudeRef"?: string;
+  /**
+   * Latitude in degrees, minutes, seconds format e.g. '39,21.102N' or numeric decimal. Implementation dependent.
+   */
+  "exif:GPSLatitude"?: string;
+  /**
+   * Indicates whether longitude is east or west (e.g. 'E' or 'W').
+   */
+  "exif:GPSLongitudeRef"?: string;
+  /**
+   * Longitude in degrees, minutes, seconds format e.g. '74,26.5737W' or numeric decimal. Implementation dependent.
+   */
+  "exif:GPSLongitude"?: string;
+  /**
+   * 0 = above sea level, 1 = below sea level. Part of Exif standard.
+   */
+  "exif:GPSAltitudeRef"?: number;
+  /**
+   * Altitude in meters (possibly a fraction). e.g. '100963/29890'
+   */
+  "exif:GPSAltitude"?: string;
+  /**
+   * Time (UTC) of GPS data record. e.g. '2021-06-28T16:34:11Z'
+   */
+  "exif:GPSTimeStamp"?: string;
+  "exif:GPSMapDatum"?: string;
+  "exif:GPSProcessingMethod"?: string;
+  "exif:GPSDateStamp"?: string;
+  "exif:GPSImgDirection"?: number;
+  "exif:GPSImgDirectionRef"?: "T" | "M";
+  "exif:SerialNumber"?: string;
+  "exif:LensSerialNumber"?: string;
+  "exif:LensSpecification"?: string;
+  "exif:ShutterSpeedValue"?: string;
+  "exif:ApertureValue"?: string;
+  "exif:BrightnessValue"?: number;
+  /**
+   * 0=Auto, 1=Manual, 2=Auto Bracket
+   */
+  "exif:ExposureMode"?: number;
+  "exif:ExposureProgram"?: number;
+  "exif:MeteringMode"?: number;
+  "exif:WhiteBalance"?: number;
+  "exif:DateTimeDigitized"?: string;
+  "exif:SubSecTimeOriginal"?: string;
+  /**
+   * e.g. [+5, 0] for timezone offset
+   */
+  "exif:TimeZoneOffset"?: number[];
+  "exif:ImageUniqueID"?: string;
+  "exif:Software"?: string;
+  "exif:ProcessingSoftware"?: string;
+  "exif:ColorSpace"?: number;
+  "exif:SceneCaptureType"?: number;
+  "exif:Contrast"?: number;
+  "exif:Saturation"?: number;
+  "exif:Sharpness"?: number;
+  "exif:Copyright"?: string;
+  "exif:CameraOwnerName"?: string;
+  "exif:UserComment"?: string;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Stores IPTC Photo/Video metadata in JSON-LD form, referencing XMP fields for IPTC Photo/Video standards
  */
 export interface IPTCPhotoVideoMetadataAssertion {
-    /**
-     * Should reference the IPTC XMP namespaces, e.g., Iptc4xmpCore, Iptc4xmpExt, dc, photoshop, plus, xmp, xmpRights, etc.
-     */
-    "@context": string | {
+  /**
+   * Should reference the IPTC XMP namespaces, e.g., Iptc4xmpCore, Iptc4xmpExt, dc, photoshop, plus, xmp, xmpRights, etc.
+   */
+  "@context":
+    | string
+    | {
         [k: string]: unknown;
-    } | unknown[];
+      }
+    | unknown[];
+  /**
+   * A short textual title for the asset.
+   */
+  "dc:title"?: string;
+  /**
+   * A textual description of the asset's content.
+   */
+  "dc:description"?: string;
+  /**
+   * Array of creator names (string). For more structured names, store them as separate fields or in an extended form.
+   */
+  "dc:creator"?: string[];
+  /**
+   * Rights statement for the asset.
+   */
+  "dc:rights"?: string;
+  /**
+   * Creation date/time in textual or ISO 8601 format. e.g. '2022-08-31T10:00:00Z' or 'Aug 31, 2022'
+   */
+  "photoshop:DateCreated"?: string;
+  /**
+   * Credit line for how the asset should be publicly credited.
+   */
+  "photoshop:Credit"?: string;
+  /**
+   * Headline for the asset.
+   */
+  "photoshop:Headline"?: string;
+  /**
+   * Name of the original source of the asset (e.g., 'Associated Press').
+   */
+  "photoshop:Source"?: string;
+  /**
+   * Value from https://cv.iptc.org/newscodes/digitalsourcetype/ e.g. 'digitalCapture', 'compositeSynthetic', 'trainedAlgorithmicMedia', etc.
+   */
+  "Iptc4xmpExt:DigitalSourceType"?: string;
+  /**
+   * List of names or identifiers for persons depicted in the image/video.
+   */
+  "Iptc4xmpExt:PersonInImage"?: string[];
+  /**
+   * Location metadata for where the asset was created/captured.
+   */
+  "Iptc4xmpExt:LocationCreated"?: {
     /**
-     * A short textual title for the asset.
+     * City where the asset was created.
      */
-    "dc:title"?: string;
+    "Iptc4xmpExt:City"?: string;
     /**
-     * A textual description of the asset's content.
+     * Additional sublocation info, e.g. neighborhood.
      */
-    "dc:description"?: string;
+    "Iptc4xmpExt:Sublocation"?: string;
     /**
-     * Array of creator names (string). For more structured names, store them as separate fields or in an extended form.
+     * Province or state where the asset was created.
      */
-    "dc:creator"?: string[];
+    "Iptc4xmpExt:ProvinceState"?: string;
     /**
-     * Rights statement for the asset.
+     * Country name of the asset's creation location.
      */
-    "dc:rights"?: string;
+    "Iptc4xmpExt:CountryName"?: string;
     /**
-     * Creation date/time in textual or ISO 8601 format. e.g. '2022-08-31T10:00:00Z' or 'Aug 31, 2022'
+     * ISO country code for the creation location (e.g. 'US', 'FR').
      */
-    "photoshop:DateCreated"?: string;
+    "Iptc4xmpExt:CountryCode"?: string;
+  };
+  /**
+   * Terms under which the asset may be used.
+   */
+  "xmpRights:UsageTerms"?: string[];
+  /**
+   * A URL for the statement of usage rights.
+   */
+  "xmpRights:WebStatement"?: string;
+  /**
+   * List of licensor objects providing details about who licenses the asset.
+   */
+  "plus:licensor"?: {
     /**
-     * Credit line for how the asset should be publicly credited.
+     * Name of the licensor entity.
      */
-    "photoshop:Credit"?: string;
+    "plus:LicensorName": string;
     /**
-     * Headline for the asset.
+     * URL referencing the licensor.
      */
-    "photoshop:Headline"?: string;
-    /**
-     * Name of the original source of the asset (e.g., 'Associated Press').
-     */
-    "photoshop:Source"?: string;
-    /**
-     * Value from https://cv.iptc.org/newscodes/digitalsourcetype/ e.g. 'digitalCapture', 'compositeSynthetic', 'trainedAlgorithmicMedia', etc.
-     */
-    "Iptc4xmpExt:DigitalSourceType"?: string;
-    /**
-     * List of names or identifiers for persons depicted in the image/video.
-     */
-    "Iptc4xmpExt:PersonInImage"?: string[];
-    /**
-     * Location metadata for where the asset was created/captured.
-     */
-    "Iptc4xmpExt:LocationCreated"?: {
-        /**
-         * City where the asset was created.
-         */
-        "Iptc4xmpExt:City"?: string;
-        /**
-         * Additional sublocation info, e.g. neighborhood.
-         */
-        "Iptc4xmpExt:Sublocation"?: string;
-        /**
-         * Province or state where the asset was created.
-         */
-        "Iptc4xmpExt:ProvinceState"?: string;
-        /**
-         * Country name of the asset's creation location.
-         */
-        "Iptc4xmpExt:CountryName"?: string;
-        /**
-         * ISO country code for the creation location (e.g. 'US', 'FR').
-         */
-        "Iptc4xmpExt:CountryCode"?: string;
-    };
-    /**
-     * Terms under which the asset may be used.
-     */
-    "xmpRights:UsageTerms"?: string[];
-    /**
-     * A URL for the statement of usage rights.
-     */
-    "xmpRights:WebStatement"?: string;
-    /**
-     * List of licensor objects providing details about who licenses the asset.
-     */
-    "plus:licensor"?: {
-        /**
-         * Name of the licensor entity.
-         */
-        "plus:LicensorName": string;
-        /**
-         * URL referencing the licensor.
-         */
-        "plus:LicensorURL"?: string;
-    }[];
-    [k: string]: unknown;
+    "plus:LicensorURL"?: string;
+  }[];
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Assertions in C2PA can be stored in several formats
  */
@@ -13511,100 +13719,101 @@ export type Relationship = "parentOf" | "componentOf" | "inputTo";
  * > All digital signatures that are stored in a C2PA Manifest shall be generated using one of the digital signature algorithms and key types listed as described in this section.
  */
 export type SigningAlg = "Es256" | "Es384" | "Es512" | "Ps256" | "Ps384" | "Ps512" | "Ed25519";
+
 /**
  * A Container for a set of Manifests and a ValidationStatus list.
  */
 export interface ManifestStore {
-    /**
-     * A label for the active (most recent) manifest in the store.
-     */
-    active_manifest?: string | null;
-    /**
-     * A HashMap of Manifests.
-     */
-    manifests: {
-        [k: string]: Manifest;
-    };
-    /**
-     * ValidationStatus generated when loading the ManifestStore from an asset.
-     */
-    validation_status?: ValidationStatus[] | null;
-    [k: string]: unknown;
+  /**
+   * A label for the active (most recent) manifest in the store.
+   */
+  active_manifest?: string | null;
+  /**
+   * A HashMap of Manifests.
+   */
+  manifests: {
+    [k: string]: Manifest;
+  };
+  /**
+   * ValidationStatus generated when loading the ManifestStore from an asset.
+   */
+  validation_status?: ValidationStatus[] | null;
+  [k: string]: unknown;
 }
 /**
  * A Manifest represents all the information in a c2pa manifest
  */
 export interface Manifest {
-    /**
-     * A list of assertions
-     */
-    assertions?: ManifestAssertion[];
-    /**
-     * A User Agent formatted string identifying the software/hardware/system produced this claim Spaces are not allowed in names, versions can be specified with product/1.0 syntax
-     */
-    claim_generator?: string;
-    /**
-     * A list of claim generator info data identifying the software/hardware/system produced this claim
-     */
-    claim_generator_info?: ClaimGeneratorInfo[] | null;
-    /**
-     * A List of verified credentials
-     */
-    credentials?: unknown[] | null;
-    /**
-     * The format of the source file as a MIME type.
-     */
-    format?: string;
-    /**
-     * A List of ingredients
-     */
-    ingredients?: Ingredient[];
-    /**
-     * Instance ID from `xmpMM:InstanceID` in XMP metadata.
-     */
-    instance_id?: string;
-    label?: string | null;
-    /**
-     * A list of user metadata for this claim
-     */
-    metadata?: Metadata[] | null;
-    /**
-     * A list of redactions - URIs to a redacted assertions
-     */
-    redactions?: string[] | null;
-    /**
-     * Signature data (only used for reporting)
-     */
-    signature_info?: SignatureInfo | null;
-    thumbnail?: ResourceRef | null;
-    /**
-     * A human-readable title, generally source filename.
-     */
-    title?: string | null;
-    /**
-     * Optional prefix added to the generated Manifest Label This is typically Internet domain name for the vendor (i.e. `adobe`)
-     */
-    vendor?: string | null;
-    [k: string]: unknown;
+  /**
+   * A list of assertions
+   */
+  assertions?: ManifestAssertion[];
+  /**
+   * A User Agent formatted string identifying the software/hardware/system produced this claim Spaces are not allowed in names, versions can be specified with product/1.0 syntax
+   */
+  claim_generator?: string;
+  /**
+   * A list of claim generator info data identifying the software/hardware/system produced this claim
+   */
+  claim_generator_info?: ClaimGeneratorInfo[] | null;
+  /**
+   * A List of verified credentials
+   */
+  credentials?: unknown[] | null;
+  /**
+   * The format of the source file as a MIME type.
+   */
+  format?: string;
+  /**
+   * A List of ingredients
+   */
+  ingredients?: Ingredient[];
+  /**
+   * Instance ID from `xmpMM:InstanceID` in XMP metadata.
+   */
+  instance_id?: string;
+  label?: string | null;
+  /**
+   * A list of user metadata for this claim
+   */
+  metadata?: Metadata[] | null;
+  /**
+   * A list of redactions - URIs to a redacted assertions
+   */
+  redactions?: string[] | null;
+  /**
+   * Signature data (only used for reporting)
+   */
+  signature_info?: SignatureInfo | null;
+  thumbnail?: ResourceRef | null;
+  /**
+   * A human-readable title, generally source filename.
+   */
+  title?: string | null;
+  /**
+   * Optional prefix added to the generated Manifest Label This is typically Internet domain name for the vendor (i.e. `adobe`)
+   */
+  vendor?: string | null;
+  [k: string]: unknown;
 }
 /**
  * A labeled container for an Assertion value in a Manifest
  */
 export interface ManifestAssertion {
-    data: unknown;
-    /**
-     * There can be more than one assertion for any label
-     */
-    instance?: number | null;
-    /**
-     * The [ManifestAssertionKind](crate::ManifestAssertionKind) for this assertion (as stored in c2pa content)
-     */
-    kind?: ManifestAssertionKind | null;
-    /**
-     * An assertion label in reverse domain format
-     */
-    label: string;
-    [k: string]: unknown;
+  data: unknown;
+  /**
+   * There can be more than one assertion for any label
+   */
+  instance?: number | null;
+  /**
+   * The [ManifestAssertionKind](crate::ManifestAssertionKind) for this assertion (as stored in c2pa content)
+   */
+  kind?: ManifestAssertionKind | null;
+  /**
+   * An assertion label in reverse domain format
+   */
+  label: string;
+  [k: string]: unknown;
 }
 /**
  * Description of the claim generator, or the software used in generating the claim.
@@ -13612,19 +13821,19 @@ export interface ManifestAssertion {
  * This structure is also used for actions softwareAgent
  */
 export interface ClaimGeneratorInfo {
-    /**
-     * hashed URI to the icon (either embedded or remote)
-     */
-    icon?: UriOrResource | null;
-    /**
-     * A human readable string naming the claim_generator
-     */
-    name: string;
-    /**
-     * A human readable string of the product's version
-     */
-    version?: string | null;
-    [k: string]: unknown;
+  /**
+   * hashed URI to the icon (either embedded or remote)
+   */
+  icon?: UriOrResource | null;
+  /**
+   * A human readable string naming the claim_generator
+   */
+  name: string;
+  /**
+   * A human readable string of the product's version
+   */
+  version?: string | null;
+  [k: string]: unknown;
 }
 /**
  * A reference to a resource to be used in JSON serialization.
@@ -13632,169 +13841,169 @@ export interface ClaimGeneratorInfo {
  * The underlying data can be read as a stream via [`Reader::resource_to_stream`](https://docs.rs/c2pa/latest/c2pa/struct.Reader.html#method.resource_to_stream).
  */
 export interface ResourceRef {
-    /**
-     * The algorithm used to hash the resource (if applicable).
-     */
-    alg?: string | null;
-    /**
-     * More detailed data types as defined in the C2PA spec.
-     */
-    data_types?: AssetType[] | null;
-    /**
-     * The mime type of the referenced resource.
-     */
-    format: string;
-    /**
-     * The hash of the resource (if applicable).
-     */
-    hash?: string | null;
-    /**
-     * A URI that identifies the resource as referenced from the manifest.
-     *
-     * This may be a JUMBF URI, a file path, a URL or any other string. Relative JUMBF URIs will be resolved with the manifest label. Relative file paths will be resolved with the base path if provided.
-     */
-    identifier: string;
-    [k: string]: unknown;
+  /**
+   * The algorithm used to hash the resource (if applicable).
+   */
+  alg?: string | null;
+  /**
+   * More detailed data types as defined in the C2PA spec.
+   */
+  data_types?: AssetType[] | null;
+  /**
+   * The mime type of the referenced resource.
+   */
+  format: string;
+  /**
+   * The hash of the resource (if applicable).
+   */
+  hash?: string | null;
+  /**
+   * A URI that identifies the resource as referenced from the manifest.
+   *
+   * This may be a JUMBF URI, a file path, a URL or any other string. Relative JUMBF URIs will be resolved with the manifest label. Relative file paths will be resolved with the base path if provided.
+   */
+  identifier: string;
+  [k: string]: unknown;
 }
 export interface AssetType {
-    type: string;
-    version?: string | null;
-    [k: string]: unknown;
+  type: string;
+  version?: string | null;
+  [k: string]: unknown;
 }
 /**
  * Hashed Uri structure as defined by C2PA spec It is annotated to produce the correctly tagged cbor serialization
  */
 export interface HashedUri {
-    alg?: string | null;
-    hash: number[];
-    url: string;
-    [k: string]: unknown;
+  alg?: string | null;
+  hash: number[];
+  url: string;
+  [k: string]: unknown;
 }
 /**
  * An `Ingredient` is any external asset that has been used in the creation of an asset.
  */
 export interface Ingredient {
-    /**
-     * The active manifest label (if one exists).
-     *
-     * If this ingredient has a [`ManifestStore`](crate::ManifestStore) , this will hold the label of the active [`Manifest`](crate::Manifest).
-     */
-    active_manifest?: string | null;
-    /**
-     * A reference to the actual data of the ingredient.
-     */
-    data?: ResourceRef | null;
-    /**
-     * Additional information about the data's type to the ingredient V2 structure.
-     */
-    data_types?: AssetType[] | null;
-    /**
-     * Additional description of the ingredient.
-     */
-    description?: string | null;
-    /**
-     * Document ID from `xmpMM:DocumentID` in XMP metadata.
-     */
-    document_id?: string | null;
-    /**
-     * The format of the source file as a MIME type.
-     */
-    format?: string;
-    /**
-     * An optional hash of the asset to prevent duplicates.
-     */
-    hash?: string | null;
-    /**
-     * URI to an informational page about the ingredient or its data.
-     */
-    informational_URI?: string | null;
-    /**
-     * Instance ID from `xmpMM:InstanceID` in XMP metadata.
-     */
-    instance_id?: string | null;
-    /**
-     * A [`ManifestStore`] from the source asset extracted as a binary C2PA blob.
-     *
-     * [`ManifestStore`]: crate::ManifestStore
-     */
-    manifest_data?: ResourceRef | null;
-    /**
-     * Any additional [`Metadata`] as defined in the C2PA spec.
-     *
-     * [`Metadata`]: crate::Manifest
-     */
-    metadata?: Metadata | null;
-    /**
-     * URI from `dcterms:provenance` in XMP metadata.
-     */
-    provenance?: string | null;
-    /**
-     * Set to `ParentOf` if this is the parent ingredient.
-     *
-     * There can only be one parent ingredient in the ingredients.
-     */
-    relationship?: Relationship & string;
-    /**
-     * A thumbnail image capturing the visual state at the time of import.
-     *
-     * A tuple of thumbnail MIME format (for example `image/jpeg`) and binary bits of the image.
-     */
-    thumbnail?: ResourceRef | null;
-    /**
-     * A human-readable title, generally source filename.
-     */
-    title: string;
-    /**
-     * Validation results.
-     */
-    validation_status?: ValidationStatus[] | null;
-    [k: string]: unknown;
+  /**
+   * The active manifest label (if one exists).
+   *
+   * If this ingredient has a [`ManifestStore`](crate::ManifestStore) , this will hold the label of the active [`Manifest`](crate::Manifest).
+   */
+  active_manifest?: string | null;
+  /**
+   * A reference to the actual data of the ingredient.
+   */
+  data?: ResourceRef | null;
+  /**
+   * Additional information about the data's type to the ingredient V2 structure.
+   */
+  data_types?: AssetType[] | null;
+  /**
+   * Additional description of the ingredient.
+   */
+  description?: string | null;
+  /**
+   * Document ID from `xmpMM:DocumentID` in XMP metadata.
+   */
+  document_id?: string | null;
+  /**
+   * The format of the source file as a MIME type.
+   */
+  format?: string;
+  /**
+   * An optional hash of the asset to prevent duplicates.
+   */
+  hash?: string | null;
+  /**
+   * URI to an informational page about the ingredient or its data.
+   */
+  informational_URI?: string | null;
+  /**
+   * Instance ID from `xmpMM:InstanceID` in XMP metadata.
+   */
+  instance_id?: string | null;
+  /**
+   * A [`ManifestStore`] from the source asset extracted as a binary C2PA blob.
+   *
+   * [`ManifestStore`]: crate::ManifestStore
+   */
+  manifest_data?: ResourceRef | null;
+  /**
+   * Any additional [`Metadata`] as defined in the C2PA spec.
+   *
+   * [`Metadata`]: crate::Manifest
+   */
+  metadata?: Metadata | null;
+  /**
+   * URI from `dcterms:provenance` in XMP metadata.
+   */
+  provenance?: string | null;
+  /**
+   * Set to `ParentOf` if this is the parent ingredient.
+   *
+   * There can only be one parent ingredient in the ingredients.
+   */
+  relationship?: Relationship & string;
+  /**
+   * A thumbnail image capturing the visual state at the time of import.
+   *
+   * A tuple of thumbnail MIME format (for example `image/jpeg`) and binary bits of the image.
+   */
+  thumbnail?: ResourceRef | null;
+  /**
+   * A human-readable title, generally source filename.
+   */
+  title: string;
+  /**
+   * Validation results.
+   */
+  validation_status?: ValidationStatus[] | null;
+  [k: string]: unknown;
 }
 /**
  * The Metadata structure can be used as part of other assertions or on its own to reference others
  */
 export interface Metadata {
-    dataSource?: DataSource | null;
-    /**
-     * A date time in ISO 8601 format.
-     */
-    dateTime?: string;
-    reference?: HashedUri | null;
-    regionOfInterest?: RegionOfInterest | null;
-    reviewRatings?: ReviewRating[] | null;
-    [k: string]: unknown;
+  dataSource?: DataSource | null;
+  /**
+   * A date time in ISO 8601 format.
+   */
+  dateTime?: string;
+  reference?: HashedUri | null;
+  regionOfInterest?: RegionOfInterest | null;
+  reviewRatings?: ReviewRating[] | null;
+  [k: string]: unknown;
 }
 /**
  * A description of the source for assertion data
  */
 export interface DataSource {
-    /**
-     * A list of [`Actor`]s associated with this source.
-     */
-    actors?: Actor[] | null;
-    /**
-     * A human-readable string giving details about the source of the assertion data.
-     */
-    details?: string | null;
-    /**
-     * A value from among the enumerated list indicating the source of the assertion.
-     */
-    type: string;
-    [k: string]: unknown;
+  /**
+   * A list of [`Actor`]s associated with this source.
+   */
+  actors?: Actor[] | null;
+  /**
+   * A human-readable string giving details about the source of the assertion data.
+   */
+  details?: string | null;
+  /**
+   * A value from among the enumerated list indicating the source of the assertion.
+   */
+  type: string;
+  [k: string]: unknown;
 }
 /**
  * Identifies a person responsible for an action.
  */
 export interface Actor {
-    /**
-     * List of references to W3C Verifiable Credentials.
-     */
-    credentials?: HashedUri[] | null;
-    /**
-     * An identifier for a human actor, used when the "type" is `humanEntry.identified`.
-     */
-    identifier?: string | null;
-    [k: string]: unknown;
+  /**
+   * List of references to W3C Verifiable Credentials.
+   */
+  credentials?: HashedUri[] | null;
+  /**
+   * An identifier for a human actor, used when the "type" is `humanEntry.identified`.
+   */
+  identifier?: string | null;
+  [k: string]: unknown;
 }
 /**
  * A region of interest within an asset describing the change.
@@ -13802,63 +14011,63 @@ export interface Actor {
  * This struct can be used from [`Action::changes`](https://docs.rs/c2pa/latest/c2pa/assertions/struct.Action.html#method.changes) or [`Metadata::region_of_interest`](https://docs.rs/c2pa/latest/c2pa/assertions/struct.Metadata.html#method.region_of_interest).
  */
 export interface RegionOfInterest {
-    /**
-     * A free-text string.
-     */
-    description?: string | null;
-    /**
-     * A free-text string representing a machine-readable, unique to this assertion, identifier for the region.
-     */
-    identifier?: string | null;
-    /**
-     * Additional information about the asset.
-     */
-    metadata?: Metadata | null;
-    /**
-     * A free-text string representing a human-readable name for the region which might be used in a user interface.
-     */
-    name?: string | null;
-    /**
-     * A range describing the region of interest for the specific asset.
-     */
-    region: Range[];
-    /**
-     * A value from our controlled vocabulary or an entity-specific value (e.g., com.litware.coolArea) that represents the role of a region among other regions.
-     */
-    role?: Role | null;
-    /**
-     * A value from a controlled vocabulary such as <https://cv.iptc.org/newscodes/imageregiontype/> or an entity-specific value (e.g., com.litware.newType) that represents the type of thing(s) depicted by a region.
-     *
-     * Note this field serializes/deserializes into the name `type`.
-     */
-    type?: string | null;
-    [k: string]: unknown;
+  /**
+   * A free-text string.
+   */
+  description?: string | null;
+  /**
+   * A free-text string representing a machine-readable, unique to this assertion, identifier for the region.
+   */
+  identifier?: string | null;
+  /**
+   * Additional information about the asset.
+   */
+  metadata?: Metadata | null;
+  /**
+   * A free-text string representing a human-readable name for the region which might be used in a user interface.
+   */
+  name?: string | null;
+  /**
+   * A range describing the region of interest for the specific asset.
+   */
+  region: Range[];
+  /**
+   * A value from our controlled vocabulary or an entity-specific value (e.g., com.litware.coolArea) that represents the role of a region among other regions.
+   */
+  role?: Role | null;
+  /**
+   * A value from a controlled vocabulary such as <https://cv.iptc.org/newscodes/imageregiontype/> or an entity-specific value (e.g., com.litware.newType) that represents the type of thing(s) depicted by a region.
+   *
+   * Note this field serializes/deserializes into the name `type`.
+   */
+  type?: string | null;
+  [k: string]: unknown;
 }
 /**
  * A spatial, temporal, frame, or textual range describing the region of interest.
  */
 export interface Range {
-    /**
-     * A frame range.
-     */
-    frame?: Frame | null;
-    /**
-     * A spatial range.
-     */
-    shape?: Shape | null;
-    /**
-     * A textual range.
-     */
-    text?: Text | null;
-    /**
-     * A temporal range.
-     */
-    time?: Time | null;
-    /**
-     * The type of range of interest.
-     */
-    type: RangeType;
-    [k: string]: unknown;
+  /**
+   * A frame range.
+   */
+  frame?: Frame | null;
+  /**
+   * A spatial range.
+   */
+  shape?: Shape | null;
+  /**
+   * A textual range.
+   */
+  text?: Text | null;
+  /**
+   * A temporal range.
+   */
+  time?: Time | null;
+  /**
+   * The type of range of interest.
+   */
+  type: RangeType;
+  [k: string]: unknown;
 }
 /**
  * A frame range representing starting and ending frames or pages.
@@ -13866,87 +14075,87 @@ export interface Range {
  * If both `start` and `end` are missing, the frame will span the entire asset.
  */
 export interface Frame {
-    /**
-     * The end of the frame inclusive or the end of the asset if not present.
-     */
-    end?: number | null;
-    /**
-     * The start of the frame or the end of the asset if not present.
-     *
-     * The first frame/page starts at 0.
-     */
-    start?: number | null;
-    [k: string]: unknown;
+  /**
+   * The end of the frame inclusive or the end of the asset if not present.
+   */
+  end?: number | null;
+  /**
+   * The start of the frame or the end of the asset if not present.
+   *
+   * The first frame/page starts at 0.
+   */
+  start?: number | null;
+  [k: string]: unknown;
 }
 /**
  * A spatial range representing rectangle, circle, or a polygon.
  */
 export interface Shape {
-    /**
-     * The height of a rectnagle.
-     *
-     * This field can be ignored for circles and polygons.
-     */
-    height?: number | null;
-    /**
-     * If the range is inside the shape.
-     *
-     * The default value is true.
-     */
-    inside?: boolean | null;
-    /**
-     * THe origin of the coordinate in the shape.
-     */
-    origin: Coordinate;
-    /**
-     * The type of shape.
-     */
-    type: ShapeType;
-    /**
-     * The type of unit for the shape range.
-     */
-    unit: UnitType;
-    /**
-     * The vertices of the polygon.
-     *
-     * This field can be ignored for rectangles and circles.
-     */
-    vertices?: Coordinate[] | null;
-    /**
-     * The width for rectangles or diameter for circles.
-     *
-     * This field can be ignored for polygons.
-     */
-    width?: number | null;
-    [k: string]: unknown;
+  /**
+   * The height of a rectnagle.
+   *
+   * This field can be ignored for circles and polygons.
+   */
+  height?: number | null;
+  /**
+   * If the range is inside the shape.
+   *
+   * The default value is true.
+   */
+  inside?: boolean | null;
+  /**
+   * THe origin of the coordinate in the shape.
+   */
+  origin: Coordinate;
+  /**
+   * The type of shape.
+   */
+  type: ShapeType;
+  /**
+   * The type of unit for the shape range.
+   */
+  unit: UnitType;
+  /**
+   * The vertices of the polygon.
+   *
+   * This field can be ignored for rectangles and circles.
+   */
+  vertices?: Coordinate[] | null;
+  /**
+   * The width for rectangles or diameter for circles.
+   *
+   * This field can be ignored for polygons.
+   */
+  width?: number | null;
+  [k: string]: unknown;
 }
 /**
  * An x, y coordinate used for specifying vertices in polygons.
  */
 export interface Coordinate {
-    /**
-     * The coordinate along the x-axis.
-     */
-    x: number;
-    /**
-     * The coordinate along the y-axis.
-     */
-    y: number;
-    [k: string]: unknown;
+  /**
+   * The coordinate along the x-axis.
+   */
+  x: number;
+  /**
+   * The coordinate along the y-axis.
+   */
+  y: number;
+  [k: string]: unknown;
 }
 /**
  * A textual range representing multiple (possibly discontinuous) ranges of text.
  */
 export interface TextSelectorRange {
-    /**
-     * The end of the text range.
-     */
-    end?: TextSelector | null;
-    /**
-     * The start (or entire) text range.
-     */
-    selector: TextSelector;
-    [k: string]: unknown;
+  /**
+   * The end of the text range.
+   */
+  end?: TextSelector | null;
+  /**
+   * The start (or entire) text range.
+   */
+  selector: TextSelector;
+  [k: string]: unknown;
 }
 /**
  * Selects a range of text via a fragment identifier.
@@ -13954,28 +14163,28 @@ export interface TextSelectorRange {
  * This is modeled after the W3C Web Annotation selector model.
  */
 export interface TextSelector {
-    /**
-     * The end character offset or the end of the fragment if not present.
-     */
-    end?: number | null;
-    /**
-     * Fragment identifier as per RFC3023 (XML) or ISO 32000-2 (PDF), Annex O.
-     */
-    fragment: string;
-    /**
-     * The start character offset or the start of the fragment if not present.
-     */
-    start?: number | null;
-    [k: string]: unknown;
+  /**
+   * The end character offset or the end of the fragment if not present.
+   */
+  end?: number | null;
+  /**
+   * Fragment identifier as per RFC3023 (XML) or ISO 32000-2 (PDF), Annex O.
+   */
+  fragment: string;
+  /**
+   * The start character offset or the start of the fragment if not present.
+   */
+  start?: number | null;
+  [k: string]: unknown;
 }
 /**
  * A temporal range representing a starting time to an ending time.
  */
 export interface ReviewRating {
-    code?: string | null;
-    explanation: string;
-    value: number;
-    [k: string]: unknown;
+  code?: string | null;
+  explanation: string;
+  value: number;
+  [k: string]: unknown;
 }
 /**
  * A `ValidationStatus` struct describes the validation status of a specific part of a manifest.
@@ -13983,50 +14192,54 @@ export interface ReviewRating {
  * See <https://c2pa.org/specifications/specifications/1.4/specs/C2PA_Specification.html#_existing_manifests>.
  */
 export interface ValidationStatus {
-    code: string;
-    explanation?: string | null;
-    url?: string | null;
-    [k: string]: unknown;
+  code: string;
+  explanation?: string | null;
+  url?: string | null;
+  [k: string]: unknown;
 }
 /**
  * Holds information about a signature
  */
 export interface SignatureInfo {
-    /**
-     * human readable issuing authority for this signature
-     */
-    alg?: SigningAlg | null;
-    /**
-     * The serial number of the certificate
-     */
-    cert_serial_number?: string | null;
-    /**
-     * human readable issuing authority for this signature
-     */
-    issuer?: string | null;
-    /**
-     * revocation status of the certificate
-     */
-    revocation_status?: boolean | null;
-    /**
-     * the time the signature was created
-     */
-    time?: string | null;
-    [k: string]: unknown;
+  /**
+   * human readable issuing authority for this signature
+   */
+  alg?: SigningAlg | null;
+  /**
+   * The serial number of the certificate
+   */
+  cert_serial_number?: string | null;
+  /**
+   * human readable issuing authority for this signature
+   */
+  issuer?: string | null;
+  /**
+   * revocation status of the certificate
+   */
+  revocation_status?: boolean | null;
+  /**
+   * the time the signature was created
+   */
+  time?: string | null;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Specifies whether the asset can be used for data mining, AI training, etc.
  */
 export interface TrainingDataMiningAssertion {
-    /**
-     * Map of usage categories to an object with 'use' and optional 'constraint_info'. Keys can be c2pa.data_mining, c2pa.ai_training, etc.
-     */
-    entries: {};
+  /**
+   * Map of usage categories to an object with 'use' and optional 'constraint_info'. Keys can be c2pa.data_mining, c2pa.ai_training, etc.
+   */
+  entries: {};
 }
 /**
  * Specifies the usage status for a particular category of data mining or ML usage.
@@ -14038,152 +14251,164 @@ export interface TrainingDataMiningAssertion {
  * via the `patternProperty` "^[A-Za-z0-9_.-]+$".
  */
 export interface TrainingMiningEntry {
-    use: "allowed" | "notAllowed" | "constrained";
-    /**
-     * If 'use' is 'constrained', additional details can go here.
-     */
-    constraint_info?: string;
+  use: "allowed" | "notAllowed" | "constrained";
+  /**
+   * If 'use' is 'constrained', additional details can go here.
+   */
+  constraint_info?: string;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A Verifiable Credential for Email Authentication
  */
 export interface EmailAuthenticationCredential {
-    "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
-    type: ("VerifiableCredential" | "SocialProfile" | "Person")[];
-    issuer: {
-        id?: string;
-        name?: string;
-        handle: string;
-        subjectOf: {
-            type: "Thing";
-            name: string;
-            description: string;
-            image: string;
-            [k: string]: unknown;
-        };
-        url: string;
-        [k: string]: unknown;
+  "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
+  type: ("VerifiableCredential" | "SocialProfile" | "Person")[];
+  issuer: {
+    id?: string;
+    name?: string;
+    handle: string;
+    subjectOf: {
+      type: "Thing";
+      name: string;
+      description: string;
+      image: string;
+      [k: string]: unknown;
     };
-    issuanceDate: string;
-    expirationDate: string;
-    credentialSubject: {
-        id: string;
-        credentialInternalId: string;
-        category: "social";
-        social: {
-            subjectOf: {
-                type: "Thing" | "SocialProfile";
-                name: string;
-                description: string;
-                image: string;
-                [k: string]: unknown;
-            };
-            [k: string]: unknown;
-        };
-        type: "Thing";
-        name: string;
-        description?: string;
-        /**
-         * Image representing the credential (schema:image)
-         */
-        image?: string;
-        identifier?: string;
-        /**
-         * Reference links for this thing (schema:sameAs)
-         */
-        sameAs?: string[];
-        [k: string]: unknown;
-    };
+    url: string;
     [k: string]: unknown;
+  };
+  issuanceDate: string;
+  expirationDate: string;
+  credentialSubject: {
+    id: string;
+    credentialInternalId: string;
+    category: "social";
+    social: {
+      subjectOf: {
+        type: "Thing" | "SocialProfile";
+        name: string;
+        description: string;
+        image: string;
+        [k: string]: unknown;
+      };
+      [k: string]: unknown;
+    };
+    type: "Thing";
+    name: string;
+    description?: string;
+    /**
+     * Image representing the credential (schema:image)
+     */
+    image?: string;
+    identifier?: string;
+    /**
+     * Reference links for this thing (schema:sameAs)
+     */
+    sameAs?: string[];
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * A Social Authentication Credential based on schema.org standards
  */
 export interface SocialAuthenticationCredential {
-    "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
-    type: ("VerifiableCredential" | "Social" | "Person")[];
-    issuer: {
-        id?: string;
-        name?: string;
-        handle: string;
-        subjectOf: {
-            type: "Thing";
-            name: string;
-            description: string;
-            image: string;
-            [k: string]: unknown;
-        };
-        url: string;
-        [k: string]: unknown;
+  "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
+  type: ("VerifiableCredential" | "Social" | "Person")[];
+  issuer: {
+    id?: string;
+    name?: string;
+    handle: string;
+    subjectOf: {
+      type: "Thing";
+      name: string;
+      description: string;
+      image: string;
+      [k: string]: unknown;
     };
-    issuanceDate: string;
-    expirationDate: string;
-    credentialSubject: {
-        id: string;
-        credentialInternalId: string;
-        category: "social";
-        social: {
-            /**
-             * The social platform that has been authenticated
-             */
-            platform?: "Discord" | "GitHub" | "LinkedIn" | "Google" | "Facebook" | "Telegram";
-            description: string;
-            subjectOf?: {
-                type: "Thing" | "SocialProfile";
-                name: "SocialProfile";
-                description: string;
-                /**
-                 * Image representing the social platform being authenticated (schema:image)
-                 */
-                image: string;
-                identifier?: string;
-                /**
-                 * Reference links for this thing (schema:sameAs)
-                 */
-                sameAs: string[];
-                [k: string]: unknown;
-            };
-            webPage: {
-                type: "ProfilePage";
-                description: string;
-                name: string;
-                identifier: string;
-                lastReviewed: string;
-                [k: string]: unknown;
-            }[];
-            [k: string]: unknown;
-        };
-        type: "Thing";
-        name: string;
+    url: string;
+    [k: string]: unknown;
+  };
+  issuanceDate: string;
+  expirationDate: string;
+  credentialSubject: {
+    id: string;
+    credentialInternalId: string;
+    category: "social";
+    social: {
+      /**
+       * The social platform that has been authenticated
+       */
+      platform?: "Discord" | "GitHub" | "LinkedIn" | "Google" | "Facebook" | "Telegram";
+      description: string;
+      subjectOf?: {
+        type: "Thing" | "SocialProfile";
+        name: "SocialProfile";
         description: string;
         /**
-         * Image representing the credential (schema:image)
+         * Image representing the social platform being authenticated (schema:image)
          */
         image: string;
-        identifier: string;
+        identifier?: string;
         /**
          * Reference links for this thing (schema:sameAs)
          */
         sameAs: string[];
         [k: string]: unknown;
+      };
+      webPage: {
+        type: "ProfilePage";
+        description: string;
+        name: string;
+        identifier: string;
+        lastReviewed: string;
+        [k: string]: unknown;
+      }[];
+      [k: string]: unknown;
     };
+    type: "Thing";
+    name: string;
+    description: string;
+    /**
+     * Image representing the credential (schema:image)
+     */
+    image: string;
+    identifier: string;
+    /**
+     * Reference links for this thing (schema:sameAs)
+     */
+    sameAs: string[];
     [k: string]: unknown;
+  };
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Stores the DID of the subject that owns the credential
  */
@@ -14207,7 +14432,13 @@ export type GovernmentIdentifier = string;
 /**
  * Type of government or national identifier, allowed values: passport, national id document, tax id, drivers license, social service number (ssn, social issurance number, or health service id), other.
  */
-export type GovernmentIdentifierType = "passport" | "national id document" | "tax id" | "drivers license" | "social service number" | "other";
+export type GovernmentIdentifierType =
+  | "passport"
+  | "national id document"
+  | "tax id"
+  | "drivers license"
+  | "social service number"
+  | "other";
 /**
  * Gender that the credential subject identifies as. Some reference values (non-exhaustive list): male, female, transgender male, transgender female, non-binary….
  */
@@ -14436,172 +14667,182 @@ export type CustomBooleanField3 = boolean;
  * Title of the credential subject e.g., "Dr." or "Sir"
  */
 export type Salutation = string;
+
 /**
  * A schema that defines basic fields for identifying a person, can be used in combination with other schemas for KYC purposes. This schema is part of the Privado ID Common Schemas Initiative. The schema aligns with the Decentralized Identity Foundation (DIF) Credential Schema standard for Basic Person, although not all fields are supported due to protocol limitations. Basic Person Schema spec at DIF: https://identity.foundation/credential-schemas/#basic-person-schema
  */
 export interface BasicPersonSchema {
-    "@context": string | unknown[] | {
+  "@context":
+    | string
+    | unknown[]
+    | {
         [k: string]: unknown;
-    };
-    expirationDate?: string;
+      };
+  expirationDate?: string;
+  id: string;
+  issuanceDate: string;
+  issuer:
+    | string
+    | {
+        id: string;
+        [k: string]: unknown;
+      };
+  type: string | string[];
+  credentialSubject: CredentialSubject;
+  credentialSchema: {
     id: string;
-    issuanceDate: string;
-    issuer: string | {
-        id: string;
-        [k: string]: unknown;
-    };
-    type: string | string[];
-    credentialSubject: CredentialSubject;
-    credentialSchema: {
-        id: string;
-        type: string;
-        [k: string]: unknown;
-    };
+    type: string;
     [k: string]: unknown;
+  };
+  [k: string]: unknown;
 }
 /**
  * Stores the data of the credential
  */
 export interface CredentialSubject {
-    id?: CredentialSubjectID;
-    fullName: FullName;
-    firstName: FirstName;
-    familyName?: FamilyName;
-    middleName?: MiddleName;
-    alsoKnownAs?: AlsoKnownAs;
-    dateOfBirth: DateOfBirth;
-    govermentIdentifier: GovernmentIdentifier;
-    governmentIdentifierType: GovernmentIdentifierType;
-    gender?: Gender;
-    email?: Email;
-    sex?: Sex;
-    phoneNumber?: PhoneNumber;
-    phoneNumberVerified?: PhoneNumberVerifiedBoolean;
-    nameAndFamilyNameAtBirth?: NameAndFamilyNameAtBirth;
-    placeOfBirth?: PlaceOfBirth;
-    addresses?: AddressesList;
-    nationalities?: Nationalities;
-    customFields?: CustomFields;
-    title?: Title;
-    salutation?: Salutation;
-    [k: string]: unknown;
+  id?: CredentialSubjectID;
+  fullName: FullName;
+  firstName: FirstName;
+  familyName?: FamilyName;
+  middleName?: MiddleName;
+  alsoKnownAs?: AlsoKnownAs;
+  dateOfBirth: DateOfBirth;
+  govermentIdentifier: GovernmentIdentifier;
+  governmentIdentifierType: GovernmentIdentifierType;
+  gender?: Gender;
+  email?: Email;
+  sex?: Sex;
+  phoneNumber?: PhoneNumber;
+  phoneNumberVerified?: PhoneNumberVerifiedBoolean;
+  nameAndFamilyNameAtBirth?: NameAndFamilyNameAtBirth;
+  placeOfBirth?: PlaceOfBirth;
+  addresses?: AddressesList;
+  nationalities?: Nationalities;
+  customFields?: CustomFields;
+  title?: Title;
+  salutation?: Salutation;
+  [k: string]: unknown;
 }
 /**
  * Defines the first and the family name(s) of the credential subject at the time of their birth. Structured as a json object.
  */
 export interface NameAndFamilyNameAtBirth {
-    firstName?: FirstName1;
-    familyName?: FamilyName1;
-    [k: string]: unknown;
+  firstName?: FirstName1;
+  familyName?: FamilyName1;
+  [k: string]: unknown;
 }
 /**
  * Defines the place where the credential subject is born. The value of this is a JSON object.
  */
 export interface PlaceOfBirth {
-    locality?: Locality;
-    region?: Region;
-    countryCode?: CountryCode;
-    countryCodeNumber?: CountryCodeNumber;
-    [k: string]: unknown;
+  locality?: Locality;
+  region?: Region;
+  countryCode?: CountryCode;
+  countryCodeNumber?: CountryCodeNumber;
+  [k: string]: unknown;
 }
 /**
  * Various addresses associated with the credential subject.
  */
 export interface AddressesList {
-    primaryAddress?: PrimaryAddress;
-    homeAddress?: HomeAddress;
-    businessAddress?: BusinessAddress;
-    mailingAddress?: MailingAddress;
-    [k: string]: unknown;
+  primaryAddress?: PrimaryAddress;
+  homeAddress?: HomeAddress;
+  businessAddress?: BusinessAddress;
+  mailingAddress?: MailingAddress;
+  [k: string]: unknown;
 }
 /**
  * Primary address of the credential subject.
  */
 export interface PrimaryAddress {
-    addressLine1?: AddressLine1;
-    addressLine2?: AddressLine2;
-    locality?: Locality1;
-    region?: Region1;
-    countryCode?: CountryCode1;
-    postalCode?: PostalCode;
-    countryCodeNumber?: CountryCodeNumber1;
-    unstructuredAddress?: UnstructuredAddress;
-    [k: string]: unknown;
+  addressLine1?: AddressLine1;
+  addressLine2?: AddressLine2;
+  locality?: Locality1;
+  region?: Region1;
+  countryCode?: CountryCode1;
+  postalCode?: PostalCode;
+  countryCodeNumber?: CountryCodeNumber1;
+  unstructuredAddress?: UnstructuredAddress;
+  [k: string]: unknown;
 }
 /**
  * Home address of the credential subject.
  */
 export interface HomeAddress {
-    addressLine1?: AddressLine11;
-    addressLine2?: AddressLine21;
-    locality?: Locality2;
-    region?: Region2;
-    countryCode?: CountryCode2;
-    postalCode?: PostalCode1;
-    countryCodeNumber?: CountryCodeNumber2;
-    unstructuredAddress?: UnstructuredAddress1;
-    [k: string]: unknown;
+  addressLine1?: AddressLine11;
+  addressLine2?: AddressLine21;
+  locality?: Locality2;
+  region?: Region2;
+  countryCode?: CountryCode2;
+  postalCode?: PostalCode1;
+  countryCodeNumber?: CountryCodeNumber2;
+  unstructuredAddress?: UnstructuredAddress1;
+  [k: string]: unknown;
 }
 /**
  * Business address of the credential subject.
  */
 export interface BusinessAddress {
-    addressLine1?: AddressLine12;
-    addressLine2?: AddressLine22;
-    locality?: Locality3;
-    region?: Region3;
-    countryCode?: CountryCode3;
-    postalCode?: PostalCode2;
-    countryCodeNumber?: CountryCodeNumber3;
-    unstructuredAddress?: UnstructuredAddress2;
-    [k: string]: unknown;
+  addressLine1?: AddressLine12;
+  addressLine2?: AddressLine22;
+  locality?: Locality3;
+  region?: Region3;
+  countryCode?: CountryCode3;
+  postalCode?: PostalCode2;
+  countryCodeNumber?: CountryCodeNumber3;
+  unstructuredAddress?: UnstructuredAddress2;
+  [k: string]: unknown;
 }
 /**
  * Address through which credential subject can be sent correspondence via postal mail.
  */
 export interface MailingAddress {
-    addressLine1?: AddressLine13;
-    addressLine2?: AddressLine23;
-    locality?: Locality4;
-    region?: Region4;
-    countryCode?: CountryCode4;
-    postalCode?: PostalCode3;
-    countryCodeNumber?: CountryCodeNumber4;
-    unstructuredAddress?: UnstructuredAddress3;
-    [k: string]: unknown;
+  addressLine1?: AddressLine13;
+  addressLine2?: AddressLine23;
+  locality?: Locality4;
+  region?: Region4;
+  countryCode?: CountryCode4;
+  postalCode?: PostalCode3;
+  countryCodeNumber?: CountryCodeNumber4;
+  unstructuredAddress?: UnstructuredAddress3;
+  [k: string]: unknown;
 }
 /**
  * Credential subject's nationalities.
  */
 export interface Nationalities {
-    nationality1CountryCode?: Nationality1CountryCode;
-    nationality2CountryCode?: Nationality2CountryCode;
-    nationality3CountryCode?: Nationality3CountryCode;
-    nationality1CountryCodeNumber?: Nationality1CountryCodeNumber;
-    nationality2CountryCodeNumber?: Nationality2CountryCodeNumber;
-    nationality3CountryCodeNumber?: Nationality3CountryCodeNumber;
-    [k: string]: unknown;
+  nationality1CountryCode?: Nationality1CountryCode;
+  nationality2CountryCode?: Nationality2CountryCode;
+  nationality3CountryCode?: Nationality3CountryCode;
+  nationality1CountryCodeNumber?: Nationality1CountryCodeNumber;
+  nationality2CountryCodeNumber?: Nationality2CountryCodeNumber;
+  nationality3CountryCodeNumber?: Nationality3CountryCodeNumber;
+  [k: string]: unknown;
 }
 /**
  * Optional custom fields that can be added by the credential issuer when required. They would be included inside this json object.
  */
 export interface CustomFields {
-    string1?: CustomStringField1;
-    string2?: CustomStringField2;
-    string3?: CustomStringField3;
-    number1?: CustomNumberField1;
-    number2?: CustomNumberField2;
-    number3?: CustomNumberField3;
-    boolean1?: CustomBooleanField1;
-    boolean2?: CustomBooleanField2;
-    boolean3?: CustomBooleanField3;
-    [k: string]: unknown;
+  string1?: CustomStringField1;
+  string2?: CustomStringField2;
+  string3?: CustomStringField3;
+  number1?: CustomNumberField1;
+  number2?: CustomNumberField2;
+  number3?: CustomNumberField3;
+  boolean1?: CustomBooleanField1;
+  boolean2?: CustomBooleanField2;
+  boolean3?: CustomBooleanField3;
+  [k: string]: unknown;
 }
+
+
+/* eslint-disable */
 /**
  * This file was automatically generated by json-schema-to-typescript.
  * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
  * and run json-schema-to-typescript to regenerate this file.
  */
+
 /**
  * Stores the DID of the subject that owns the credential
  */
@@ -14634,39 +14875,44 @@ export type Id = string;
  * Expresses the credential status type (method). The value should provide enough information to determine the current status of the credential.
  */
 export interface ProofOfAge {
-    "@context": string | unknown[] | {
+  "@context":
+    | string
+    | unknown[]
+    | {
         [k: string]: unknown;
-    };
-    expirationDate?: string;
+      };
+  expirationDate?: string;
+  id: string;
+  issuanceDate: string;
+  issuer:
+    | string
+    | {
+        id: string;
+        [k: string]: unknown;
+      };
+  type: string | string[];
+  credentialSubject: CredentialSubject;
+  credentialSchema: {
     id: string;
-    issuanceDate: string;
-    issuer: string | {
-        id: string;
-        [k: string]: unknown;
-    };
-    type: string | string[];
-    credentialSubject: CredentialSubject;
-    credentialSchema: {
-        id: string;
-        type: string;
-        [k: string]: unknown;
-    };
-    credentialStatus?: CredentialStatus;
+    type: string;
     [k: string]: unknown;
+  };
+  credentialStatus?: CredentialStatus;
+  [k: string]: unknown;
 }
 /**
  * Stores the data of the credential
  */
 export interface EstimatedAgeRange {
-    minAgeRange: MinimumAgeRange;
-    maxAgeRange: MaximumAgeRange;
-    [k: string]: unknown;
+  minAgeRange: MinimumAgeRange;
+  maxAgeRange: MaximumAgeRange;
+  [k: string]: unknown;
 }
 /**
  * Allows the discovery of information about the current status of the credential, such as whether it is suspended or revoked.
  */
 export interface CredentialStatus {
-    id: Id;
-    type: Type;
-    [k: string]: unknown;
+  id: Id;
+  type: Type;
+  [k: string]: unknown;
 }

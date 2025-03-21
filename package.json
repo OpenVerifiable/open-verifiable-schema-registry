@@ -1,6 +1,6 @@
 {
   "name": "@openverifiable/open-verifiable-types",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A collection of schemas for open and verifiable types.",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -11,12 +11,12 @@
   ],
   "website": "https://openverifiable.org",
   "scripts": {
-    "clean": "rm -rf dist && rm -rf src/schemaTypes && mkdir src/schemaTypes && touch src/schemaTypes/index.ts",
+    "clean": "rm -rf dist && rm -rf types/schemaTypes && mkdir types/schemaTypes && touch types/schemaTypes/index.ts",
+    "copy-types": "cp dist/schemaTypes/index.d.ts dist/index.d.ts && rm -rf dist/schemaTypes",
     "export-types": "node exportSchemas.js",
     "lint:eslint": "eslint test/**/*.ts",
     "build": "tsc -p .",
-    "test": "npm run build && tsc -p test/",
-    "prepublishOnly": "npm run build"
+    "test": "npm run build && tsc -p test/"
   },
   "repository": {
     "type": "git",

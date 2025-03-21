@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://openverifiable.org/schemas/cheqd/EmailAuthenticationCredential.schema.json",
+  "version": "0.0.1",
+  "title": "EmailAuthenticationCredential",
+  "description": "A Verifiable Credential for Email Authentication",
+  "type": "object",
+  "required": ["@context", "type", "issuer", "issuanceDate", "expirationDate", "credentialSubject"],
+  "properties": {
+    "@context": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://schema.org"
+        ]
+      }
+    },
+    "type": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["VerifiableCredential", "SocialProfile", "Person"]
+      }
+    },
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "handle": { "type": "string" },
+        "subjectOf": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["Thing"] },
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "image": { "type": "string", "format": "uri" }
+          },
+          "required": ["type", "name", "description", "image"]
+        },
+        "url": { "type": "string", "format": "uri" }
+      },
+      "required": ["subjectOf", "handle", "url"]
+    },
+    "issuanceDate": { "type": "string", "format": "date" },
+    "expirationDate": { "type": "string", "format": "date" },
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "credentialInternalId": { "type": "string" },
+        "category": { "type": "string", "enum": ["social"] },
+        "social": {
+          "type": "object",
+          "properties": {
+            "subjectOf": {
+                "type": "object",
+                "properties": {
+                    "type": { "type": "string", "enum": ["Thing", "SocialProfile"] },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "image": { "type": "string", "format": "uri" }
+                },
+                "required": ["type", "name", "description", "image"]
+                }
+            },
+            "Person": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string", "format": "email" },
+                "identifier": { "type": "string" },
+                "lastReviewed": { "type": "string", "format": "date-time" },
+                "name": { "type": "string" },
+                "url": { "type": "string", "format": "uri" },
+                "subjectOf": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string", "enum": ["Person"] },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "image": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "Image representing the person who controls the email address (schema:image)"
+                    },
+                    "identifier": { "type": "string" },
+                    "sameAs": {
+                      "type": "array",
+                      "items": { "type": "string", "format": "uri" },
+                      "description": "Reference links for this thing (schema:sameAs)"
+                    }
+                  },
+                  "required": ["type", "name", "description", "image"]
+                },
+                "knows": {
+                  "type": "array",
+                  "items": { "type": "string", "format": "uri" },
+                  "description": "Connections or references for the person"
+                }
+              },
+              "required": ["email", "identifier", "lastReviewed"]
+            },
+          "required": ["subjectOf", "Person"]
+        },
+        "type": { "type": "string", "enum": ["Thing"] },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Image representing the credential (schema:image)"
+        },
+        "identifier": { "type": "string" },
+        "sameAs": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Reference links for this thing (schema:sameAs)"
+        }
+      },
+      "required": ["id", "credentialInternalId", "category", "social", "type", "name"]
+    }
+  }
+}

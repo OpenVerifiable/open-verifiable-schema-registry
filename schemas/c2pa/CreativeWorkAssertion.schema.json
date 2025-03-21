@@ -1,0 +1,562 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/c2pa/CreativeWorkAssertion.schema.json",
+  "title": "CreativeWorkAssertion",
+  "version": "0.0.1",
+  "type": "object",
+  "description": "Indicates the asset is a creative work (Schema.org).",
+  "properties": {
+    "@context": {
+      "type": ["string", "array", "object"],
+      "description": "Should include 'https://schema.org' plus any additional context if needed."
+    },
+    "@type": {
+      "type": "string",
+      "const": "CreativeWork",
+      "description": "Indicates this is a schema.org CreativeWork"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL for the creative work."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name or title of the creative work."
+    },
+    "headline": {
+      "type": "string",
+      "description": "Headline of the article, book, or other creative work."
+    },
+    "description": {
+      "type": "string",
+      "description": "A short summary describing the creative work."
+    },
+    "creator": {
+      "description": "The creator(s)/author(s) of this work. Could be Person or Organization.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PersonOrOrg"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PersonOrOrg"
+          }
+        }
+      ]
+    },
+    "author": {
+      "description": "Synonym for creator, but also can be Person or Organization.",
+      "oneOf": [
+        { "$ref": "#/$defs/PersonOrOrg" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PersonOrOrg" }
+        }
+      ]
+    },
+    "publisher": {
+      "description": "The publisher of the creative work.",
+      "$ref": "#/$defs/PersonOrOrg"
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date/time of creation (ISO 8601)."
+    },
+    "datePublished": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date/time of first publication (ISO 8601)."
+    },
+    "dateModified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date/time this work was most recently modified (ISO 8601)."
+    },
+    "license": {
+      "type": ["string", "object"],
+      "description": "A license document that applies to this content (URI or an object)."
+    },
+    "keywords": {
+      "description": "Keywords or tags used to describe this content.",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "genre": {
+      "description": "Genre of the creative work (string or array of strings).",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      ]
+    },
+    "inLanguage": {
+      "description": "Primary language of the creative work (BCP-47 or ISO 639 code).",
+      "type": "string"
+    },
+    "contentRating": {
+      "type": "string",
+      "description": "Official rating of the content, e.g. MPAA PG-13."
+    },
+    "isPartOf": {
+      "description": "Indicates a parent creative work that this is a part of.",
+      "$ref": "#/$defs/CreativeWorkRef"
+    },
+    "exampleOfWork": {
+      "description": "A work that this is an example/instance of.",
+      "$ref": "#/$defs/CreativeWorkRef"
+    },
+    "thumbnailUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL for a thumbnail image relevant to this creative work."
+    },
+    "image": {
+      "description": "An image of the creative work (URL or ImageObject).",
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        { "$ref": "#/$defs/ImageObject" }
+      ]
+    },
+    "about": {
+      "description": "The subject matter of this content (Thing, or array of Thing).",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Thing"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Thing"
+          }
+        }
+      ]
+    },
+    "text": {
+      "type": "string",
+      "description": "The textual content of this creative work if applicable."
+    },
+    "copyrightHolder": {
+      "description": "The entity holding the legal copyright to the work. Usually Person or Organization.",
+      "oneOf": [
+        { "$ref": "#/$defs/PersonOrOrg" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/PersonOrOrg" }
+        }
+      ]
+    },
+    "copyrightYear": {
+      "type": "integer",
+      "description": "Year of first assertion of copyright."
+    },
+    "accessMode": {
+      "type": "string",
+      "description": "Indicates the primary way an individual can access or use the content (e.g., 'visual', 'textual')."
+    },
+    "accessModeSufficient": {
+      "type": "array",
+      "description": "A list of ways sufficient to understand or use the content, e.g., ['textual','visual'].",
+      "items": { "type": "string" }
+    }
+  },
+  "required": ["@context", "@type"],
+  "$defs": {
+    "PersonOrOrg": {
+      "description": "Represents a Person or an Organization from schema.org",
+      "oneOf": [
+        { "$ref": "#/$defs/Person" },
+        { "$ref": "#/$defs/Organization" }
+      ]
+    },
+    "Person": {
+      "type": "object",
+      "description": "Represents an individual person, based on schema.org/Person",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Person",
+          "description": "Indicates this object is a schema.org Person"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the person, e.g. 'Alice Smith'"
+        },
+        "givenName": {
+          "type": "string",
+          "description": "Given (first) name"
+        },
+        "familyName": {
+          "type": "string",
+          "description": "Family (last) name"
+        },
+        "additionalName": {
+          "type": ["string", "array"],
+          "description": "Middle name(s) or additional name(s). Can be a string or array of strings.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          ]
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "The person's job title, e.g., 'Software Engineer'"
+        },
+        "affiliation": {
+          "description": "Organizations that this person is affiliated with",
+          "oneOf": [
+            { "$ref": "#/$defs/Organization" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/Organization" }
+            }
+          ]
+        },
+        "worksFor": {
+          "description": "Organizations for which the person works",
+          "oneOf": [
+            { "$ref": "#/$defs/Organization" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/Organization" }
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of a web page for this person"
+        },
+        "sameAs": {
+          "description": "URL(s) indicating an unambiguous reference to the person's identity (e.g., Wikipedia, LinkedIn)",
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          ]
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Person's date of birth in ISO8601 format (YYYY-MM-DD)"
+        },
+        "gender": {
+          "type": "string",
+          "description": "Person's gender (string)."
+        },
+        "image": {
+          "description": "Image(s) depicting this person (URL string or schema.org ImageObject).",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "$ref": "#/$defs/ImageObject" },
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  { "type": "string", "format": "uri" },
+                  { "$ref": "#/$defs/ImageObject" }
+                ]
+              }
+            }
+          ]
+        },
+        "identifier": {
+          "type": ["string", "object"],
+          "description": "Could be an external ID or an object with more ID details."
+        }
+      },
+      "required": ["@type", "name"],
+      "additionalProperties": false
+    },
+    "ContactPoint": {
+      "type": "object",
+      "description": "Contact information for a person or organization",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "ContactPoint"
+        },
+        "contactType": {
+          "type": "string",
+          "description": "A brief description of what the contact is for (e.g. 'customer service')."
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "areaServed": {
+          "type": "string",
+          "description": "The geographic area where this contact point can provide service."
+        }
+      },
+      "required": ["@type", "contactType"],
+      "additionalProperties": false
+    },
+    "Organization": {
+      "type": "object",
+      "description": "Represents an organization, based on schema.org/Organization",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Organization",
+          "description": "Indicates this object is a schema.org Organization"
+        },
+        "name": {
+          "type": "string",
+          "description": "The official (common) name of the organization."
+        },
+        "legalName": {
+          "type": "string",
+          "description": "Formal, legal name if different from 'name'."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "A URL for the organization, e.g. corporate homepage."
+        },
+        "identifier": {
+          "type": ["string", "object"],
+          "description": "An external or internal ID referencing this organization (e.g., company registration number, DUNS, etc.)."
+        },
+        "logo": {
+          "description": "An associated logo image for the organization (URL or schema.org ImageObject).",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "$ref": "#/$defs/ImageObject" }
+          ]
+        },
+        "contactPoint": {
+          "description": "Contact point(s) for the organization (schema.org ContactPoint).",
+          "oneOf": [
+            { "$ref": "#/$defs/ContactPoint" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/ContactPoint" }
+            }
+          ]
+        },
+        "sameAs": {
+          "description": "URL(s) referencing official social profiles or external pages for the organization.",
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          ]
+        },
+        "image": {
+          "description": "An image that represents the organization (URL string or an ImageObject).",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "$ref": "#/$defs/ImageObject" }
+          ]
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "A general email address for the organization."
+        },
+        "telephone": {
+          "type": "string",
+          "description": "A phone number for the organization. Use E.164 or localized format."
+        },
+        "foundingDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date that the organization was founded (YYYY-MM-DD)."
+        },
+        "founder": {
+          "description": "Person(s) who founded the organization.",
+          "oneOf": [
+            { "$ref": "#/$defs/Person" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/Person" }
+            }
+          ]
+        },
+        "parentOrganization": {
+          "description": "The larger organization that this organization is a subOrganization of.",
+          "$ref": "#/$defs/Organization"
+        },
+        "subOrganization": {
+          "description": "A sub-organization within this organization.",
+          "oneOf": [
+            { "$ref": "#/$defs/Organization" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/Organization" }
+            }
+          ]
+        }
+      },
+      "required": ["@type", "name"],
+      "additionalProperties": false
+    },
+    "CreativeWorkRef": {
+      "type": "object",
+      "description": "A partial reference to another CreativeWork",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "CreativeWork"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL referencing that creative work"
+        },
+        "name": {
+          "type": "string",
+          "description": "Title of the referenced creative work"
+        }
+      },
+      "required": ["@type"]
+    },
+    "ImageObject": {
+      "type": "object",
+      "description": "A schema.org ImageObject with expanded fields",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "ImageObject",
+          "description": "Indicates this is a schema.org ImageObject"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "A direct link to the image file. Typically the same as contentUrl, but can differ."
+        },
+        "caption": {
+          "type": "string",
+          "description": "A caption for this image."
+        },
+        "height": {
+          "type": ["string", "number"],
+          "description": "Height of the image in px (number) or a textual measure (e.g., '300px')."
+        },
+        "width": {
+          "type": ["string", "number"],
+          "description": "Width of the image in px (number) or a textual measure (e.g., '300px')."
+        },
+        "contentUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Actual URL where the image file is hosted. If not provided, 'url' may serve the same purpose."
+        },
+        "encodingFormat": {
+          "type": "string",
+          "description": "Mime type or file format (e.g., 'image/jpeg', 'image/png')."
+        },
+        "contentSize": {
+          "type": "string",
+          "description": "File size in bytes or a readable string (e.g., '345 KB')."
+        },
+        "representativeOfPage": {
+          "type": "boolean",
+          "description": "Indicates whether this image is representative of the page (e.g., for a primary image)."
+        },
+        "thumbnail": {
+          "description": "A thumbnail image for this ImageObject (must also be an ImageObject).",
+          "$ref": "#/$defs/ImageObject"
+        },
+        "exifData": {
+          "description": "EXIF or other metadata for this image, as text or an object referencing details.",
+          "oneOf": [
+            {
+              "type": "string",
+              "description": "EXIF or metadata in textual form."
+            },
+            {
+              "type": "object",
+              "description": "Structured exif data object. The schema can be domain-specific or an external reference."
+            }
+          ]
+        },
+        "license": {
+          "type": ["string", "object"],
+          "description": "License information for the image (could be a URL string or a detailed object)."
+        },
+        "creator": {
+          "description": "Who created this image. Usually a Person or Organization.",
+          "oneOf": [
+            { "$ref": "#/$defs/PersonOrOrg" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/PersonOrOrg" }
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "A name for the image if different from 'caption'."
+        },
+        "description": {
+          "type": "string",
+          "description": "A short description of this image."
+        }
+      },
+      "required": [
+        "@type",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "Thing": {
+      "type": "object",
+      "description": "A generic 'Thing' from schema.org, used for 'about' references.",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "E.g. 'Thing' or a more specific type like 'Event', 'Place', etc."
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["@type"]
+    }
+  },
+  "additionalProperties": false
+} 
