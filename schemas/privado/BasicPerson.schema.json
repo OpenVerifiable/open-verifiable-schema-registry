@@ -7,6 +7,8 @@
     "version": "1.4"
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/privado/BasicPerson.schema.json",
+  "version": "0.0.1",
   "description": "A schema that defines basic fields for identifying a person, can be used in combination with other schemas for KYC purposes. This schema is part of the Privado ID Common Schemas Initiative. The schema aligns with the Decentralized Identity Foundation (DIF) Credential Schema standard for Basic Person, although not all fields are supported due to protocol limitations. Basic Person Schema spec at DIF: https://identity.foundation/credential-schemas/#basic-person-schema",
   "title": "Basic Person Schema",
   "properties": {
@@ -35,6 +37,7 @@
       },
       "required": ["id"]
     },
+    
     "type": {
       "type": ["string", "array"],
       "items": {
@@ -287,7 +290,7 @@
                   "type": "string"
                 },
                 "addressLine2": {
-                  "description": "Address Line 2, with apartment or suite number or additional indications",
+                  "description": "Address Line 2, with apartment or suite number or additional indications.",
                   "title": "Address Line 2",
                   "type": "string"
                 },

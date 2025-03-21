@@ -13331,7 +13331,38 @@ export interface SymmetricKey {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface Prettierrc {
+/**
+ * Describes creation, edits, or other actions on the asset (v1).
+ */
+export interface ActionsAssertion {
+  /**
+   * List of action objects
+   */
+  actions: ActionItem[];
+}
+export interface ActionItem {
+  /**
+   * A c2pa.* label or custom action name.
+   */
+  action: string;
+  /**
+   * Non-trusted timestamp.
+   */
+  when?: string;
+  /**
+   * Software/hardware used.
+   */
+  softwareAgent?: string;
+  /**
+   * URL from IPTC newscodes describing source type.
+   */
+  digitalSourceType?: string;
+  /**
+   * Optional extra data about the action.
+   */
+  parameters?: {
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 }
 
@@ -13343,9 +13374,30 @@ export interface Prettierrc {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type AugProductAlpha = {
+/**
+ * A generic structure for custom C2PA assertions using reverse domain notation.
+ */
+export interface CustomAssertion {
+  /**
+   * Reverse domain label, e.g. 'com.example.custom-assertion'
+   */
+  label: string;
+  /**
+   * Custom assertion data. Flexible schema, may follow JSON-LD or any structure.
+   */
+  data: {
+    [k: string]: unknown;
+  };
+  /**
+   * Optional payload format. Usually 'Json'.
+   */
+  kind?: "Json" | "Cbor" | "Binary" | "Uri";
+  /**
+   * Optional index if multiple instances are needed.
+   */
+  instance?: number;
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13355,9 +13407,37 @@ export type AugProductAlpha = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type CosmosNycMainnet = {
+/**
+ * Contains a cryptographic hash of some or all of the asset for content binding.
+ */
+export interface DataHashAssertion {
+  /**
+   * Hash algorithm (e.g. 'sha256').
+   */
+  alg?: string;
+  /**
+   * Base64-encoded hash.
+   */
+  hash: string;
+  /**
+   * Zero-filled byte string (base64-encoded) for multi-pass hashing.
+   */
+  pad: string;
+  /**
+   * Optional second zero-filled byte string (base64-encoded).
+   */
+  pad2?: string;
+  /**
+   * Optional human-readable label for the covered data.
+   */
+  name?: string;
+  exclusions?: ExclusionRange[];
+}
+export interface ExclusionRange {
+  start: number;
+  length: number;
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13367,9 +13447,128 @@ export type CosmosNycMainnet = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type MainnetDemo2023 = {
+/**
+ * Represents Exif metadata in JSON-LD form. Partial coverage of common exif fields.
+ */
+export interface ExifInformationAssertion {
+  /**
+   * JSON-LD context referencing exif = 'http://ns.adobe.com/exif/1.0/' and possibly exifEX = 'http://cipa.jp/exif/2.32/'
+   */
+  "@context":
+    | string
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[];
+  /**
+   * Manufacturer of the capturing device, e.g. 'Canon', 'Nikon'
+   */
+  "exif:Make"?: string;
+  /**
+   * Model of the capturing device, e.g. 'EOS R5'
+   */
+  "exif:Model"?: string;
+  /**
+   * Manufacturer of the lens, if separate from camera maker.
+   */
+  "exif:LensMake"?: string;
+  /**
+   * Model of the lens, if applicable.
+   */
+  "exif:LensModel"?: string;
+  /**
+   * Date/Time when the original image data was generated (local camera time). e.g. '2021:06:28 16:34:11'
+   */
+  "exif:DateTimeOriginal"?: string;
+  /**
+   * Exposure time, typically as fraction of a second. e.g. '1/125'
+   */
+  "exif:ExposureTime"?: string;
+  /**
+   * The F number (aperture) e.g. 2.8
+   */
+  "exif:FNumber"?: number;
+  /**
+   * ISO speed or sensitivity setting e.g. 100, 400, 1600.
+   */
+  "exif:ISOSpeedRatings"?: number;
+  /**
+   * Focal length of the lens in mm e.g. '50mm'.
+   */
+  "exif:FocalLength"?: string;
+  /**
+   * Flash setting or mode. Could be 'Flash fired' or 'Flash did not fire'.
+   */
+  "exif:Flash"?: string;
+  /**
+   * GPS tag version. Typically '2.2.0.0'
+   */
+  "exif:GPSVersionID"?: string;
+  /**
+   * Indicates whether latitude is north or south latitude (e.g. 'N' or 'S').
+   */
+  "exif:GPSLatitudeRef"?: string;
+  /**
+   * Latitude in degrees, minutes, seconds format e.g. '39,21.102N' or numeric decimal. Implementation dependent.
+   */
+  "exif:GPSLatitude"?: string;
+  /**
+   * Indicates whether longitude is east or west (e.g. 'E' or 'W').
+   */
+  "exif:GPSLongitudeRef"?: string;
+  /**
+   * Longitude in degrees, minutes, seconds format e.g. '74,26.5737W' or numeric decimal. Implementation dependent.
+   */
+  "exif:GPSLongitude"?: string;
+  /**
+   * 0 = above sea level, 1 = below sea level. Part of Exif standard.
+   */
+  "exif:GPSAltitudeRef"?: number;
+  /**
+   * Altitude in meters (possibly a fraction). e.g. '100963/29890'
+   */
+  "exif:GPSAltitude"?: string;
+  /**
+   * Time (UTC) of GPS data record. e.g. '2021-06-28T16:34:11Z'
+   */
+  "exif:GPSTimeStamp"?: string;
+  "exif:GPSMapDatum"?: string;
+  "exif:GPSProcessingMethod"?: string;
+  "exif:GPSDateStamp"?: string;
+  "exif:GPSImgDirection"?: number;
+  "exif:GPSImgDirectionRef"?: "T" | "M";
+  "exif:SerialNumber"?: string;
+  "exif:LensSerialNumber"?: string;
+  "exif:LensSpecification"?: string;
+  "exif:ShutterSpeedValue"?: string;
+  "exif:ApertureValue"?: string;
+  "exif:BrightnessValue"?: number;
+  /**
+   * 0=Auto, 1=Manual, 2=Auto Bracket
+   */
+  "exif:ExposureMode"?: number;
+  "exif:ExposureProgram"?: number;
+  "exif:MeteringMode"?: number;
+  "exif:WhiteBalance"?: number;
+  "exif:DateTimeDigitized"?: string;
+  "exif:SubSecTimeOriginal"?: string;
+  /**
+   * e.g. [+5, 0] for timezone offset
+   */
+  "exif:TimeZoneOffset"?: number[];
+  "exif:ImageUniqueID"?: string;
+  "exif:Software"?: string;
+  "exif:ProcessingSoftware"?: string;
+  "exif:ColorSpace"?: number;
+  "exif:SceneCaptureType"?: number;
+  "exif:Contrast"?: number;
+  "exif:Saturation"?: number;
+  "exif:Sharpness"?: number;
+  "exif:Copyright"?: string;
+  "exif:CameraOwnerName"?: string;
+  "exif:UserComment"?: string;
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13379,9 +13578,107 @@ export type MainnetDemo2023 = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type OvXAma = {
+/**
+ * Stores IPTC Photo/Video metadata in JSON-LD form, referencing XMP fields for IPTC Photo/Video standards
+ */
+export interface IPTCPhotoVideoMetadataAssertion {
+  /**
+   * Should reference the IPTC XMP namespaces, e.g., Iptc4xmpCore, Iptc4xmpExt, dc, photoshop, plus, xmp, xmpRights, etc.
+   */
+  "@context":
+    | string
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[];
+  /**
+   * A short textual title for the asset.
+   */
+  "dc:title"?: string;
+  /**
+   * A textual description of the asset's content.
+   */
+  "dc:description"?: string;
+  /**
+   * Array of creator names (string). For more structured names, store them as separate fields or in an extended form.
+   */
+  "dc:creator"?: string[];
+  /**
+   * Rights statement for the asset.
+   */
+  "dc:rights"?: string;
+  /**
+   * Creation date/time in textual or ISO 8601 format. e.g. '2022-08-31T10:00:00Z' or 'Aug 31, 2022'
+   */
+  "photoshop:DateCreated"?: string;
+  /**
+   * Credit line for how the asset should be publicly credited.
+   */
+  "photoshop:Credit"?: string;
+  /**
+   * Headline for the asset.
+   */
+  "photoshop:Headline"?: string;
+  /**
+   * Name of the original source of the asset (e.g., 'Associated Press').
+   */
+  "photoshop:Source"?: string;
+  /**
+   * Value from https://cv.iptc.org/newscodes/digitalsourcetype/ e.g. 'digitalCapture', 'compositeSynthetic', 'trainedAlgorithmicMedia', etc.
+   */
+  "Iptc4xmpExt:DigitalSourceType"?: string;
+  /**
+   * List of names or identifiers for persons depicted in the image/video.
+   */
+  "Iptc4xmpExt:PersonInImage"?: string[];
+  /**
+   * Location metadata for where the asset was created/captured.
+   */
+  "Iptc4xmpExt:LocationCreated"?: {
+    /**
+     * City where the asset was created.
+     */
+    "Iptc4xmpExt:City"?: string;
+    /**
+     * Additional sublocation info, e.g. neighborhood.
+     */
+    "Iptc4xmpExt:Sublocation"?: string;
+    /**
+     * Province or state where the asset was created.
+     */
+    "Iptc4xmpExt:ProvinceState"?: string;
+    /**
+     * Country name of the asset's creation location.
+     */
+    "Iptc4xmpExt:CountryName"?: string;
+    /**
+     * ISO country code for the creation location (e.g. 'US', 'FR').
+     */
+    "Iptc4xmpExt:CountryCode"?: string;
+  };
+  /**
+   * Terms under which the asset may be used.
+   */
+  "xmpRights:UsageTerms"?: string[];
+  /**
+   * A URL for the statement of usage rights.
+   */
+  "xmpRights:WebStatement"?: string;
+  /**
+   * List of licensor objects providing details about who licenses the asset.
+   */
+  "plus:licensor"?: {
+    /**
+     * Name of the licensor entity.
+     */
+    "plus:LicensorName": string;
+    /**
+     * URL referencing the licensor.
+     */
+    "plus:LicensorURL"?: string;
+  }[];
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13391,249 +13688,541 @@ export type OvXAma = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type RegenSummit2023 = {
+/**
+ * Assertions in C2PA can be stored in several formats
+ */
+export type ManifestAssertionKind = "Cbor" | "Json" | "Binary" | "Uri";
+export type UriOrResource = ResourceRef | HashedUri;
+/**
+ * The type of shape for the range.
+ */
+export type ShapeType = "rectangle" | "circle" | "polygon";
+/**
+ * The type of unit for the range.
+ */
+export type UnitType = "pixel" | "percent";
+/**
+ * The type of time.
+ */
+export type TimeType = "npt";
+/**
+ * The type of range for the region of interest.
+ */
+export type RangeType = "spatial" | "temporal" | "frame" | "textual";
+/**
+ * A role describing the region.
+ */
+export type Relationship = "parentOf" | "componentOf" | "inputTo";
+/**
+ * Describes the digital signature algorithms allowed by the [C2PA spec](https://c2pa.org/specifications/specifications/1.4/specs/C2PA_Specification.html#_digital_signatures):
+ *
+ * > All digital signatures that are stored in a C2PA Manifest shall be generated using one of the digital signature algorithms and key types listed as described in this section.
+ */
+export type SigningAlg = "Es256" | "Es384" | "Es512" | "Ps256" | "Ps384" | "Ps512" | "Ed25519";
+
+/**
+ * A Container for a set of Manifests and a ValidationStatus list.
+ */
+export interface ManifestStore {
+  /**
+   * A label for the active (most recent) manifest in the store.
+   */
+  active_manifest?: string | null;
+  /**
+   * A HashMap of Manifests.
+   */
+  manifests: {
+    [k: string]: Manifest;
+  };
+  /**
+   * ValidationStatus generated when loading the ManifestStore from an asset.
+   */
+  validation_status?: ValidationStatus[] | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A Manifest represents all the information in a c2pa manifest
  */
-
-export type Rwot2023Attendee = {
+export interface Manifest {
+  /**
+   * A list of assertions
+   */
+  assertions?: ManifestAssertion[];
+  /**
+   * A User Agent formatted string identifying the software/hardware/system produced this claim Spaces are not allowed in names, versions can be specified with product/1.0 syntax
+   */
+  claim_generator?: string;
+  /**
+   * A list of claim generator info data identifying the software/hardware/system produced this claim
+   */
+  claim_generator_info?: ClaimGeneratorInfo[] | null;
+  /**
+   * A List of verified credentials
+   */
+  credentials?: unknown[] | null;
+  /**
+   * The format of the source file as a MIME type.
+   */
+  format?: string;
+  /**
+   * A List of ingredients
+   */
+  ingredients?: Ingredient[];
+  /**
+   * Instance ID from `xmpMM:InstanceID` in XMP metadata.
+   */
+  instance_id?: string;
+  label?: string | null;
+  /**
+   * A list of user metadata for this claim
+   */
+  metadata?: Metadata[] | null;
+  /**
+   * A list of redactions - URIs to a redacted assertions
+   */
+  redactions?: string[] | null;
+  /**
+   * Signature data (only used for reporting)
+   */
+  signature_info?: SignatureInfo | null;
+  thumbnail?: ResourceRef | null;
+  /**
+   * A human-readable title, generally source filename.
+   */
+  title?: string | null;
+  /**
+   * Optional prefix added to the generated Manifest Label This is typically Internet domain name for the vendor (i.e. `adobe`)
+   */
+  vendor?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A labeled container for an Assertion value in a Manifest
  */
-
-export type Rwot2023DemoNight = {
+export interface ManifestAssertion {
+  data: unknown;
+  /**
+   * There can be more than one assertion for any label
+   */
+  instance?: number | null;
+  /**
+   * The [ManifestAssertionKind](crate::ManifestAssertionKind) for this assertion (as stored in c2pa content)
+   */
+  kind?: ManifestAssertionKind | null;
+  /**
+   * An assertion label in reverse domain format
+   */
+  label: string;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Description of the claim generator, or the software used in generating the claim.
+ *
+ * This structure is also used for actions softwareAgent
  */
-
-export type Attendee = {
+export interface ClaimGeneratorInfo {
+  /**
+   * hashed URI to the icon (either embedded or remote)
+   */
+  icon?: UriOrResource | null;
+  /**
+   * A human readable string naming the claim_generator
+   */
+  name: string;
+  /**
+   * A human readable string of the product's version
+   */
+  version?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A reference to a resource to be used in JSON serialization.
+ *
+ * The underlying data can be read as a stream via [`Reader::resource_to_stream`](https://docs.rs/c2pa/latest/c2pa/struct.Reader.html#method.resource_to_stream).
  */
-
-export type CredsTalk = {
+export interface ResourceRef {
+  /**
+   * The algorithm used to hash the resource (if applicable).
+   */
+  alg?: string | null;
+  /**
+   * More detailed data types as defined in the C2PA spec.
+   */
+  data_types?: AssetType[] | null;
+  /**
+   * The mime type of the referenced resource.
+   */
+  format: string;
+  /**
+   * The hash of the resource (if applicable).
+   */
+  hash?: string | null;
+  /**
+   * A URI that identifies the resource as referenced from the manifest.
+   *
+   * This may be a JUMBF URI, a file path, a URL or any other string. Relative JUMBF URIs will be resolved with the manifest label. Relative file paths will be resolved with the base path if provided.
+   */
+  identifier: string;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type Dydx = {
+}
+export interface AssetType {
+  type: string;
+  version?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Hashed Uri structure as defined by C2PA spec It is annotated to produce the correctly tagged cbor serialization
  */
-
-export type Gnoland = {
+export interface HashedUri {
+  alg?: string | null;
+  hash: number[];
+  url: string;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * An `Ingredient` is any external asset that has been used in the creation of an asset.
  */
-
-export type IdPrivacyTalk = {
+export interface Ingredient {
+  /**
+   * The active manifest label (if one exists).
+   *
+   * If this ingredient has a [`ManifestStore`](crate::ManifestStore) , this will hold the label of the active [`Manifest`](crate::Manifest).
+   */
+  active_manifest?: string | null;
+  /**
+   * A reference to the actual data of the ingredient.
+   */
+  data?: ResourceRef | null;
+  /**
+   * Additional information about the data's type to the ingredient V2 structure.
+   */
+  data_types?: AssetType[] | null;
+  /**
+   * Additional description of the ingredient.
+   */
+  description?: string | null;
+  /**
+   * Document ID from `xmpMM:DocumentID` in XMP metadata.
+   */
+  document_id?: string | null;
+  /**
+   * The format of the source file as a MIME type.
+   */
+  format?: string;
+  /**
+   * An optional hash of the asset to prevent duplicates.
+   */
+  hash?: string | null;
+  /**
+   * URI to an informational page about the ingredient or its data.
+   */
+  informational_URI?: string | null;
+  /**
+   * Instance ID from `xmpMM:InstanceID` in XMP metadata.
+   */
+  instance_id?: string | null;
+  /**
+   * A [`ManifestStore`] from the source asset extracted as a binary C2PA blob.
+   *
+   * [`ManifestStore`]: crate::ManifestStore
+   */
+  manifest_data?: ResourceRef | null;
+  /**
+   * Any additional [`Metadata`] as defined in the C2PA spec.
+   *
+   * [`Metadata`]: crate::Manifest
+   */
+  metadata?: Metadata | null;
+  /**
+   * URI from `dcterms:provenance` in XMP metadata.
+   */
+  provenance?: string | null;
+  /**
+   * Set to `ParentOf` if this is the parent ingredient.
+   *
+   * There can only be one parent ingredient in the ingredients.
+   */
+  relationship?: Relationship & string;
+  /**
+   * A thumbnail image capturing the visual state at the time of import.
+   *
+   * A tuple of thumbnail MIME format (for example `image/jpeg`) and binary bits of the image.
+   */
+  thumbnail?: ResourceRef | null;
+  /**
+   * A human-readable title, generally source filename.
+   */
+  title: string;
+  /**
+   * Validation results.
+   */
+  validation_status?: ValidationStatus[] | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * The Metadata structure can be used as part of other assertions or on its own to reference others
  */
-
-export type Juno = {
+export interface Metadata {
+  dataSource?: DataSource | null;
+  /**
+   * A date time in ISO 8601 format.
+   */
+  dateTime?: string;
+  reference?: HashedUri | null;
+  regionOfInterest?: RegionOfInterest | null;
+  reviewRatings?: ReviewRating[] | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A description of the source for assertion data
  */
-
-export type Lava = {
+export interface DataSource {
+  /**
+   * A list of [`Actor`]s associated with this source.
+   */
+  actors?: Actor[] | null;
+  /**
+   * A human-readable string giving details about the source of the assertion data.
+   */
+  details?: string | null;
+  /**
+   * A value from among the enumerated list indicating the source of the assertion.
+   */
+  type: string;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Identifies a person responsible for an action.
  */
-
-export type Neutron = {
+export interface Actor {
+  /**
+   * List of references to W3C Verifiable Credentials.
+   */
+  credentials?: HashedUri[] | null;
+  /**
+   * An identifier for a human actor, used when the "type" is `humanEntry.identified`.
+   */
+  identifier?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A region of interest within an asset describing the change.
+ *
+ * This struct can be used from [`Action::changes`](https://docs.rs/c2pa/latest/c2pa/assertions/struct.Action.html#method.changes) or [`Metadata::region_of_interest`](https://docs.rs/c2pa/latest/c2pa/assertions/struct.Metadata.html#method.region_of_interest).
  */
-
-export type Okp4 = {
+export interface RegionOfInterest {
+  /**
+   * A free-text string.
+   */
+  description?: string | null;
+  /**
+   * A free-text string representing a machine-readable, unique to this assertion, identifier for the region.
+   */
+  identifier?: string | null;
+  /**
+   * Additional information about the asset.
+   */
+  metadata?: Metadata | null;
+  /**
+   * A free-text string representing a human-readable name for the region which might be used in a user interface.
+   */
+  name?: string | null;
+  /**
+   * A range describing the region of interest for the specific asset.
+   */
+  region: Range[];
+  /**
+   * A value from our controlled vocabulary or an entity-specific value (e.g., com.litware.coolArea) that represents the role of a region among other regions.
+   */
+  role?: Role | null;
+  /**
+   * A value from a controlled vocabulary such as <https://cv.iptc.org/newscodes/imageregiontype/> or an entity-specific value (e.g., com.litware.newType) that represents the type of thing(s) depicted by a region.
+   *
+   * Note this field serializes/deserializes into the name `type`.
+   */
+  type?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A spatial, temporal, frame, or textual range describing the region of interest.
  */
-
-export type Speaker = {
+export interface Range {
+  /**
+   * A frame range.
+   */
+  frame?: Frame | null;
+  /**
+   * A spatial range.
+   */
+  shape?: Shape | null;
+  /**
+   * A textual range.
+   */
+  text?: Text | null;
+  /**
+   * A temporal range.
+   */
+  time?: Time | null;
+  /**
+   * The type of range of interest.
+   */
+  type: RangeType;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A frame range representing starting and ending frames or pages.
+ *
+ * If both `start` and `end` are missing, the frame will span the entire asset.
  */
-
-export type Volunteer = {
+export interface Frame {
+  /**
+   * The end of the frame inclusive or the end of the asset if not present.
+   */
+  end?: number | null;
+  /**
+   * The start of the frame or the end of the asset if not present.
+   *
+   * The first frame/page starts at 0.
+   */
+  start?: number | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A spatial range representing rectangle, circle, or a polygon.
  */
-
-export type CommunityMember = {
+export interface Shape {
+  /**
+   * The height of a rectnagle.
+   *
+   * This field can be ignored for circles and polygons.
+   */
+  height?: number | null;
+  /**
+   * If the range is inside the shape.
+   *
+   * The default value is true.
+   */
+  inside?: boolean | null;
+  /**
+   * THe origin of the coordinate in the shape.
+   */
+  origin: Coordinate;
+  /**
+   * The type of shape.
+   */
+  type: ShapeType;
+  /**
+   * The type of unit for the shape range.
+   */
+  unit: UnitType;
+  /**
+   * The vertices of the polygon.
+   *
+   * This field can be ignored for rectangles and circles.
+   */
+  vertices?: Coordinate[] | null;
+  /**
+   * The width for rectangles or diameter for circles.
+   *
+   * This field can be ignored for polygons.
+   */
+  width?: number | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * An x, y coordinate used for specifying vertices in polygons.
  */
-
-export type RegenPartner = {
+export interface Coordinate {
+  /**
+   * The coordinate along the x-axis.
+   */
+  x: number;
+  /**
+   * The coordinate along the y-axis.
+   */
+  y: number;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A textual range representing multiple (possibly discontinuous) ranges of text.
  */
-
-export type DiscordProfile = {
+export interface TextSelectorRange {
+  /**
+   * The end of the text range.
+   */
+  end?: TextSelector | null;
+  /**
+   * The start (or entire) text range.
+   */
+  selector: TextSelector;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Selects a range of text via a fragment identifier.
+ *
+ * This is modeled after the W3C Web Annotation selector model.
  */
-
-export type EmailProfile = {
+export interface TextSelector {
+  /**
+   * The end character offset or the end of the fragment if not present.
+   */
+  end?: number | null;
+  /**
+   * Fragment identifier as per RFC3023 (XML) or ISO 32000-2 (PDF), Annex O.
+   */
+  fragment: string;
+  /**
+   * The start character offset or the start of the fragment if not present.
+   */
+  start?: number | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A temporal range representing a starting time to an ending time.
  */
-
-export type GenericSocial = {
+export interface ReviewRating {
+  code?: string | null;
+  explanation: string;
+  value: number;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * A `ValidationStatus` struct describes the validation status of a specific part of a manifest.
+ *
+ * See <https://c2pa.org/specifications/specifications/1.4/specs/C2PA_Specification.html#_existing_manifests>.
  */
-
-export type TelegramProfile = {
+export interface ValidationStatus {
+  code: string;
+  explanation?: string | null;
+  url?: string | null;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Holds information about a signature
  */
-
-export type CredsEarlyAdopter = {
+export interface SignatureInfo {
+  /**
+   * human readable issuing authority for this signature
+   */
+  alg?: SigningAlg | null;
+  /**
+   * The serial number of the certificate
+   */
+  cert_serial_number?: string | null;
+  /**
+   * human readable issuing authority for this signature
+   */
+  issuer?: string | null;
+  /**
+   * revocation status of the certificate
+   */
+  revocation_status?: boolean | null;
+  /**
+   * the time the signature was created
+   */
+  time?: string | null;
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13643,9 +14232,92 @@ export type CredsEarlyAdopter = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type DiscordOg = {
+/**
+ * Specifies whether the asset can be used for data mining, AI training, etc.
+ */
+export interface TrainingDataMiningAssertion {
+  /**
+   * Map of usage categories to an object with 'use' and optional 'constraint_info'. Keys can be c2pa.data_mining, c2pa.ai_training, etc.
+   */
+  entries: {};
+}
+/**
+ * Specifies the usage status for a particular category of data mining or ML usage.
+ *
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "^c2pa\.(data_mining|ai_training|ai_generative_training|ai_inference)$".
+ *
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "^[A-Za-z0-9_.-]+$".
+ */
+export interface TrainingMiningEntry {
+  use: "allowed" | "notAllowed" | "constrained";
+  /**
+   * If 'use' is 'constrained', additional details can go here.
+   */
+  constraint_info?: string;
+}
+
+
+/* eslint-disable */
+/**
+ * This file was automatically generated by json-schema-to-typescript.
+ * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
+ * and run json-schema-to-typescript to regenerate this file.
+ */
+
+/**
+ * A Verifiable Credential for Email Authentication
+ */
+export interface EmailAuthenticationCredential {
+  "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
+  type: ("VerifiableCredential" | "SocialProfile" | "Person")[];
+  issuer: {
+    id?: string;
+    name?: string;
+    handle: string;
+    subjectOf: {
+      type: "Thing";
+      name: string;
+      description: string;
+      image: string;
+      [k: string]: unknown;
+    };
+    url: string;
+    [k: string]: unknown;
+  };
+  issuanceDate: string;
+  expirationDate: string;
+  credentialSubject: {
+    id: string;
+    credentialInternalId: string;
+    category: "social";
+    social: {
+      subjectOf: {
+        type: "Thing" | "SocialProfile";
+        name: string;
+        description: string;
+        image: string;
+        [k: string]: unknown;
+      };
+      [k: string]: unknown;
+    };
+    type: "Thing";
+    name: string;
+    description?: string;
+    /**
+     * Image representing the credential (schema:image)
+     */
+    image?: string;
+    identifier?: string;
+    /**
+     * Reference links for this thing (schema:sameAs)
+     */
+    sameAs?: string[];
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13655,9 +14327,79 @@ export type DiscordOg = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type TelegramOg = {
+/**
+ * A Social Authentication Credential based on schema.org standards
+ */
+export interface SocialAuthenticationCredential {
+  "@context": ("https://www.w3.org/2018/credentials/v1" | "https://schema.org")[];
+  type: ("VerifiableCredential" | "Social" | "Person")[];
+  issuer: {
+    id?: string;
+    name?: string;
+    handle: string;
+    subjectOf: {
+      type: "Thing";
+      name: string;
+      description: string;
+      image: string;
+      [k: string]: unknown;
+    };
+    url: string;
+    [k: string]: unknown;
+  };
+  issuanceDate: string;
+  expirationDate: string;
+  credentialSubject: {
+    id: string;
+    credentialInternalId: string;
+    category: "social";
+    social: {
+      /**
+       * The social platform that has been authenticated
+       */
+      platform?: "Discord" | "GitHub" | "LinkedIn" | "Google" | "Facebook" | "Telegram";
+      description: string;
+      subjectOf?: {
+        type: "Thing" | "SocialProfile";
+        name: "SocialProfile";
+        description: string;
+        /**
+         * Image representing the social platform being authenticated (schema:image)
+         */
+        image: string;
+        identifier?: string;
+        /**
+         * Reference links for this thing (schema:sameAs)
+         */
+        sameAs: string[];
+        [k: string]: unknown;
+      };
+      webPage: {
+        type: "ProfilePage";
+        description: string;
+        name: string;
+        identifier: string;
+        lastReviewed: string;
+        [k: string]: unknown;
+      }[];
+      [k: string]: unknown;
+    };
+    type: "Thing";
+    name: string;
+    description: string;
+    /**
+     * Image representing the credential (schema:image)
+     */
+    image: string;
+    identifier: string;
+    /**
+     * Reference links for this thing (schema:sameAs)
+     */
+    sameAs: string[];
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13667,129 +14409,431 @@ export type TelegramOg = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ContentCreator = {
+/**
+ * Stores the DID of the subject that owns the credential
+ */
+export type CredentialSubjectID = string;
+/**
+ * End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's locale and preferences.
+ */
+export type FamilyName = string;
+/**
+ * Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.
+ */
+export type MiddleName = string;
+/**
+ * Stage name, religious name or any other type of alias/pseudonym with which a person is known in a specific context besides its legal name. This must be part of the applicable legislation and thus the trust framework (e.g., be an attribute on the identity card).
+ */
+export type AlsoKnownAs = string;
+/**
+ * Date of birth of the credential subject.
+ */
+export type GovernmentIdentifier = string;
+/**
+ * Type of government or national identifier, allowed values: passport, national id document, tax id, drivers license, social service number (ssn, social issurance number, or health service id), other.
+ */
+export type GovernmentIdentifierType =
+  | "passport"
+  | "national id document"
+  | "tax id"
+  | "drivers license"
+  | "social service number"
+  | "other";
+/**
+ * Gender that the credential subject identifies as. Some reference values (non-exhaustive list): male, female, transgender male, transgender female, non-binary….
+ */
+export type Sex = string;
+/**
+ * Primary contact number of the user, it should include the country code. The phone number must be formatted according to ITU-T recommendation [E.164], e.g., "1999550123" or "50688785073"
+ */
+export type PhoneNumber = number;
+/**
+ * True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating.
+ */
+export type PhoneNumberVerifiedBoolean = boolean;
+/**
+ * First name(s) or given names of the credential subject at birth.
+ */
+export type FirstName1 = string;
+/**
+ * Family name(s) of the credential subject at birth.
+ */
+export type FamilyName1 = string;
+/**
+ * Locality: String representing city or locality component.
+ */
+export type Locality = string;
+/**
+ * region: String representing state, province, prefecture, or region component. This field might be required in some jurisdictions.
+ */
+export type Region = string;
+/**
+ * Country: String representing country in ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type CountryCode = string;
+/**
+ * ISO 3166-1 numeric three-digit country code, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type CountryCodeNumber = number;
+/**
+ * Address Line 1, usually the street address or major indication for the address.
+ */
+export type AddressLine1 = string;
+/**
+ * Address Line 2, with apartment or suite number or additional indications.
+ */
+export type AddressLine2 = string;
+/**
+ * locality: String representing city or locality component.
+ */
+export type Locality1 = string;
+/**
+ * region: String representing state, province, prefecture, or region component.
+ */
+export type Region1 = string;
+/**
+ * country: String representing country in ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type CountryCode1 = string;
+/**
+ * Postal code (also known as postcode, post code, PIN or ZIP Code).
+ */
+export type PostalCode = string;
+/**
+ * ISO 3166-1 numeric three-digit country code, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type CountryCodeNumber1 = number;
+/**
+ * Optional one line address field since not all addresses may be structured in the person's KYC source information.
+ */
+export type UnstructuredAddress = string;
+/**
+ * Address Line 1, usually the street address or major indication for the address.
+ */
+export type AddressLine11 = string;
+/**
+ * Address Line 2, with apartment or suite number or additional indications.
+ */
+export type AddressLine21 = string;
+/**
+ * locality: String representing city or locality component.
+ */
+export type Locality2 = string;
+/**
+ * region: String representing state, province, prefecture, or region component.
+ */
+export type Region2 = string;
+/**
+ * country: String representing country in ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type CountryCode2 = string;
+/**
+ * Postal code (also known as postcode, post code, PIN or ZIP Code).
+ */
+export type PostalCode1 = string;
+/**
+ * ISO 3166-1 numeric three-digit country code, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type CountryCodeNumber2 = number;
+/**
+ * Optional one line address field since not all addresses may be structured in the person's KYC source information.
+ */
+export type UnstructuredAddress1 = string;
+/**
+ * Address Line 1, usually the street address or major indication for the address
+ */
+export type AddressLine12 = string;
+/**
+ * Address Line 2, with apartment or suite number or additional indications.
+ */
+export type AddressLine22 = string;
+/**
+ * locality: String representing city or locality component.
+ */
+export type Locality3 = string;
+/**
+ * region: String representing state, province, prefecture, or region component.
+ */
+export type Region3 = string;
+/**
+ * country: String representing country in ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type CountryCode3 = string;
+/**
+ * Postal code (also known as postcode, post code, PIN or ZIP Code).
+ */
+export type PostalCode2 = string;
+/**
+ * ISO 3166-1 numeric three-digit country code, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type CountryCodeNumber3 = number;
+/**
+ * Optional one line address field since not all addresses may be structured in the person's KYC source information.
+ */
+export type UnstructuredAddress2 = string;
+/**
+ * Address Line 1, usually the street address or major indication for the address.
+ */
+export type AddressLine13 = string;
+/**
+ * Address Line 2, with apartment or suite number or additional indications.
+ */
+export type AddressLine23 = string;
+/**
+ * locality: String representing city or locality component.
+ */
+export type Locality4 = string;
+/**
+ * region: String representing state, province, prefecture, or region component.
+ */
+export type Region4 = string;
+/**
+ * country: String representing country in ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type CountryCode4 = string;
+/**
+ * Postal code (also known as postcode, post code, PIN or ZIP Code).
+ */
+export type PostalCode3 = string;
+/**
+ * ISO 3166-1 numeric three-digit country code, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type CountryCodeNumber4 = number;
+/**
+ * Optional one line address field since not all addresses may be structured in the person's KYC source information.
+ */
+export type UnstructuredAddress3 = string;
+/**
+ * Primary nationality of the credential subject using ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type Nationality1CountryCode = string;
+/**
+ * Additional nationality of the credential subject using using ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type Nationality2CountryCode = string;
+/**
+ * Additional nationality of the credential subject using using ISO 3166-1 alpha-3 codes (e.g. FRA, USA, CRC).
+ */
+export type Nationality3CountryCode = string;
+/**
+ * Primary nationality of the credential subject using ISO 3166-1 numeric three-digit country codes, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type Nationality1CountryCodeNumber = number;
+/**
+ * Additional nationality of the credential subject using ISO 3166-1 numeric three-digit country codes, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type Nationality2CountryCodeNumber = number;
+/**
+ * Additional nationality of the credential subject using ISO 3166-1 numeric three-digit country codes, eg: 250 for France, 840 for United States, 188 for Costa Rica.
+ */
+export type Nationality3CountryCodeNumber = number;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomStringField1 = string;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomStringField2 = string;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomStringField3 = string;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomNumberField1 = number;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomNumberField2 = number;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomNumberField3 = number;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomBooleanField1 = boolean;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomBooleanField2 = boolean;
+/**
+ * optional field for elements not included in the main schema
+ */
+export type CustomBooleanField3 = boolean;
+/**
+ * Title of the credential subject e.g., "Dr." or "Sir"
+ */
+export type Salutation = string;
+
+/**
+ * A schema that defines basic fields for identifying a person, can be used in combination with other schemas for KYC purposes. This schema is part of the Privado ID Common Schemas Initiative. The schema aligns with the Decentralized Identity Foundation (DIF) Credential Schema standard for Basic Person, although not all fields are supported due to protocol limitations. Basic Person Schema spec at DIF: https://identity.foundation/credential-schemas/#basic-person-schema
+ */
+export interface BasicPersonSchema {
+  "@context":
+    | string
+    | unknown[]
+    | {
+        [k: string]: unknown;
+      };
+  expirationDate?: string;
+  id: string;
+  issuanceDate: string;
+  issuer:
+    | string
+    | {
+        id: string;
+        [k: string]: unknown;
+      };
+  type: string | string[];
+  credentialSubject: CredentialSubject;
+  credentialSchema: {
+    id: string;
+    type: string;
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Stores the data of the credential
  */
-
-export type DocsContributor = {
+export interface CredentialSubject {
+  id?: CredentialSubjectID;
+  fullName: FullName;
+  firstName: FirstName;
+  familyName?: FamilyName;
+  middleName?: MiddleName;
+  alsoKnownAs?: AlsoKnownAs;
+  dateOfBirth: DateOfBirth;
+  govermentIdentifier: GovernmentIdentifier;
+  governmentIdentifierType: GovernmentIdentifierType;
+  gender?: Gender;
+  email?: Email;
+  sex?: Sex;
+  phoneNumber?: PhoneNumber;
+  phoneNumberVerified?: PhoneNumberVerifiedBoolean;
+  nameAndFamilyNameAtBirth?: NameAndFamilyNameAtBirth;
+  placeOfBirth?: PlaceOfBirth;
+  addresses?: AddressesList;
+  nationalities?: Nationalities;
+  customFields?: CustomFields;
+  title?: Title;
+  salutation?: Salutation;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Defines the first and the family name(s) of the credential subject at the time of their birth. Structured as a json object.
  */
-
-export type MemeMaster = {
+export interface NameAndFamilyNameAtBirth {
+  firstName?: FirstName1;
+  familyName?: FamilyName1;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Defines the place where the credential subject is born. The value of this is a JSON object.
  */
-
-export type CredsProductResearch = {
+export interface PlaceOfBirth {
+  locality?: Locality;
+  region?: Region;
+  countryCode?: CountryCode;
+  countryCodeNumber?: CountryCodeNumber;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Various addresses associated with the credential subject.
  */
-
-export type ProductAlpha = {
+export interface AddressesList {
+  primaryAddress?: PrimaryAddress;
+  homeAddress?: HomeAddress;
+  businessAddress?: BusinessAddress;
+  mailingAddress?: MailingAddress;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Primary address of the credential subject.
  */
-
-export type Q1Wrapup = {
+export interface PrimaryAddress {
+  addressLine1?: AddressLine1;
+  addressLine2?: AddressLine2;
+  locality?: Locality1;
+  region?: Region1;
+  countryCode?: CountryCode1;
+  postalCode?: PostalCode;
+  countryCodeNumber?: CountryCodeNumber1;
+  unstructuredAddress?: UnstructuredAddress;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Home address of the credential subject.
  */
-
-export type TwitterSpaces = {
+export interface HomeAddress {
+  addressLine1?: AddressLine11;
+  addressLine2?: AddressLine21;
+  locality?: Locality2;
+  region?: Region2;
+  countryCode?: CountryCode2;
+  postalCode?: PostalCode1;
+  countryCodeNumber?: CountryCodeNumber2;
+  unstructuredAddress?: UnstructuredAddress1;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Business address of the credential subject.
  */
-
-export type Cheqd101 = {
+export interface BusinessAddress {
+  addressLine1?: AddressLine12;
+  addressLine2?: AddressLine22;
+  locality?: Locality3;
+  region?: Region3;
+  countryCode?: CountryCode3;
+  postalCode?: PostalCode2;
+  countryCodeNumber?: CountryCodeNumber3;
+  unstructuredAddress?: UnstructuredAddress2;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Address through which credential subject can be sent correspondence via postal mail.
  */
-
-export type SsiMaster = {
+export interface MailingAddress {
+  addressLine1?: AddressLine13;
+  addressLine2?: AddressLine23;
+  locality?: Locality4;
+  region?: Region4;
+  countryCode?: CountryCode4;
+  postalCode?: PostalCode3;
+  countryCodeNumber?: CountryCodeNumber4;
+  unstructuredAddress?: UnstructuredAddress3;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Credential subject's nationalities.
  */
-
-export type Ambassador = {
+export interface Nationalities {
+  nationality1CountryCode?: Nationality1CountryCode;
+  nationality2CountryCode?: Nationality2CountryCode;
+  nationality3CountryCode?: Nationality3CountryCode;
+  nationality1CountryCodeNumber?: Nationality1CountryCodeNumber;
+  nationality2CountryCodeNumber?: Nationality2CountryCodeNumber;
+  nationality3CountryCodeNumber?: Nationality3CountryCodeNumber;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Optional custom fields that can be added by the credential issuer when required. They would be included inside this json object.
  */
-
-export type CredsChampion = {
+export interface CustomFields {
+  string1?: CustomStringField1;
+  string2?: CustomStringField2;
+  string3?: CustomStringField3;
+  number1?: CustomNumberField1;
+  number2?: CustomNumberField2;
+  number3?: CustomNumberField3;
+  boolean1?: CustomBooleanField1;
+  boolean2?: CustomBooleanField2;
+  boolean3?: CustomBooleanField3;
   [k: string]: unknown;
-};
+}
 
 
 /* eslint-disable */
@@ -13799,1107 +14843,76 @@ export type CredsChampion = {
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Moderator = {
+/**
+ * Stores the DID of the subject that owns the credential
+ */
+export type ProbabilityOfCorrectness = number;
+/**
+ * assurance method used for estimating the credential subject's age eg: voice, facial scan, document check, document and face match, or other.
+ */
+export type AssuranceMethodUsed = string;
+/**
+ * Numeric id of the verification method used. Values: 1 - voice, 2 - facial scan, 3 - document check, 4 - document and face match, or 5 - other.
+ */
+export type VerificationMethodNumericId = number;
+/**
+ * Minimum Age Range estimated for the subject
+ */
+export type MinimumAgeRange = number;
+/**
+ * Maximum Age Range estimated for the subject
+ */
+export type MaximumAgeRange = number;
+/**
+ * Levels of confidence with which the verification has been completed allowed values: "asserted", "basic" (90%+), "standard" (99%+), "enhanced" (99.9%+) , and "strict" (99.99%+).  Refer to  IS0/IEC 27566 – Age assurance systems - for more details.
+ */
+export type LevelOfConfidence = "asserted" | "basic" | "standard" | "enhanced" | "strict";
+/**
+ * Id URL of the credentialStatus.
+ */
+export type Id = string;
+/**
+ * Expresses the credential status type (method). The value should provide enough information to determine the current status of the credential.
+ */
+export interface ProofOfAge {
+  "@context":
+    | string
+    | unknown[]
+    | {
+        [k: string]: unknown;
+      };
+  expirationDate?: string;
+  id: string;
+  issuanceDate: string;
+  issuer:
+    | string
+    | {
+        id: string;
+        [k: string]: unknown;
+      };
+  type: string | string[];
+  credentialSubject: CredentialSubject;
+  credentialSchema: {
+    id: string;
+    type: string;
+    [k: string]: unknown;
+  };
+  credentialStatus?: CredentialStatus;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Stores the data of the credential
  */
-
-export type PrivateBetaUser = {
+export interface EstimatedAgeRange {
+  minAgeRange: MinimumAgeRange;
+  maxAgeRange: MaximumAgeRange;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
+}
 /**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
+ * Allows the discovery of information about the current status of the credential, such as whether it is suspended or revoked.
  */
-
-export type ConsensusTicket = {
+export interface CredentialStatus {
+  id: Id;
+  type: Type;
   [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type IiwTicket = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type LaunchWebinar = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericAchievement = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericAssets = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericEndorsement = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type LedgerContributor = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericEvent = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type MainnetBooth2023 = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type CosmosQuest = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericLearn = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type GenericRole = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-export type TeamMember = {
-  [k: string]: unknown;
-};
-
-
-/* eslint-disable */
-
-/** Used at the top-level node to indicate the context for the JSON-LD objects used. The context provided in this type is compatible with the keys and URLs in the rest of this generated file. */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * General history of activities such as listening, watching, browsing, etc.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * AI assistants and their configuration
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Saved prompts for the assistant
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * DID JWT representation of this credential
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Unique id of the task allocated by the allocator node
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Unique id of the task allocated by the allocator node
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Base64 encoded data
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * A document
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Favourite links across all platforms
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * A file
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Name of this item
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- *  A code specifying the particular kind of Act that the Act-instance represents within its class.  Constraints:
- * The kind of Act (e.g. physical examination, serum potassium, inpatient encounter, charge financial transaction, etc.) is specified with a code from one of several, typically external, coding systems.  The coding system will depend on the class of Act, such as LOINC for observations, etc. Conceptually, the Act.code must be a specialization of the Act.classCode. This is why the structure of ActClass domain should be reflected in the superstructure of the ActCode domain and then individual codes or externally referenced vocabularies subordinated under these domains that reflect the ActClass structure. Act.classCode and Act.code are not modifiers of each other but the Act.code concept should really imply the Act.classCode concept. For a negative example, it is not appropriate to use an Act.code "potassium" together with and Act.classCode for "laboratory observation" to somehow mean "potassium laboratory observation" and then use the same Act.code for "potassium" together with Act.classCode for "medication" to mean "substitution of potassium". This mutually modifying use of Act.code and Act.classCode is not permitted.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * This example value set defines a set of codes that can be used to indicate the role of a Practitioner.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * This value set defines an example set of codes of service-types.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Location tracking data
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * A generic schema for playlists from platforms like Spotify, YouTube, etc.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Public profile data for a user
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Calendar information
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Chat group that contains chat messages
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Single message within a chat group
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * A record of a contact
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Email message
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Schema for a calendar event
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * A person or business I am following
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Schema for a meeting transcript
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Social media post
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * URL of an image representing this credential
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Self-sovereign Soulbound token (SBT) metadata. Only one SBT exists for a
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Self-sovereign storage of Soulbound token metadata
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Configuration of a profile on Verida One
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Name of the item within card list and details
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Type of data being requested
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Array of data being sent. Must be valid schema data.
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-/**
- * Symmetric encryption key as a hex string
- */
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
-/* eslint-disable */
-/**
- * This file was automatically generated by json-schema-to-typescript.
- * DO NOT MODIFY IT BY HAND. Instead, modify the source JSONSchema file,
- * and run json-schema-to-typescript to regenerate this file.
- */
-
-
+}

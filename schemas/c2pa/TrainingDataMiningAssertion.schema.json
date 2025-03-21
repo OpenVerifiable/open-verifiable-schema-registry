@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openverifiable.org/schemas/c2pa/TrainingDataMiningAssertion.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/TrainingDataMiningAssertion.schema.json",
   "title": "TrainingDataMiningAssertion",
+  "version": "0.0.1",
   "type": "object",
   "description": "Specifies whether the asset can be used for data mining, AI training, etc.",
   "properties": {
@@ -39,4 +40,4 @@
     }
   },
   "additionalProperties": false
-}
+} 

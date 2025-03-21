@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openverifiable.org/schemas/c2pa/CreativeWorkAssertion.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/CreativeWorkAssertion.schema.json",
   "title": "CreativeWorkAssertion",
+  "version": "0.0.1",
   "type": "object",
   "description": "Indicates the asset is a creative work (Schema.org).",
   "properties": {
@@ -558,5 +559,4 @@
     }
   },
   "additionalProperties": false
-}
-
+} 

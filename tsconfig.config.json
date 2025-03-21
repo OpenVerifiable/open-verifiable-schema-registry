@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "module": "ESNext",
+    "declaration": true,
+    "outDir": "dist",
+    "rootDir": "types"
+  },
+  "include": ["types/**/*", "types/**/*.d.ts"],
+  "exclude": ["node_modules", "drafts"]
+}

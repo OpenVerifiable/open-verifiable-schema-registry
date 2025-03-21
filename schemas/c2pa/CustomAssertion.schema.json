@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/c2pa/CustomAssertion.schema.json",
+  "title": "CustomAssertion",
+  "version": "0.0.1",
+  "description": "A generic structure for custom C2PA assertions using reverse domain notation.",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]+(\\.[a-zA-Z0-9_-]+)+$",
+      "description": "Reverse domain label, e.g. 'com.example.custom-assertion'"
+    },
+    "data": {
+      "type": "object",
+      "description": "Custom assertion data. Flexible schema, may follow JSON-LD or any structure."
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["Json", "Cbor", "Binary", "Uri"],
+      "description": "Optional payload format. Usually 'Json'."
+    },
+    "instance": {
+      "type": "integer",
+      "description": "Optional index if multiple instances are needed."
+    }
+  },
+  "required": ["label", "data"]
+} 

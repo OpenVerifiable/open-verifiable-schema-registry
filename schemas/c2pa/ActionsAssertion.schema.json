@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openverifiable.org/schemas/c2pa/ActionsAssertion.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/ActionsAssertion.schema.json",
   "title": "ActionsAssertion",
+  "version": "0.0.1",
   "type": "object",
   "description": "Describes creation, edits, or other actions on the asset (v1).",
   "properties": {
@@ -45,4 +46,4 @@
     }
   },
   "additionalProperties": false
-}
+} 

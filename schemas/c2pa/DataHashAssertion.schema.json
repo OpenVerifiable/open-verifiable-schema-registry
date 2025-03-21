@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openverifiable.org/schemas/c2pa/DataHashAssertion.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/DataHashAssertion.schema.json",
   "title": "DataHashAssertion",
+  "version": "0.0.1",
   "type": "object",
   "description": "Contains a cryptographic hash of some or all of the asset for content binding.",
   "properties": {
@@ -44,4 +45,4 @@
     }
   },
   "additionalProperties": false
-}
+} 

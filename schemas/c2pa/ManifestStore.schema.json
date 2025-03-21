@@ -1,7 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://openverifiable.org/schemas/c2pa/ManifestStore.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/ManifestStore.schema.json",
   "title": "ManifestStore",
+  "version": "0.0.1",
   "description": "A Container for a set of Manifests and a ValidationStatus list.",
   "type": "object",
   "required": [
@@ -1239,4 +1240,4 @@
       }
     }
   }
-}
+} 

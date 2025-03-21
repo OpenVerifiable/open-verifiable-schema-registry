@@ -6,6 +6,3 @@ export { AlternativeUri } from '@cheqd/ts-proto/cheqd/resource/v2/resource.js';
 export { AuthRule } from '@cheqd/studio/dist/types/authentication';
 export { SupportedPlanTypes } from '@cheqd/studio/dist/types/admin';
 export { CreateStatusList2021MethodName, DefaultStatusList2021Encodings, DefaultStatusList2021ResourceTypes, DefaultStatusList2021StatusPurposeTypes, GenerateStatusList2021MethodName, BroadcastStatusList2021MethodName, LitProtocol, TxNonceFormats, TransactSendTokensMethodName } from '@cheqd/did-provider-cheqd/dist/types';
-/**
- * A base schema
- */

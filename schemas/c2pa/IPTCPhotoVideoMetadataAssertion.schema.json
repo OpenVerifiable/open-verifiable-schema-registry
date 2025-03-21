@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://openverifiable.org/schemas/c2pa/IPTCPhotoVideoMetadataAssertion.json",
+  "$id": "https://openverifiable.org/schemas/c2pa/IPTCPhotoVideoMetadataAssertion.schema.json",
   "title": "IPTCPhotoVideoMetadataAssertion",
+  "version": "0.0.1",
   "type": "object",
   "description": "Stores IPTC Photo/Video metadata in JSON-LD form, referencing XMP fields for IPTC Photo/Video standards",
   "properties": {
@@ -111,4 +112,4 @@
   },
   "required": ["@context"],
   "additionalProperties": true
-}
+} 

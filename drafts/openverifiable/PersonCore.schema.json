@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openverifiable.org/schemas/person/PersonCore.schema.json",
+  "title": "PersonCore",
+  "version": "0.0.1",
+  "description": "A privacy-focused core definition of a person, designed to be modular and embeddable into Verifiable Credentials or other data models.",
+  "type": "object",
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Person"
+    },
+    "fullName": {
+      "description": "End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's locale and preferences.",
+      "title": "Full Name",
+      "minLength": 1,
+      "type": "string"
+    },
+    "firstName": {
+      "description": "Current first name(s) or given names of the credential subject",
+      "title": "First Name",
+      "minLength": 1,
+      "type": "string"
+    },
+    "familyName": {
+      "description": "Current family name(s) of the credential subject",
+      "title": "Family Name",
+      "type": "string"
+    },
+    "middleName": {
+      "description": "Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.",
+      "title": "Middle Name",
+      "type": "string"
+    },
+    "alsoKnownAs": {
+      "description": "Stage name, religious name or any other type of alias/pseudonym with which a person is known in a specific context besides its legal name. This must be part of the applicable legislation and thus the trust framework (e.g., be an attribute on the identity card).",
+      "title": "Also Known As",
+      "type": "string"
+    },
+    "nameAndFamilyNameAtBirth": {
+      "description": "Defines the first and the family name(s) of the credential subject at the time of their birth. Structured as a json object.",
+      "title": "Name and Family Name at birth",
+      "properties": {
+        "firstName": {
+          "description": "First name(s) or given names of the credential subject at birth.",
+          "title": "First Name",
+          "type": "string"
+        },
+        "familyName": {
+          "description": "Family name(s) of the credential subject at birth.",
+          "title": "Family Name",
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "identifier": {
+      "type": ["string", "object"],
+      "description": "Unique identifier for the person, such as a DID or platform-specific ID"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical profile or homepage URL"
+    },
+    "image": {
+      "type": "string",
+      "format": "uri",
+      "description": "Profile image URI"
+    }
+  },
+  "required": ["@type", "name"]
+}

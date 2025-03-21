@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://openverifiable.org/schemas/cheqd/SocialAuthenticationCredential.schema.json",
+  "title": "SocialAuthenticationCredential",
+  "description": "A Social Authentication Credential based on schema.org standards",
+  "type": "object",
+  "version": "0.0.1",
+  "required": ["@context", "type", "issuer", "issuanceDate", "expirationDate", "credentialSubject"],
+  "properties": {
+    "@context": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://schema.org"
+        ]
+      }
+    },
+    "type": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["VerifiableCredential", "Social", "Person"]
+      }
+    },
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "handle": { "type": "string" },
+        "subjectOf": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["Thing"] },
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "image": { "type": "string", "format": "uri" }
+          },
+          "required": ["type", "name", "description", "image"]
+        },
+        "url": { "type": "string", "format": "uri" }
+      },
+      "required": ["subjectOf", "handle", "url"]
+    },
+    "issuanceDate": { "type": "string", "format": "date" },
+    "expirationDate": { "type": "string", "format": "date" },
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "credentialInternalId": { "type": "string" },
+        "category": { "type": "string", "enum": ["social"] },
+        "social": {
+          "type": "object",
+          "properties": {
+            "platform": {
+              "type": "string",
+              "enum": ["Discord", "GitHub", "LinkedIn", "Google", "Facebook", "Telegram"],
+              "description": "The social platform that has been authenticated"
+            },
+            "description": { "type": "string" },
+            "subjectOf": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["Thing", "SocialProfile"]
+                },
+                "name": {
+                  "type": "string",
+                  "enum": ["SocialProfile"]
+                },
+                "description": { "type": "string" },
+                "image": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Image representing the social platform being authenticated (schema:image)"
+                },
+                "identifier": { "type": "string" },
+                "sameAs": {
+                  "type": "array",
+                  "items": { "type": "string", "format": "uri" },
+                  "description": "Reference links for this thing (schema:sameAs)"
+                }
+              },
+              "required": ["type", "name", "description", "image", "sameAs"]
+            },
+            "webPage": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": { "type": "string", "enum": ["ProfilePage"] },
+                  "description": { "type": "string" },
+                  "name": { "type": "string" },
+                  "identifier": { "type": "string" },
+                  "lastReviewed": { "type": "string", "format": "date-time" }
+                },
+                "required": ["type", "description", "name", "identifier", "lastReviewed"]
+              }
+            }
+          },
+          "required": ["type", "name", "description", "image", "sameAs", "webPage"]
+        },
+        "type": { "type": "string", "enum": ["Thing"] },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Image representing the credential (schema:image)"
+        },
+        "identifier": { "type": "string" },
+        "sameAs": {
+            "type": "array",
+            "items": { "type": "string", "format": "uri" },
+            "description": "Reference links for this thing (schema:sameAs)"
+        }
+      },
+      "required": ["id", "credentialInternalId", "category", "social", "type", "name", "description", "image", "identifier", "sameAs"]
+    }
+  }
+} 
