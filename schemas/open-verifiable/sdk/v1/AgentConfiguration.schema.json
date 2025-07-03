@@ -1,0 +1,370 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://identity.foundation/credentials/v1",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "ov": "https://schemas.openverifiable.org/",
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/AgentConfiguration.schema.json",
+  "title": "Open Verifiable Agent Configuration Schema",
+  "description": "Configuration schema for Open Verifiable agent instances and types",
+  "governanceReference": [
+    "adr:architecture-0007-agent-architecture-and-extensibility",
+    "adr:0036-sdk-cli-tooling-strategy"
+  ],
+  "type": "object",
+  "properties": {
+    "agentType": {
+      "type": "string",
+      "enum": ["user", "package", "parent", "service"],
+      "description": "Type of agent instance"
+    },
+    "agentId": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-_]+$",
+      "description": "Unique identifier for this agent instance"
+    },
+    "store": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["memory", "file", "database"],
+          "description": "Storage backend for agent data"
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "keyDerivation": {
+              "type": "string",
+              "enum": ["pbkdf2", "scrypt", "argon2"],
+              "default": "pbkdf2"
+            }
+          }
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["sqlite", "postgresql"]
+            },
+            "connectionString": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": ["type"]
+    },
+    "didProviders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": ["did:key", "did:cheqd", "did:ethr", "did:web"]
+          },
+          "network": {
+            "type": "string",
+            "description": "Network or provider-specific configuration"
+          },
+          "config": {
+            "type": "object",
+            "description": "Provider-specific configuration object"
+          }
+        },
+        "required": ["method"]
+      },
+      "minItems": 1
+    },
+    "veramo": {
+      "type": "object",
+      "properties": {
+        "dbConnection": {
+          "type": "object",
+          "description": "Veramo database connection configuration"
+        },
+        "plugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of Veramo plugins to enable"
+        }
+      }
+    },
+    "cheqd": {
+      "type": "object",
+      "properties": {
+        "mainnet": {
+          "type": "object",
+          "properties": {
+            "rpcUrl": {
+              "type": "string",
+              "format": "uri",
+              "default": "https://rpc.cheqd.network"
+            },
+            "resolverUrl": {
+              "type": "string",
+              "format": "uri",
+              "default": "https://resolver.cheqd.net/1.0/identifiers/"
+            }
+          }
+        },
+        "testnet": {
+          "type": "object",
+          "properties": {
+            "rpcUrl": {
+              "type": "string",
+              "format": "uri",
+              "default": "https://rpc.cheqd.net"
+            },
+            "resolverUrl": {
+              "type": "string",
+              "format": "uri",
+              "default": "https://resolver.cheqd.net/1.0/identifiers/"
+            }
+          }
+        }
+      }
+    },
+    "packageAgent": {
+      "type": "object",
+      "description": "Configuration specific to package agents",
+      "properties": {
+        "packageJsonPath": {
+          "type": "string",
+          "description": "Path to package.json for package-level operations"
+        },
+        "bundleTracking": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable bundle hash tracking for package integrity"
+        },
+        "autoPublishRelease": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically publish releases to DLR"
+        }
+      }
+    },
+    "userAgent": {
+      "type": "object",
+      "description": "Configuration specific to user agents",
+      "properties": {
+        "primaryDIDRequired": {
+          "type": "boolean",
+          "default": true,
+          "description": "Require primary DID for user operations"
+        },
+        "walletIntegration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable wallet integration for signing"
+        }
+      }
+    },
+    "parentAgent": {
+      "type": "object",
+      "description": "Configuration specific to parent/organizational agents",
+      "properties": {
+        "organizationDID": {
+          "type": "string",
+          "description": "Organization-level DID for parent agent"
+        },
+        "delegationEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable delegation capabilities"
+        }
+      }
+    },
+    "serviceAgent": {
+      "type": "object",
+      "description": "Configuration specific to service agents",
+      "properties": {
+        "serviceEndpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "serviceEndpoint": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": ["id", "type", "serviceEndpoint"]
+          }
+        },
+        "apiKeys": {
+          "type": "object",
+          "description": "Service-specific API keys and credentials"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "did-management",
+          "credential-issuance",
+          "credential-verification", 
+          "messaging",
+          "resource-creation",
+          "trust-registry",
+          "revocation-management"
+        ]
+      },
+      "description": "Agent capabilities and features to enable"
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "keyRotationInterval": {
+          "type": "integer",
+          "minimum": 86400,
+          "description": "Key rotation interval in seconds (minimum 24 hours)"
+        },
+        "requireMFA": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require multi-factor authentication"
+        },
+        "auditLogging": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable comprehensive audit logging"
+        }
+      }
+    }
+  },
+  "required": ["agentType", "agentId", "store", "didProviders"],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "agentType": {
+            "const": "package"
+          }
+        }
+      },
+      "then": {
+        "required": ["packageAgent"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "agentType": {
+            "const": "user"
+          }
+        }
+      },
+      "then": {
+        "required": ["userAgent"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "agentType": {
+            "const": "parent"
+          }
+        }
+      },
+      "then": {
+        "required": ["parentAgent"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "agentType": {
+            "const": "service"
+          }
+        }
+      },
+      "then": {
+        "required": ["serviceAgent"]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "agentType": "user",
+      "agentId": "user-agent-01",
+      "store": {
+        "type": "file",
+        "encryption": {
+          "enabled": true,
+          "keyDerivation": "pbkdf2"
+        }
+      },
+      "didProviders": [
+        {
+          "method": "did:key"
+        },
+        {
+          "method": "did:cheqd",
+          "network": "mainnet"
+        }
+      ],
+      "userAgent": {
+        "primaryDIDRequired": true,
+        "walletIntegration": true
+      },
+      "capabilities": [
+        "did-management",
+        "credential-issuance", 
+        "credential-verification"
+      ]
+    },
+    {
+      "agentType": "package",
+      "agentId": "package-agent-01",
+      "store": {
+        "type": "file",
+        "encryption": {
+          "enabled": true
+        }
+      },
+      "didProviders": [
+        {
+          "method": "did:cheqd",
+          "network": "mainnet"
+        }
+      ],
+      "packageAgent": {
+        "packageJsonPath": "./package.json",
+        "bundleTracking": true,
+        "autoPublishRelease": false
+      },
+      "capabilities": [
+        "resource-creation",
+        "credential-issuance"
+      ]
+    }
+  ]
+} 

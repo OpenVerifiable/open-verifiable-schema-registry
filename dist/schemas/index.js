@@ -1,0 +1,13 @@
+import ActionsAssertionSchema from "./c2pa/ActionsAssertion.schema.json";
+import CreativeWorkAssertionSchema from "./c2pa/CreativeWorkAssertion.schema.json";
+import CustomAssertionSchema from "./c2pa/CustomAssertion.schema.json";
+import DataHashAssertionSchema from "./c2pa/DataHashAssertion.schema.json";
+import ExifInformationAssertionSchema from "./c2pa/ExifInformationAssertion.schema.json";
+import IPTCPhotoVideoMetadataAssertionSchema from "./c2pa/IPTCPhotoVideoMetadataAssertion.schema.json";
+import ManifestStoreSchema from "./c2pa/ManifestStore.schema.json";
+import TrainingDataMiningAssertionSchema from "./c2pa/TrainingDataMiningAssertion.schema.json";
+import SocialAuthenticationCredentialSchema from "./cheqd/SocialAuthenticationCredential.schema.json";
+import EmailAuthenticationCredentialSchema from "./cheqd/EmailAuthenticationCredential.schema.json";
+import BasicPersonSchema from "./privado/BasicPerson.schema.json";
+import ProofOfAgeSchema from "./privado/ProofOfAge.schema.json";
+export { ActionsAssertionSchema, CreativeWorkAssertionSchema, CustomAssertionSchema, DataHashAssertionSchema, ExifInformationAssertionSchema, IPTCPhotoVideoMetadataAssertionSchema, ManifestStoreSchema, TrainingDataMiningAssertionSchema, SocialAuthenticationCredentialSchema, EmailAuthenticationCredentialSchema, BasicPersonSchema, ProofOfAgeSchema, };

@@ -1,0 +1,437 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/CommunityGovernanceConfiguration.schema.json",
+  "title": "Community Governance Configuration Schema",
+  "description": "Configuration schema for community governance participation, voting mechanisms, and consensus protocols",
+  "governanceReference": [
+    "adr:0019-ecosystem-governance-community-management-strategy",
+    "adr:0033-schema-registry-governance-automation",
+    "adr:0003-governance-model-decision-processes"
+  ],
+  "type": "object",
+  "properties": {
+    "governanceId": {
+      "type": "string",
+      "description": "Unique identifier for this governance configuration"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Governance configuration version"
+    },
+    "participantRole": {
+      "type": "string",
+      "enum": ["observer", "participant", "contributor", "maintainer", "steward"],
+      "description": "Role of the participant in the governance process"
+    },
+    "votingConfiguration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable voting capabilities"
+        },
+        "mechanisms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["token-weighted", "quadratic", "conviction", "futarchy", "simple-majority"]
+          },
+          "default": ["token-weighted"],
+          "description": "Supported voting mechanisms"
+        },
+        "delegationEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Allow vote delegation"
+        },
+        "minimumStake": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Minimum stake required for voting"
+        },
+        "votingPeriod": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Voting period in hours"
+        },
+        "quorumThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Minimum participation threshold for valid votes"
+        }
+      }
+    },
+    "proposalManagement": {
+      "type": "object",
+      "properties": {
+        "submissionEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Can this participant submit proposals"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["technical", "governance", "economic", "social", "emergency"]
+          },
+          "description": "Categories of proposals this participant can submit"
+        },
+        "requiresStake": {
+          "type": "boolean",
+          "default": true,
+          "description": "Proposal submission requires stake"
+        },
+        "stakeAmount": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Required stake amount for proposal submission"
+        },
+        "reviewPeriod": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Review period in hours before voting"
+        }
+      }
+    },
+    "consensusProtocols": {
+      "type": "object",
+      "properties": {
+        "primaryProtocol": {
+          "type": "string",
+          "enum": ["proof-of-stake", "proof-of-authority", "proof-of-contribution", "hybrid"],
+          "default": "proof-of-contribution",
+          "description": "Primary consensus protocol"
+        },
+        "fallbackProtocol": {
+          "type": "string",
+          "enum": ["proof-of-stake", "proof-of-authority", "proof-of-contribution", "hybrid"],
+          "description": "Fallback consensus protocol"
+        },
+        "finalizationThreshold": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1,
+          "default": 0.67,
+          "description": "Threshold for proposal finalization"
+        },
+        "slashingEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable slashing for malicious behavior"
+        }
+      }
+    },
+    "reputationSystem": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable reputation tracking"
+        },
+        "algorithm": {
+          "type": "string",
+          "enum": ["eigentrust", "pagerank", "contribution-based", "time-weighted"],
+          "default": "contribution-based",
+          "description": "Reputation calculation algorithm"
+        },
+        "factors": {
+          "type": "object",
+          "properties": {
+            "codeContributions": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3,
+              "description": "Weight for code contributions"
+            },
+            "governanceParticipation": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2,
+              "description": "Weight for governance participation"
+            },
+            "communitySupport": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.25,
+              "description": "Weight for community support activities"
+            },
+            "reviewQuality": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.25,
+              "description": "Weight for review quality"
+            }
+          }
+        },
+        "decayFactor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.95,
+          "description": "Reputation decay factor over time"
+        }
+      }
+    },
+    "identityVerification": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean",
+          "default": false,
+          "description": "Require identity verification for governance participation"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["did-verification", "social-proof", "biometric", "kyc", "community-endorsement"]
+          },
+          "description": "Accepted identity verification methods"
+        },
+        "minimumTrustLevel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 5,
+          "description": "Minimum trust level for participation"
+        }
+      }
+    },
+    "communicationChannels": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable communication channels"
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["forum", "chat", "video", "polling", "voting"]
+              },
+              "endpoint": {
+                "type": "string",
+                "format": "uri"
+              },
+              "credentials": {
+                "type": "object",
+                "properties": {
+                  "authentication": {
+                    "type": "string",
+                    "enum": ["did", "oauth", "api-key", "none"]
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": ["type", "endpoint"]
+          }
+        }
+      }
+    },
+    "conflictResolution": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable conflict resolution mechanisms"
+        },
+        "arbitrationPanel": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "panelSize": {
+              "type": "integer",
+              "minimum": 3,
+              "maximum": 15,
+              "default": 7,
+              "description": "Number of arbitrators in panel"
+            },
+            "selectionMethod": {
+              "type": "string",
+              "enum": ["random", "reputation-based", "elected", "appointed"],
+              "default": "reputation-based"
+            }
+          }
+        },
+        "appealProcess": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "appealPeriod": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Appeal period in hours"
+            },
+            "appealCost": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Cost for filing an appeal"
+            }
+          }
+        }
+      }
+    },
+    "incentiveStructure": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable incentive mechanisms"
+        },
+        "tokenRewards": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "currency": {
+              "type": "string",
+              "description": "Token type for rewards"
+            },
+            "rewardRates": {
+              "type": "object",
+              "properties": {
+                "voting": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Reward rate for voting participation"
+                },
+                "proposalSubmission": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Reward for successful proposal submission"
+                },
+                "codeReview": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Reward for quality code reviews"
+                }
+              }
+            }
+          }
+        },
+        "nonMonetaryRewards": {
+          "type": "object",
+          "properties": {
+            "badges": {
+              "type": "boolean",
+              "default": true,
+              "description": "Award governance badges"
+            },
+            "recognition": {
+              "type": "boolean",
+              "default": true,
+              "description": "Public recognition for contributions"
+            },
+            "specialRoles": {
+              "type": "boolean",
+              "default": true,
+              "description": "Access to special governance roles"
+            }
+          }
+        }
+      }
+    },
+    "auditAndTransparency": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable audit and transparency features"
+        },
+        "publicLedger": {
+          "type": "boolean",
+          "default": true,
+          "description": "Maintain public ledger of governance actions"
+        },
+        "auditTrail": {
+          "type": "boolean",
+          "default": true,
+          "description": "Maintain detailed audit trail"
+        },
+        "transparencyReports": {
+          "type": "boolean",
+          "default": true,
+          "description": "Generate regular transparency reports"
+        }
+      }
+    }
+  },
+  "required": ["governanceId", "version", "participantRole"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "governanceId": "governance-001",
+      "version": "1.0.0",
+      "participantRole": "contributor",
+      "votingConfiguration": {
+        "enabled": true,
+        "mechanisms": ["token-weighted", "quadratic"],
+        "delegationEnabled": true,
+        "minimumStake": 100,
+        "votingPeriod": 168,
+        "quorumThreshold": 0.3
+      },
+      "proposalManagement": {
+        "submissionEnabled": true,
+        "categories": ["technical", "governance"],
+        "requiresStake": true,
+        "stakeAmount": 1000,
+        "reviewPeriod": 72
+      },
+      "consensusProtocols": {
+        "primaryProtocol": "proof-of-contribution",
+        "finalizationThreshold": 0.67,
+        "slashingEnabled": false
+      },
+      "reputationSystem": {
+        "enabled": true,
+        "algorithm": "contribution-based",
+        "factors": {
+          "codeContributions": 0.3,
+          "governanceParticipation": 0.2,
+          "communitySupport": 0.25,
+          "reviewQuality": 0.25
+        }
+      }
+    }
+  ]
+} 

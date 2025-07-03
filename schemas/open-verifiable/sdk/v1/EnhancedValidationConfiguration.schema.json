@@ -1,0 +1,584 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/EnhancedValidationConfiguration.schema.json",
+  "title": "Enhanced Validation Configuration Schema",
+  "description": "Configuration schema for advanced validation, testing, and quality assurance automation",
+  "governanceReference": [
+    "adr:0021-quality-assurance-testing-strategy",
+    "adr:0022-test-driven-development-methodology",
+    "adr:architecture-0009-testing-validation-strategy"
+  ],
+  "type": "object",
+  "properties": {
+    "validationId": {
+      "type": "string",
+      "description": "Unique identifier for this validation configuration"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Validation configuration version"
+    },
+    "schemaValidation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable schema validation"
+        },
+        "strictMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable strict schema validation"
+        },
+        "validateExamples": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate schema examples"
+        },
+        "customValidators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Custom validator name"
+              },
+              "path": {
+                "type": "string",
+                "description": "Path to custom validator module"
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": true
+              }
+            },
+            "required": ["name", "path"]
+          }
+        },
+        "adrGovernanceValidation": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Validate ADR governance references"
+            },
+            "requireGovernanceReference": {
+              "type": "boolean",
+              "default": true,
+              "description": "Require governance references in schemas"
+            },
+            "validateGovernanceLinks": {
+              "type": "boolean",
+              "default": true,
+              "description": "Validate governance reference links"
+            }
+          }
+        }
+      }
+    },
+    "testAutomation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable test automation"
+        },
+        "testTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["unit", "integration", "e2e", "security", "performance", "accessibility"]
+          },
+          "default": ["unit", "integration"],
+          "description": "Types of tests to run"
+        },
+        "testFrameworks": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "type": "string",
+              "enum": ["jest", "mocha", "vitest", "tap"],
+              "default": "jest"
+            },
+            "integration": {
+              "type": "string",
+              "enum": ["jest", "mocha", "supertest", "newman"],
+              "default": "jest"
+            },
+            "e2e": {
+              "type": "string",
+              "enum": ["playwright", "cypress", "selenium", "puppeteer"],
+              "default": "playwright"
+            },
+            "security": {
+              "type": "string",
+              "enum": ["snyk", "npm-audit", "bandit", "semgrep"],
+              "default": "snyk"
+            },
+            "performance": {
+              "type": "string",
+              "enum": ["lighthouse", "k6", "jmeter", "artillery"],
+              "default": "k6"
+            }
+          }
+        },
+        "coverageTargets": {
+          "type": "object",
+          "properties": {
+            "statements": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80,
+              "description": "Statement coverage target percentage"
+            },
+            "branches": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 75,
+              "description": "Branch coverage target percentage"
+            },
+            "functions": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80,
+              "description": "Function coverage target percentage"
+            },
+            "lines": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80,
+              "description": "Line coverage target percentage"
+            }
+          }
+        },
+        "parallelExecution": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable parallel test execution"
+            },
+            "maxWorkers": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 32,
+              "default": 4,
+              "description": "Maximum number of parallel workers"
+            },
+            "testSuiteDistribution": {
+              "type": "string",
+              "enum": ["even", "duration-based", "file-size-based"],
+              "default": "duration-based"
+            }
+          }
+        }
+      }
+    },
+    "qualityAssurance": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable quality assurance checks"
+        },
+        "codeQuality": {
+          "type": "object",
+          "properties": {
+            "linting": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "tools": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["eslint", "prettier", "tslint", "standardjs"]
+                  },
+                  "default": ["eslint", "prettier"]
+                },
+                "configFiles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Custom linting configuration files"
+                }
+              }
+            },
+            "codeComplexity": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "cyclomaticComplexityThreshold": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 50,
+                  "default": 10
+                },
+                "maintainabilityIndex": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "default": 70
+                }
+              }
+            }
+          }
+        },
+        "securityScanning": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable security scanning"
+            },
+            "vulnerabilityScanning": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "tools": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["snyk", "npm-audit", "yarn-audit", "trivy"]
+                  },
+                  "default": ["snyk", "npm-audit"]
+                },
+                "severityThreshold": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high", "critical"],
+                  "default": "medium"
+                }
+              }
+            },
+            "secretsScanning": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "tools": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["truffleHog", "gitleaks", "detect-secrets"]
+                  },
+                  "default": ["gitleaks"]
+                }
+              }
+            }
+          }
+        },
+        "accessibilityTesting": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable accessibility testing"
+            },
+            "standards": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["WCAG2.0", "WCAG2.1", "WCAG2.2", "Section508"]
+              },
+              "default": ["WCAG2.1"]
+            },
+            "level": {
+              "type": "string",
+              "enum": ["A", "AA", "AAA"],
+              "default": "AA"
+            }
+          }
+        }
+      }
+    },
+    "performanceTesting": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable performance testing"
+        },
+        "loadTesting": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "scenarios": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "virtualUsers": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "duration": {
+                    "type": "string",
+                    "pattern": "^\\d+[smh]$"
+                  },
+                  "rampUpTime": {
+                    "type": "string",
+                    "pattern": "^\\d+[smh]$"
+                  }
+                },
+                "required": ["name", "virtualUsers", "duration"]
+              }
+            }
+          }
+        },
+        "benchmarking": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "metrics": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["response-time", "throughput", "memory-usage", "cpu-usage"]
+              },
+              "default": ["response-time", "throughput"]
+            },
+            "thresholds": {
+              "type": "object",
+              "properties": {
+                "responseTime": {
+                  "type": "number",
+                  "description": "Maximum acceptable response time in milliseconds"
+                },
+                "throughput": {
+                  "type": "number",
+                  "description": "Minimum acceptable throughput (requests per second)"
+                },
+                "memoryUsage": {
+                  "type": "integer",
+                  "description": "Maximum acceptable memory usage in bytes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "continuousValidation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable continuous validation"
+        },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["commit", "pull-request", "scheduled", "manual"]
+          },
+          "default": ["commit", "pull-request"]
+        },
+        "schedule": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "cron": {
+              "type": "string",
+              "pattern": "^([0-9,\\-\\*\\/]+\\s){4}[0-9,\\-\\*\\/]+$",
+              "description": "Cron expression for scheduled validation"
+            }
+          }
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "channels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["email", "slack", "webhook", "github-status"]
+              },
+              "default": ["github-status"]
+            },
+            "onFailure": {
+              "type": "boolean",
+              "default": true
+            },
+            "onSuccess": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "reporting": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable validation reporting"
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["json", "html", "xml", "junit", "lcov", "cobertura"]
+          },
+          "default": ["json", "html"]
+        },
+        "outputDirectory": {
+          "type": "string",
+          "default": "./validation-reports",
+          "description": "Directory to store validation reports"
+        },
+        "retentionPeriod": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 30,
+          "description": "Report retention period in days"
+        },
+        "dashboardEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable validation dashboard"
+        }
+      }
+    }
+  },
+  "required": ["validationId", "version"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "validationId": "validation-001",
+      "version": "1.0.0",
+      "schemaValidation": {
+        "enabled": true,
+        "strictMode": true,
+        "validateExamples": true,
+        "adrGovernanceValidation": {
+          "enabled": true,
+          "requireGovernanceReference": true,
+          "validateGovernanceLinks": true
+        }
+      },
+      "testAutomation": {
+        "enabled": true,
+        "testTypes": ["unit", "integration", "security"],
+        "testFrameworks": {
+          "unit": "jest",
+          "integration": "jest",
+          "security": "snyk"
+        },
+        "coverageTargets": {
+          "statements": 90,
+          "branches": 85,
+          "functions": 90,
+          "lines": 90
+        },
+        "parallelExecution": {
+          "enabled": true,
+          "maxWorkers": 8,
+          "testSuiteDistribution": "duration-based"
+        }
+      },
+      "qualityAssurance": {
+        "enabled": true,
+        "codeQuality": {
+          "linting": {
+            "enabled": true,
+            "tools": ["eslint", "prettier"]
+          },
+          "codeComplexity": {
+            "enabled": true,
+            "cyclomaticComplexityThreshold": 8,
+            "maintainabilityIndex": 75
+          }
+        },
+        "securityScanning": {
+          "enabled": true,
+          "vulnerabilityScanning": {
+            "enabled": true,
+            "tools": ["snyk", "npm-audit"],
+            "severityThreshold": "high"
+          },
+          "secretsScanning": {
+            "enabled": true,
+            "tools": ["gitleaks"]
+          }
+        }
+      },
+      "continuousValidation": {
+        "enabled": true,
+        "triggers": ["commit", "pull-request", "scheduled"],
+        "schedule": {
+          "enabled": true,
+          "cron": "0 2 * * *"
+        },
+        "notifications": {
+          "enabled": true,
+          "channels": ["slack", "github-status"],
+          "onFailure": true,
+          "onSuccess": false
+        }
+      },
+      "reporting": {
+        "enabled": true,
+        "formats": ["json", "html", "junit"],
+        "outputDirectory": "./validation-reports",
+        "retentionPeriod": 60,
+        "dashboardEnabled": true
+      }
+    }
+  ]
+} 

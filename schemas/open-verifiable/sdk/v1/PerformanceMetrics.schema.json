@@ -1,0 +1,335 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/PerformanceMetrics.schema.json",
+  "title": "Performance Metrics Schema",
+  "description": "Schema for collecting and monitoring SDK performance metrics and system health",
+  "governanceReference": [
+    "adr:0030-schema-registry-performance-scalability",
+    "adr:0025-monitoring-observability-strategy",
+    "adr:architecture-0014-sdk-performance-optimization"
+  ],
+  "type": "object",
+  "properties": {
+    "metricId": {
+      "type": "string",
+      "description": "Unique identifier for this performance metric collection"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when metrics were collected"
+    },
+    "sdkVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "SDK version that generated these metrics"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["development", "staging", "production"],
+      "description": "Environment where metrics were collected"
+    },
+    "operationMetrics": {
+      "type": "object",
+      "properties": {
+        "didOperations": {
+          "type": "object",
+          "properties": {
+            "creation": {
+              "type": "object",
+              "properties": {
+                "averageTime": {
+                  "type": "number",
+                  "description": "Average DID creation time in milliseconds"
+                },
+                "p95Time": {
+                  "type": "number",
+                  "description": "95th percentile DID creation time in milliseconds"
+                },
+                "successRate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "Success rate for DID creation operations"
+                },
+                "errorCount": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of DID creation errors"
+                }
+              }
+            },
+            "resolution": {
+              "type": "object",
+              "properties": {
+                "averageTime": {
+                  "type": "number",
+                  "description": "Average DID resolution time in milliseconds"
+                },
+                "cacheHitRate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "description": "Cache hit rate for DID resolution"
+                },
+                "networkTime": {
+                  "type": "number",
+                  "description": "Average network time for remote resolution"
+                }
+              }
+            }
+          }
+        },
+        "credentialOperations": {
+          "type": "object",
+          "properties": {
+            "issuance": {
+              "type": "object",
+              "properties": {
+                "averageTime": {
+                  "type": "number"
+                },
+                "validationTime": {
+                  "type": "number",
+                  "description": "Time spent on credential validation"
+                },
+                "signingTime": {
+                  "type": "number",
+                  "description": "Time spent on cryptographic signing"
+                }
+              }
+            },
+            "verification": {
+              "type": "object",
+              "properties": {
+                "averageTime": {
+                  "type": "number"
+                },
+                "signatureVerificationTime": {
+                  "type": "number"
+                },
+                "trustRegistryTime": {
+                  "type": "number",
+                  "description": "Time spent querying trust registry"
+                },
+                "revocationCheckTime": {
+                  "type": "number",
+                  "description": "Time spent checking revocation status"
+                }
+              }
+            }
+          }
+        },
+        "storageOperations": {
+          "type": "object",
+          "properties": {
+            "readTime": {
+              "type": "number",
+              "description": "Average storage read time in milliseconds"
+            },
+            "writeTime": {
+              "type": "number",
+              "description": "Average storage write time in milliseconds"
+            },
+            "encryptionTime": {
+              "type": "number",
+              "description": "Time spent on encryption/decryption"
+            },
+            "storageSize": {
+              "type": "integer",
+              "description": "Current storage size in bytes"
+            }
+          }
+        }
+      }
+    },
+    "systemMetrics": {
+      "type": "object",
+      "properties": {
+        "memory": {
+          "type": "object",
+          "properties": {
+            "used": {
+              "type": "integer",
+              "description": "Memory used by SDK in bytes"
+            },
+            "peak": {
+              "type": "integer",
+              "description": "Peak memory usage in bytes"
+            },
+            "gcTime": {
+              "type": "number",
+              "description": "Time spent in garbage collection (if applicable)"
+            }
+          }
+        },
+        "cpu": {
+          "type": "object",
+          "properties": {
+            "usage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "CPU usage percentage"
+            },
+            "cryptoOperations": {
+              "type": "number",
+              "description": "Time spent on cryptographic operations"
+            }
+          }
+        },
+        "network": {
+          "type": "object",
+          "properties": {
+            "requestCount": {
+              "type": "integer",
+              "description": "Number of network requests made"
+            },
+            "averageLatency": {
+              "type": "number",
+              "description": "Average network latency in milliseconds"
+            },
+            "errorRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Network error rate"
+            },
+            "bytesTransferred": {
+              "type": "integer",
+              "description": "Total bytes transferred"
+            }
+          }
+        }
+      }
+    },
+    "errorMetrics": {
+      "type": "object",
+      "properties": {
+        "totalErrors": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of errors"
+        },
+        "errorsByType": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z][a-zA-Z0-9_]*$": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "description": "Error counts by error type"
+        },
+        "criticalErrors": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of critical errors"
+        },
+        "recoveredErrors": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of errors that were automatically recovered"
+        }
+      }
+    },
+    "carbonMetrics": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "governanceReference": "adr:architecture-0004-carbon-awareness-integration"
+        },
+        "estimatedCO2": {
+          "type": "number",
+          "description": "Estimated CO2 footprint in grams"
+        },
+        "energyUsage": {
+          "type": "number",
+          "description": "Estimated energy usage in watts"
+        },
+        "methodology": {
+          "type": "string",
+          "description": "Carbon calculation methodology"
+        }
+      }
+    },
+    "aggregationPeriod": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Aggregation period duration in seconds"
+        },
+        "sampleCount": {
+          "type": "integer",
+          "description": "Number of samples in this aggregation"
+        }
+      }
+    }
+  },
+  "required": ["metricId", "timestamp", "sdkVersion", "environment"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "metricId": "metrics-001",
+      "timestamp": "2024-01-15T10:30:00Z",
+      "sdkVersion": "1.0.0",
+      "environment": "production",
+      "operationMetrics": {
+        "didOperations": {
+          "creation": {
+            "averageTime": 150.5,
+            "p95Time": 250.0,
+            "successRate": 0.98,
+            "errorCount": 5
+          },
+          "resolution": {
+            "averageTime": 75.2,
+            "cacheHitRate": 0.85,
+            "networkTime": 50.0
+          }
+        },
+        "credentialOperations": {
+          "verification": {
+            "averageTime": 45.8,
+            "signatureVerificationTime": 25.0,
+            "trustRegistryTime": 15.0,
+            "revocationCheckTime": 5.8
+          }
+        }
+      },
+      "systemMetrics": {
+        "memory": {
+          "used": 52428800,
+          "peak": 67108864
+        },
+        "network": {
+          "requestCount": 1250,
+          "averageLatency": 85.5,
+          "errorRate": 0.02
+        }
+      }
+    }
+  ]
+} 

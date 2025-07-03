@@ -1,0 +1,48 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://openverifiable.org/schemas/c2pa/DataHashAssertion.schema.json",
+    "title": "DataHashAssertion",
+    "version": "0.0.1",
+    "type": "object",
+    "description": "Contains a cryptographic hash of some or all of the asset for content binding.",
+    "properties": {
+        "alg": {
+            "type": "string",
+            "description": "Hash algorithm (e.g. 'sha256')."
+        },
+        "hash": {
+            "type": "string",
+            "description": "Base64-encoded hash."
+        },
+        "pad": {
+            "type": "string",
+            "description": "Zero-filled byte string (base64-encoded) for multi-pass hashing."
+        },
+        "pad2": {
+            "type": "string",
+            "description": "Optional second zero-filled byte string (base64-encoded)."
+        },
+        "name": {
+            "type": "string",
+            "description": "Optional human-readable label for the covered data."
+        },
+        "exclusions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/ExclusionRange"
+            }
+        }
+    },
+    "required": ["hash", "pad"],
+    "$defs": {
+        "ExclusionRange": {
+            "type": "object",
+            "properties": {
+                "start": { "type": "integer" },
+                "length": { "type": "integer" }
+            },
+            "required": ["start", "length"]
+        }
+    },
+    "additionalProperties": false
+}

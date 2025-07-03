@@ -1,0 +1,23 @@
+{
+  "name": "@open-verifiable/types-typescript-index.json",
+  "version": "1.0.0",
+  "description": "Generated typescript types for Open Verifiable index.json schemas",
+  "main": "index.ts",
+  "types": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-verifiable/open-verifiable-schema-registry"
+  },
+  "keywords": [
+    "open-verifiable",
+    "schemas",
+    "types",
+    "typescript"
+  ],
+  "generated": {
+    "tool": "quicktype",
+    "source": "open-verifiable-schema-registry",
+    "layer": "index.json",
+    "timestamp": "2025-07-03T02:44:53.024Z"
+  }
+}

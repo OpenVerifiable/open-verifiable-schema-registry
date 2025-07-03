@@ -1,0 +1,259 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/KeyManagementConfiguration.schema.json",
+  "title": "Key Management Configuration Schema",
+  "description": "Configuration schema for cryptographic key management in Open Verifiable SDK",
+  "governanceReference": [
+    "adr:architecture-0006-secure-local-storage-for-keys-and-credentials",
+    "adr:0029-schema-registry-security-model"
+  ],
+  "type": "object",
+  "properties": {
+    "keyStore": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["memory", "file", "encrypted-file", "hardware", "kms"],
+          "description": "Type of key storage backend"
+        },
+        "path": {
+          "type": "string",
+          "description": "File path for file-based key stores"
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "algorithm": {
+              "type": "string",
+              "enum": ["AES-256-GCM", "ChaCha20-Poly1305"],
+              "default": "AES-256-GCM"
+            },
+            "keyDerivation": {
+              "type": "object",
+              "properties": {
+                "algorithm": {
+                  "type": "string",
+                  "enum": ["pbkdf2", "scrypt", "argon2"],
+                  "default": "pbkdf2"
+                },
+                "iterations": {
+                  "type": "integer",
+                  "minimum": 100000,
+                  "default": 100000
+                },
+                "saltLength": {
+                  "type": "integer",
+                  "minimum": 16,
+                  "default": 32
+                }
+              }
+            }
+          },
+          "required": ["enabled"]
+        }
+      },
+      "required": ["type"]
+    },
+    "keyGeneration": {
+      "type": "object",
+      "properties": {
+        "defaultAlgorithm": {
+          "type": "string",
+          "enum": ["Ed25519", "secp256k1", "secp256r1", "RSA-2048", "RSA-4096"],
+          "default": "Ed25519"
+        },
+        "supportedAlgorithms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Ed25519", "secp256k1", "secp256r1", "RSA-2048", "RSA-4096"]
+          },
+          "default": ["Ed25519", "secp256k1"]
+        },
+        "randomnessSource": {
+          "type": "string",
+          "enum": ["system", "hardware", "external"],
+          "default": "system"
+        }
+      }
+    },
+    "keyRotation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "rotationInterval": {
+          "type": "integer",
+          "minimum": 86400,
+          "description": "Key rotation interval in seconds (minimum 24 hours)"
+        },
+        "advanceNotice": {
+          "type": "integer",
+          "minimum": 3600,
+          "description": "Advance notice period in seconds before rotation"
+        },
+        "maxKeyAge": {
+          "type": "integer",
+          "minimum": 604800,
+          "description": "Maximum key age in seconds before forced rotation"
+        }
+      }
+    },
+    "keyUsage": {
+      "type": "object",
+      "properties": {
+        "signingKeys": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": ["Ed25519", "secp256k1", "secp256r1"],
+              "default": "Ed25519"
+            },
+            "purposes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["authentication", "assertionMethod", "capabilityInvocation"]
+              },
+              "default": ["authentication", "assertionMethod"]
+            }
+          }
+        },
+        "encryptionKeys": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": ["X25519", "secp256k1"],
+              "default": "X25519"
+            },
+            "purposes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["keyAgreement", "capabilityDelegation"]
+              },
+              "default": ["keyAgreement"]
+            }
+          }
+        }
+      }
+    },
+    "backup": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "method": {
+          "type": "string",
+          "enum": ["mnemonic", "encrypted-export", "hsm", "distributed"],
+          "default": "mnemonic"
+        },
+        "mnemonicOptions": {
+          "type": "object",
+          "properties": {
+            "wordCount": {
+              "type": "integer",
+              "enum": [12, 15, 18, 21, 24],
+              "default": 24
+            },
+            "language": {
+              "type": "string",
+              "enum": ["english", "japanese", "french", "spanish"],
+              "default": "english"
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "requireMFA": {
+          "type": "boolean",
+          "default": false
+        },
+        "biometricAuth": {
+          "type": "boolean",
+          "default": false,
+          "governanceReference": "adr:architecture-0008-biometric-authentication-integration"
+        },
+        "lockoutPolicy": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "maxAttempts": {
+              "type": "integer",
+              "minimum": 3,
+              "maximum": 10,
+              "default": 5
+            },
+            "lockoutDuration": {
+              "type": "integer",
+              "minimum": 300,
+              "default": 900,
+              "description": "Lockout duration in seconds"
+            }
+          }
+        }
+      }
+    },
+    "auditLogging": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "key-generation",
+              "key-access",
+              "key-rotation",
+              "key-backup",
+              "key-deletion",
+              "authentication-failure",
+              "configuration-change"
+            ]
+          },
+          "default": ["key-generation", "key-access", "authentication-failure"]
+        },
+        "retention": {
+          "type": "integer",
+          "minimum": 86400,
+          "default": 2592000,
+          "description": "Audit log retention period in seconds"
+        }
+      }
+    }
+  },
+  "required": ["keyStore", "keyGeneration"],
+  "additionalProperties": false
+} 

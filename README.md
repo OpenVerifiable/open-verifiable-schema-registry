@@ -62,3 +62,11 @@ We believe in:
 Open Verifiable is a **community-driven initiative**. Join us to shape the future of **decentralized trust and identity!**
 
 🚀 **Open Verifiable – Building the Decentralized Trust Layer for AI & Web3** 🚀
+
+## 🏛️ Architectural Decisions (ADRs)
+
+All architectural decisions for the Open Verifiable Schema Registry and the broader ecosystem are maintained in the main [Open Verifiable Architecture Decision Records repository](https://github.com/openverifiable/open-verifiable-architecture-decision-records).
+
+- To view or propose changes to the architecture, visit the [ADRs directory](https://github.com/openverifiable/open-verifiable-architecture-decision-records/tree/main/adrs).
+- Schema registry-specific ADRs are numbered 0035 and above in that repository.
+- Please do **not** add or edit ADRs in this repository; use the main ADR repo and follow the community governance process described there.

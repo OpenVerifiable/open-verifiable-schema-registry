@@ -1,0 +1,81 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/TrustRegistryQuery.schema.json",
+  "title": "Trust Registry Query Schema",
+  "description": "Schema for trust registry queries and validation",
+  "governanceReference": [
+    "adr:0011-trust-registry-client-integration"
+  ],
+  "type": "object",
+  "properties": {
+    "queryId": {
+      "type": "string",
+      "description": "Unique identifier for this trust query"
+    },
+    "queryType": {
+      "type": "string",
+      "enum": [
+        "issuer-trust",
+        "schema-validation",
+        "revocation-status",
+        "governance-participation"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["did", "credential", "schema", "issuer"]
+        },
+        "identifier": {
+          "type": "string"
+        }
+      },
+      "required": ["type", "identifier"]
+    },
+    "requester": {
+      "type": "object",
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        }
+      },
+      "required": ["did"]
+    },
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "trustLevel": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "default": "medium"
+        },
+        "includeTransitive": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["queryId", "queryType", "target", "requester"],
+  "additionalProperties": false
+} 

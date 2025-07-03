@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "ov": "https://schemas.openverifiable.org/",
+    "adr": "https://adrs.openverifiable.org/",
+    "sdk": "https://schemas.openverifiable.org/sdk/",
+    "governanceReference": {
+      "@id": "adr:governanceReference",
+      "@type": "@id"
+    },
+    "implementationReference": {
+      "@id": "adr:implementationReference", 
+      "@type": "@id"
+    },
+    "standardsCompliance": {
+      "@id": "adr:standardsCompliance",
+      "@type": "@id"
+    },
+    "SDKConfiguration": "sdk:v1/SDKConfiguration",
+    "AgentConfiguration": "sdk:v1/AgentConfiguration",
+    "VerificationResult": "sdk:v1/VerificationResult",
+    "CredentialTemplate": "sdk:v1/CredentialTemplate",
+    "TrustRegistryQuery": "sdk:v1/TrustRegistryQuery",
+    "KeyManagementConfiguration": "sdk:v1/KeyManagementConfiguration",
+    "PrivacyPreservingCredential": "sdk:v1/PrivacyPreservingCredential",
+    "PerformanceMetrics": "sdk:v1/PerformanceMetrics",
+    "DeveloperToolingConfiguration": "sdk:v1/DeveloperToolingConfiguration",
+    "CommunityGovernanceConfiguration": "sdk:v1/CommunityGovernanceConfiguration",
+    "EnhancedValidationConfiguration": "sdk:v1/EnhancedValidationConfiguration"
+  }
+} 

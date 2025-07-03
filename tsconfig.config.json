@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
@@ -9,8 +10,7 @@
     "module": "ESNext",
     "declaration": true,
     "outDir": "dist",
-    "rootDir": "types"
+    "rootDir": "."
   },
-  "include": ["types/**/*", "types/**/*.d.ts"],
   "exclude": ["node_modules", "drafts"]
 }

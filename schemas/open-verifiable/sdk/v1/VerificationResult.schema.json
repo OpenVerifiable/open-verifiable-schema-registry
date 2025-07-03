@@ -1,0 +1,361 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://identity.foundation/credentials/v1",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "ov": "https://schemas.openverifiable.org/",
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/VerificationResult.schema.json",
+  "title": "Open Verifiable Verification Result Schema",
+  "description": "Standardized verification result structure for credentials, signatures, and trust validation",
+  "governanceReference": [
+    "adr:0017-credential-presentation-verification-protocols",
+    "adr:0011-trust-registry-client-integration",
+    "adr:0012-credential-revocation-strategy"
+  ],
+  "type": "object",
+  "properties": {
+    "verified": {
+      "type": "boolean",
+      "description": "Overall verification status - true if all checks pass"
+    },
+    "verificationTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when verification was performed"
+    },
+    "verificationType": {
+      "type": "string",
+      "enum": [
+        "credential",
+        "presentation",
+        "signature",
+        "trust",
+        "revocation",
+        "schema",
+        "composite"
+      ],
+      "description": "Type of verification performed"
+    },
+    "verificationMethod": {
+      "type": "string",
+      "description": "Verification method or algorithm used"
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["credential", "presentation", "did", "signature", "document"]
+        },
+        "id": {
+          "type": "string",
+          "description": "Identifier of the subject being verified"
+        },
+        "hash": {
+          "type": "string",
+          "description": "Hash of the subject (optional for integrity verification)"
+        }
+      },
+      "required": ["type", "id"]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "signature",
+              "schema",
+              "expiration",
+              "revocation",
+              "trust",
+              "issuer",
+              "holder",
+              "cryptographic",
+              "format",
+              "policy"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["passed", "failed", "warning", "skipped"]
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable description of the check result"
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional details specific to this check type"
+          },
+          "governance": {
+            "type": "object",
+            "properties": {
+              "adrReference": {
+                "type": "string",
+                "description": "ADR governing this verification check"
+              },
+              "policyId": {
+                "type": "string",
+                "description": "Policy identifier for this check"
+              }
+            }
+          }
+        },
+        "required": ["type", "status"]
+      },
+      "minItems": 1
+    },
+    "trustRegistry": {
+      "type": "object",
+      "properties": {
+        "queried": {
+          "type": "boolean",
+          "description": "Whether trust registry was consulted"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "description": "Trust registry endpoint used"
+        },
+        "issuerTrust": {
+          "type": "object",
+          "properties": {
+            "trusted": {
+              "type": "boolean"
+            },
+            "level": {
+              "type": "string",
+              "enum": ["high", "medium", "low", "unknown"]
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        },
+        "schemaRegistry": {
+          "type": "object",
+          "properties": {
+            "validated": {
+              "type": "boolean"
+            },
+            "schemaId": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "revocation": {
+      "type": "object",
+      "properties": {
+        "checked": {
+          "type": "boolean",
+          "description": "Whether revocation status was checked"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "revoked", "suspended", "unknown"]
+        },
+        "method": {
+          "type": "string",
+          "enum": ["statusList2021", "revocationList2020", "registry", "none"]
+        },
+        "lastChecked": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "statusListCredential": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to status list credential if applicable"
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "description": "Whether cryptographic signature is valid"
+        },
+        "algorithm": {
+          "type": "string",
+          "description": "Signature algorithm used"
+        },
+        "keyId": {
+          "type": "string",
+          "description": "Key identifier used for signing"
+        },
+        "publicKey": {
+          "type": "string",
+          "description": "Public key used for verification"
+        },
+        "did": {
+          "type": "string",
+          "description": "DID of the signer"
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Error code for programmatic handling"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          },
+          "checkType": {
+            "type": "string",
+            "description": "Which verification check produced this error"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "warning", "info"]
+          }
+        },
+        "required": ["code", "message", "severity"]
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "checkType": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "message"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "verifierDid": {
+          "type": "string",
+          "description": "DID of the entity performing verification"
+        },
+        "verificationPurpose": {
+          "type": "string",
+          "enum": ["authentication", "assertionMethod", "keyAgreement", "capabilityInvocation", "capabilityDelegation"]
+        },
+        "sdkVersion": {
+          "type": "string",
+          "description": "Version of SDK used for verification"
+        },
+        "processingTime": {
+          "type": "number",
+          "description": "Verification processing time in milliseconds"
+        },
+        "carbonFootprint": {
+          "type": "object",
+          "properties": {
+            "estimated": {
+              "type": "number",
+              "description": "Estimated CO2 footprint in grams"
+            },
+            "methodology": {
+              "type": "string",
+              "governanceReference": "adr:architecture-0004-carbon-awareness-integration"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["verified", "verificationTimestamp", "verificationType", "subject", "checks"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "verified": true,
+      "verificationTimestamp": "2024-01-15T10:30:00Z",
+      "verificationType": "credential",
+      "verificationMethod": "Ed25519Signature2020",
+      "subject": {
+        "type": "credential",
+        "id": "https://example.com/credentials/123",
+        "hash": "sha256:abcd1234..."
+      },
+      "checks": [
+        {
+          "type": "signature",
+          "status": "passed",
+          "message": "Cryptographic signature is valid"
+        },
+        {
+          "type": "schema",
+          "status": "passed",
+          "message": "Credential conforms to schema"
+        },
+        {
+          "type": "expiration",
+          "status": "passed",
+          "message": "Credential is not expired"
+        },
+        {
+          "type": "revocation",
+          "status": "passed",
+          "message": "Credential is not revoked"
+        },
+        {
+          "type": "trust",
+          "status": "passed",
+          "message": "Issuer is trusted"
+        }
+      ],
+      "trustRegistry": {
+        "queried": true,
+        "endpoint": "https://trust.openverifiable.org",
+        "issuerTrust": {
+          "trusted": true,
+          "level": "high",
+          "reason": "Verified issuer in trust registry"
+        }
+      },
+      "revocation": {
+        "checked": true,
+        "status": "active",
+        "method": "statusList2021",
+        "lastChecked": "2024-01-15T10:30:00Z"
+      },
+      "signature": {
+        "valid": true,
+        "algorithm": "Ed25519",
+        "keyId": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbEsR8uD2MBf#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbEsR8uD2MBf",
+        "did": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbEsR8uD2MBf"
+      },
+      "metadata": {
+        "verifierDid": "did:key:z6MkverifierExample",
+        "verificationPurpose": "assertionMethod",
+        "sdkVersion": "1.0.0",
+        "processingTime": 45.2
+      }
+    }
+  ]
+} 

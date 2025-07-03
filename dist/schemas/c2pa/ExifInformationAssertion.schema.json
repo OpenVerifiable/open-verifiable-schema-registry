@@ -1,0 +1,122 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://openverifiable.org/schemas/c2pa/ExifInformationAssertion.schema.json",
+    "title": "ExifInformationAssertion",
+    "version": "0.0.1",
+    "type": "object",
+    "description": "Represents Exif metadata in JSON-LD form. Partial coverage of common exif fields.",
+    "properties": {
+        "@context": {
+            "type": ["string", "object", "array"],
+            "description": "JSON-LD context referencing exif = 'http://ns.adobe.com/exif/1.0/' and possibly exifEX = 'http://cipa.jp/exif/2.32/'"
+        },
+        "exif:Make": {
+            "type": "string",
+            "description": "Manufacturer of the capturing device, e.g. 'Canon', 'Nikon'"
+        },
+        "exif:Model": {
+            "type": "string",
+            "description": "Model of the capturing device, e.g. 'EOS R5'"
+        },
+        "exif:LensMake": {
+            "type": "string",
+            "description": "Manufacturer of the lens, if separate from camera maker."
+        },
+        "exif:LensModel": {
+            "type": "string",
+            "description": "Model of the lens, if applicable."
+        },
+        "exif:DateTimeOriginal": {
+            "type": "string",
+            "description": "Date/Time when the original image data was generated (local camera time). e.g. '2021:06:28 16:34:11'"
+        },
+        "exif:ExposureTime": {
+            "type": "string",
+            "description": "Exposure time, typically as fraction of a second. e.g. '1/125'"
+        },
+        "exif:FNumber": {
+            "type": "number",
+            "description": "The F number (aperture) e.g. 2.8"
+        },
+        "exif:ISOSpeedRatings": {
+            "type": "integer",
+            "description": "ISO speed or sensitivity setting e.g. 100, 400, 1600."
+        },
+        "exif:FocalLength": {
+            "type": "string",
+            "description": "Focal length of the lens in mm e.g. '50mm'."
+        },
+        "exif:Flash": {
+            "type": "string",
+            "description": "Flash setting or mode. Could be 'Flash fired' or 'Flash did not fire'."
+        },
+        "exif:GPSVersionID": {
+            "type": "string",
+            "description": "GPS tag version. Typically '2.2.0.0'"
+        },
+        "exif:GPSLatitudeRef": {
+            "type": "string",
+            "description": "Indicates whether latitude is north or south latitude (e.g. 'N' or 'S')."
+        },
+        "exif:GPSLatitude": {
+            "type": "string",
+            "description": "Latitude in degrees, minutes, seconds format e.g. '39,21.102N' or numeric decimal. Implementation dependent."
+        },
+        "exif:GPSLongitudeRef": {
+            "type": "string",
+            "description": "Indicates whether longitude is east or west (e.g. 'E' or 'W')."
+        },
+        "exif:GPSLongitude": {
+            "type": "string",
+            "description": "Longitude in degrees, minutes, seconds format e.g. '74,26.5737W' or numeric decimal. Implementation dependent."
+        },
+        "exif:GPSAltitudeRef": {
+            "type": "integer",
+            "description": "0 = above sea level, 1 = below sea level. Part of Exif standard."
+        },
+        "exif:GPSAltitude": {
+            "type": "string",
+            "description": "Altitude in meters (possibly a fraction). e.g. '100963/29890'"
+        },
+        "exif:GPSTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time (UTC) of GPS data record. e.g. '2021-06-28T16:34:11Z'"
+        },
+        "exif:GPSMapDatum": { "type": "string" },
+        "exif:GPSProcessingMethod": { "type": "string" },
+        "exif:GPSDateStamp": { "type": "string" },
+        "exif:GPSImgDirection": { "type": "number" },
+        "exif:GPSImgDirectionRef": { "type": "string", "enum": ["T", "M"] },
+        "exif:SerialNumber": { "type": "string" },
+        "exif:LensSerialNumber": { "type": "string" },
+        "exif:LensSpecification": { "type": "string" },
+        "exif:ShutterSpeedValue": { "type": "string" },
+        "exif:ApertureValue": { "type": "string" },
+        "exif:BrightnessValue": { "type": "number" },
+        "exif:ExposureMode": { "type": "integer", "description": "0=Auto, 1=Manual, 2=Auto Bracket" },
+        "exif:ExposureProgram": { "type": "integer" },
+        "exif:MeteringMode": { "type": "integer" },
+        "exif:WhiteBalance": { "type": "integer" },
+        "exif:DateTimeDigitized": { "type": "string", "format": "date-time" },
+        "exif:SubSecTimeOriginal": { "type": "string" },
+        "exif:TimeZoneOffset": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "e.g. [+5, 0] for timezone offset"
+        },
+        "exif:ImageUniqueID": { "type": "string" },
+        "exif:Software": { "type": "string" },
+        "exif:ProcessingSoftware": { "type": "string" },
+        "exif:ColorSpace": { "type": "integer" },
+        "exif:SceneCaptureType": { "type": "integer" },
+        "exif:Contrast": { "type": "integer" },
+        "exif:Saturation": { "type": "integer" },
+        "exif:Sharpness": { "type": "integer" },
+        "exif:Copyright": { "type": "string" },
+        "exif:CameraOwnerName": { "type": "string" },
+        "exif:UserComment": { "type": "string" }
+    },
+    "required": ["@context"],
+    "additionalProperties": true
+}

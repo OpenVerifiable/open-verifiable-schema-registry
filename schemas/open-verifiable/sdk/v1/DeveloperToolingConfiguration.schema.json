@@ -1,0 +1,450 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/DeveloperToolingConfiguration.schema.json",
+  "title": "Developer Tooling Configuration Schema",
+  "description": "Configuration schema for developer tools, IDE integration, and development workflow automation",
+  "governanceReference": [
+    "adr:0037-developer-tools-environment-strategy",
+    "adr:0038-type-generation-code-tooling-strategy",
+    "adr:architecture-0010-developer-experience-cli-tooling"
+  ],
+  "type": "object",
+  "properties": {
+    "toolingId": {
+      "type": "string",
+      "description": "Unique identifier for this developer tooling configuration"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Tooling configuration version"
+    },
+    "ideIntegration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable IDE integration features"
+        },
+        "vscode": {
+          "type": "object",
+          "properties": {
+            "extensionId": {
+              "type": "string",
+              "default": "open-verifiable.ov-id-sdk",
+              "description": "VS Code extension identifier"
+            },
+            "features": {
+              "type": "object",
+              "properties": {
+                "schemaValidation": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Enable real-time schema validation"
+                },
+                "typeGeneration": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Enable automatic type generation"
+                },
+                "snippets": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Enable code snippets"
+                },
+                "debugging": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Enable debugging support"
+                }
+              }
+            }
+          }
+        },
+        "intellij": {
+          "type": "object",
+          "properties": {
+            "pluginId": {
+              "type": "string",
+              "description": "IntelliJ plugin identifier"
+            },
+            "features": {
+              "type": "object",
+              "properties": {
+                "codeCompletion": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "refactoring": {
+                  "type": "boolean",
+                  "default": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "debugging": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable debugging features"
+        },
+        "logLevel": {
+          "type": "string",
+          "enum": ["error", "warn", "info", "debug", "trace"],
+          "default": "info",
+          "description": "Default logging level for development"
+        },
+        "tracing": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable distributed tracing"
+            },
+            "format": {
+              "type": "string",
+              "enum": ["jaeger", "zipkin", "opentelemetry"],
+              "default": "opentelemetry"
+            },
+            "endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Tracing collector endpoint"
+            }
+          }
+        },
+        "breakpoints": {
+          "type": "object",
+          "properties": {
+            "didOperations": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable breakpoints for DID operations"
+            },
+            "credentialFlow": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable breakpoints for credential workflows"
+            },
+            "cryptoOperations": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable breakpoints for cryptographic operations"
+            }
+          }
+        }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "properties": {
+        "framework": {
+          "type": "string",
+          "enum": ["jest", "mocha", "vitest", "playwright"],
+          "default": "jest",
+          "description": "Testing framework preference"
+        },
+        "automation": {
+          "type": "object",
+          "properties": {
+            "unitTests": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable automatic unit test generation"
+            },
+            "integrationTests": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable automatic integration test generation"
+            },
+            "e2eTests": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable automatic E2E test generation"
+            }
+          }
+        },
+        "coverage": {
+          "type": "object",
+          "properties": {
+            "threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80,
+              "description": "Code coverage threshold percentage"
+            },
+            "excludePatterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Patterns to exclude from coverage"
+            }
+          }
+        }
+      }
+    },
+    "codeGeneration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "governanceReference": "adr:0038-type-generation-code-tooling-strategy",
+          "description": "Enable automatic code generation"
+        },
+        "typescript": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "boolean",
+              "default": true,
+              "description": "Generate TypeScript type definitions"
+            },
+            "interfaces": {
+              "type": "boolean",
+              "default": true,
+              "description": "Generate TypeScript interfaces"
+            },
+            "validators": {
+              "type": "boolean",
+              "default": true,
+              "description": "Generate runtime validators (e.g., Zod schemas)"
+            }
+          }
+        },
+        "documentation": {
+          "type": "object",
+          "properties": {
+            "api": {
+              "type": "boolean",
+              "default": true,
+              "description": "Generate API documentation"
+            },
+            "examples": {
+              "type": "boolean",
+              "default": true,
+              "description": "Generate code examples"
+            },
+            "tutorials": {
+              "type": "boolean",
+              "default": false,
+              "description": "Generate interactive tutorials"
+            }
+          }
+        }
+      }
+    },
+    "linting": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable linting and code quality checks"
+        },
+        "rules": {
+          "type": "object",
+          "properties": {
+            "schemaCompliance": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enforce schema compliance rules"
+            },
+            "securityPatterns": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enforce security pattern rules"
+            },
+            "performancePatterns": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enforce performance pattern rules"
+            }
+          }
+        },
+        "customRules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["error", "warning", "info"]
+              },
+              "pattern": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "severity", "pattern"]
+          }
+        }
+      }
+    },
+    "cicdIntegration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable CI/CD integration"
+        },
+        "githubActions": {
+          "type": "object",
+          "properties": {
+            "workflows": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["validate-schemas", "run-tests", "generate-types", "security-scan"]
+              },
+              "default": ["validate-schemas", "run-tests"]
+            },
+            "triggers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["push", "pull_request", "schedule"]
+              },
+              "default": ["push", "pull_request"]
+            }
+          }
+        },
+        "qualityGates": {
+          "type": "object",
+          "properties": {
+            "testCoverage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80
+            },
+            "securityScan": {
+              "type": "boolean",
+              "default": true
+            },
+            "performanceTest": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "devServer": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable development server for testing"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535,
+          "default": 3000,
+          "description": "Development server port"
+        },
+        "hotReload": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hot reload for schema changes"
+        },
+        "mockServices": {
+          "type": "object",
+          "properties": {
+            "trustRegistry": {
+              "type": "boolean",
+              "default": true,
+              "description": "Mock trust registry for development"
+            },
+            "didResolver": {
+              "type": "boolean",
+              "default": true,
+              "description": "Mock DID resolver for development"
+            },
+            "blockchain": {
+              "type": "boolean",
+              "default": true,
+              "description": "Mock blockchain operations for development"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["toolingId", "version"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "toolingId": "dev-config-001",
+      "version": "1.0.0",
+      "ideIntegration": {
+        "enabled": true,
+        "vscode": {
+          "extensionId": "open-verifiable.ov-id-sdk",
+          "features": {
+            "schemaValidation": true,
+            "typeGeneration": true,
+            "snippets": true,
+            "debugging": true
+          }
+        }
+      },
+      "debugging": {
+        "enabled": true,
+        "logLevel": "debug",
+        "tracing": {
+          "enabled": true,
+          "format": "opentelemetry"
+        }
+      },
+      "testing": {
+        "framework": "jest",
+        "automation": {
+          "unitTests": true,
+          "integrationTests": true,
+          "e2eTests": false
+        },
+        "coverage": {
+          "threshold": 90
+        }
+      },
+      "codeGeneration": {
+        "enabled": true,
+        "typescript": {
+          "types": true,
+          "interfaces": true,
+          "validators": true
+        },
+        "documentation": {
+          "api": true,
+          "examples": true
+        }
+      }
+    }
+  ]
+} 
