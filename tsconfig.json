@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.config.json",
-  "include": ["types/**/*", "types/**/*.d.ts"]
+  "include": ["index.ts", "schemas/**/*"],
 }

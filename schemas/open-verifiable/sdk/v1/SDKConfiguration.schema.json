@@ -1,0 +1,246 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://identity.foundation/credentials/v1",
+    "https://schemas.openverifiable.org/governance/v1",
+    {
+      "ov": "https://schemas.openverifiable.org/",
+      "adr": "https://adrs.openverifiable.org/",
+      "governanceReference": {
+        "@id": "adr:governanceReference",
+        "@type": "@id"
+      },
+      "implementationReference": {
+        "@id": "adr:implementationReference", 
+        "@type": "@id"
+      },
+      "standardsCompliance": {
+        "@id": "adr:standardsCompliance",
+        "@type": "@id"
+      }
+    }
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.openverifiable.org/sdk/v1/SDKConfiguration.schema.json",
+  "title": "Open Verifiable SDK Configuration Schema",
+  "description": "Configuration schema for Open Verifiable SDK initialization and setup",
+  "governanceReference": [
+    "adr:0036-sdk-cli-tooling-strategy",
+    "adr:0037-developer-tools-environment-strategy"
+  ],
+  "implementationReference": [
+    "adr:architecture-0007-agent-architecture-and-extensibility",
+    "adr:architecture-0010-developer-experience-cli-tooling"
+  ],
+  "standardsCompliance": [
+    "adr:0005-w3c-vc-2-0-adoption-strategy",
+    "adr:0007-interoperability-standards-compliance-strategy"
+  ],
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "SDK version following semantic versioning per ADR-0036"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["development", "staging", "production"],
+      "description": "Deployment environment configuration"
+    },
+    "didMethods": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["did:key", "did:cheqd", "did:ethr", "did:web"]
+      },
+      "governanceReference": "adr:architecture-0002-choose-decentralized-identity-methodology",
+      "description": "Supported DID methods per identity methodology ADR"
+    },
+    "networks": {
+      "type": "object",
+      "properties": {
+        "cheqd": {
+          "type": "object",
+          "properties": {
+            "network": {
+              "type": "string",
+              "enum": ["mainnet", "testnet"],
+              "description": "Cheqd network configuration"
+            },
+            "rpcUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Cheqd RPC endpoint URL"
+            },
+            "cosmosPayerSeed": {
+              "type": "string",
+              "description": "Cosmos payer seed for transactions"
+            }
+          },
+          "required": ["network"]
+        },
+        "ethereum": {
+          "type": "object",
+          "properties": {
+            "network": {
+              "type": "string",
+              "enum": ["mainnet", "goerli", "polygon"],
+              "description": "Ethereum network configuration"
+            },
+            "rpcUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Ethereum RPC endpoint URL"
+            }
+          }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["memory", "file", "database"],
+          "governanceReference": "adr:architecture-0006-secure-local-storage-for-keys-and-credentials",
+          "description": "Storage backend type per secure storage ADR"
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable encryption at rest per security-first principle"
+            },
+            "algorithm": {
+              "type": "string",
+              "enum": ["AES-256-GCM", "ChaCha20-Poly1305"],
+              "default": "AES-256-GCM",
+              "description": "Encryption algorithm for secure storage"
+            }
+          },
+          "required": ["enabled"]
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["sqlite", "postgresql"],
+              "description": "Database type for persistent storage"
+            },
+            "connectionString": {
+              "type": "string",
+              "description": "Database connection string"
+            }
+          }
+        }
+      },
+      "required": ["type"]
+    },
+    "trustRegistry": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "governanceReference": "adr:0011-trust-registry-client-integration",
+          "description": "Enable trust registry integration per proof-first trust principle"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "description": "Trust registry endpoint URL"
+        },
+        "cacheTtl": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 300,
+          "description": "Trust registry cache TTL in seconds"
+        }
+      }
+    },
+    "carbonAwareness": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "governanceReference": "adr:architecture-0004-carbon-awareness-integration",
+          "description": "Enable carbon awareness features per sustainability principles"
+        },
+        "tracking": {
+          "type": "boolean",
+          "default": false,
+          "description": "Track carbon footprint of operations"
+        }
+      }
+    },
+    "logging": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["error", "warn", "info", "debug"],
+          "default": "info",
+          "description": "Logging level for SDK operations"
+        },
+        "auditEnabled": {
+          "type": "boolean",
+          "default": true,
+          "governanceReference": "adr:0029-schema-registry-security-model",
+          "description": "Enable audit logging per security requirements"
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "governanceReference": "adr:0024-inclusive-design-testing-requirements",
+          "description": "Enable accessibility features per inclusive integration principle"
+        },
+        "lowBandwidth": {
+          "type": "boolean",
+          "default": false,
+          "description": "Optimize for low-bandwidth environments"
+        }
+      }
+    }
+  },
+  "required": ["version", "environment", "didMethods", "storage"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "version": "1.0.0",
+      "environment": "development",
+      "didMethods": ["did:key", "did:cheqd"],
+      "networks": {
+        "cheqd": {
+          "network": "testnet",
+          "rpcUrl": "https://testnet-rpc.cheqd.network"
+        }
+      },
+      "storage": {
+        "type": "file",
+        "encryption": {
+          "enabled": true,
+          "algorithm": "AES-256-GCM"
+        }
+      },
+      "trustRegistry": {
+        "enabled": true,
+        "endpoint": "https://trust.openverifiable.org",
+        "cacheTtl": 300
+      },
+      "logging": {
+        "level": "debug",
+        "auditEnabled": true
+      }
+    }
+  ]
+} 

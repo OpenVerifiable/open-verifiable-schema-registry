@@ -1,10 +1,12 @@
 # CHANGELOG.md
 
-## [0.0.8]
+## [0.0.10]
 ### Added
-- Additional schemas from C2PA
-- Added Privado schemas
-- Added Cheqd schemas
+- Added schemas to exports with index
+
+## [0.0.9]
+### Added
+- Added schemas to exports
 
 ## [0.0.7]
 ### Refactor

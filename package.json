@@ -1,6 +1,6 @@
 {
   "name": "@openverifiable/open-verifiable-types",
-  "version": "0.0.8",
+  "version": "0.0.12",
   "description": "A collection of schemas for open and verifiable types.",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -11,12 +11,14 @@
   ],
   "website": "https://openverifiable.org",
   "scripts": {
-    "clean": "rm -rf dist && rm -rf types/schemaTypes && mkdir types/schemaTypes && touch types/schemaTypes/index.ts",
-    "copy-types": "cp dist/schemaTypes/index.d.ts dist/index.d.ts && rm -rf dist/schemaTypes",
+    "clean": "rm -rf dist",
     "export-types": "node exportSchemas.js",
     "lint:eslint": "eslint test/**/*.ts",
     "build": "tsc -p .",
-    "test": "npm run build && tsc -p test/"
+    "test": "npm run build && tsc -p test/",
+    "validate-ov-schemas": "npm run validate",
+    "generate-ov-types": "npm run generate-types",
+    "check-ov-governance": "npm run check-governance"
   },
   "repository": {
     "type": "git",
@@ -56,6 +58,8 @@
     "@types/stripe-v3": "^3.1.33",
     "@typescript-eslint/parser": "^8.26.1",
     "@veramo/core-types": "^6.0.0",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
     "axios": "^1.8.2",
     "did-resolver": "^1.0.1",
     "json-schema-to-typescript": "^15.0.4",
